@@ -1,0 +1,3 @@
+.elements__like_active:focus {
+    background-image: url("../../../../images/like_active.svg");
+}

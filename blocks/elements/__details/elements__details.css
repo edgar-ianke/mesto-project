@@ -1,0 +1,7 @@
+.elements__details {
+    width: 246px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 0 31px;
+}

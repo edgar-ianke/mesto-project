@@ -1,0 +1,23 @@
+.form__close-icon {
+  position: inherit;
+  top: -40px;
+  right: -40px;
+  height: 32px;
+  width: 32px;
+  background-image: url("../../../images/Close-Icon.svg");
+  object-fit: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.form__close-icon:hover {
+  opacity: 0.8;
+}
+@media screen and (max-width: 480px) {
+  .form__close-icon {
+    height: 20px;
+    width: 20px;
+    top: -36px;
+    right: 0;
+    background-image: url("../../../images/Close-Icon_small.svg");
+  }
+}
