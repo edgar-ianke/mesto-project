@@ -16,4 +16,4 @@
 3. CSS
 4. Figma
 ------------------------------ 
-[Ссылка на GH pages](https://edgar-ianke.github.io/russian-travel/)
+[Ссылка на GH pages](https://edgar-ianke.github.io/mesto-project/)
