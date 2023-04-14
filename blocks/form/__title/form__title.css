@@ -6,7 +6,7 @@
   color: #000000;
   padding: 34px 0 54px;
 }
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 520px) {
   .form__title {
     padding: 25px 0 75px;
     font-size: 18px;
