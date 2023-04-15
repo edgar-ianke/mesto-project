@@ -2,9 +2,5 @@
   padding-top: 45px;
   margin: 0 auto;
   max-width: 880px;
-}
-@media screen and (max-width: 934px) {
-  .header {
-    max-width: calc(100% - 16px);
-  }
+  border-bottom: 1px solid rgba(84, 84, 84, 0.7);
 }

@@ -11,5 +11,6 @@
 @media screen and (max-width: 702px) {
   .elements {
     padding: 36px 0 48px;
+    max-width: calc(100vw - 38px);
   }
 }
