@@ -8,9 +8,9 @@
   row-gap: 20px;
   justify-content: center;
 }
-@media screen and (max-width: 702px) {
+@media screen and (max-width: 918px) {
   .elements {
-    padding: 36px 0 48px;
     max-width: calc(100vw - 38px);
+    padding: 36px 0 48px;
   }
 }

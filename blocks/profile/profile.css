@@ -7,6 +7,11 @@
   grid-template-rows: min-content;
   column-gap: 30px;
 }
+@media screen and (max-width: 918px) {
+    .profile {
+        max-width: calc(100vw - 38px);
+    }
+}
 @media screen and (max-width: 702px) {
   .profile {
     grid-template-columns: 282px;
