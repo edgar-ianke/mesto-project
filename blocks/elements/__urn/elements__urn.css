@@ -1,0 +1,15 @@
+.elements__urn {
+  width: 18px;
+  height: 19px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  border: none;
+  align-self: center;
+}
+.elements__urn:hover {
+    opacity: 0.6;
+}

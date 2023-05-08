@@ -1,3 +1,5 @@
-  .pop-up_disabled {
-    display: none;
-  }
+.pop-up_disabled {
+  visibility: hidden;
+  opacity: 0;
+  
+}
