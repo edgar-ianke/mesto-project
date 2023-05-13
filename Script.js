@@ -24,15 +24,14 @@ const initialCards = [
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
   },
 ];
-initialCards.forEach(addElement);
 
 const editButton = document.querySelector(".profile__edit-button");
-const closeButtonEdit = document.querySelector("#edit-close");
+const buttonCloseEdit = document.querySelector("#edit-close");
 const popUpEdit = document.querySelector("#pop-up-edit");
 const createButton = document.querySelector(".profile__add-button");
-const closeButtonCreate = document.querySelector("#create-close");
+const buttonCloseCreate = document.querySelector("#create-close");
 const likeButton = document.querySelectorAll(".elements__like");
-const closeButtonImg = document.querySelector("#img-close");
+const buttonCloseImg = document.querySelector("#img-close");
 
 const popUpCreate = document.querySelector("#pop-up-create");
 const formElementEdit = document.querySelector("#edit-form");
@@ -45,82 +44,81 @@ const nameInputCreate = document.querySelector("#create-name");
 const linkInputCreate = document.querySelector("#create-link");
 
 const fullImg = document.querySelector("#pop-up-full-img");
+const fullImgSrc = fullImg.querySelector(".full-img");
+const fullImgInfo = fullImg.querySelector(".full-img__info");
 
-function toggleEditForm() {
-  popUpEdit.classList.toggle("pop-up_disabled");
-  if (!popUpEdit.className.includes("pop-up_disabled")) {
-    nameInputEdit.value = document.querySelector(".profile__name").textContent;
-    jobInputEdit.value = document.querySelector(".profile__description").textContent;
+const profileName = document.querySelector(".profile__name");
+const profileDescription = document.querySelector(".profile__description");
+
+const elementsAll = document.querySelector(".elements");
+
+initialCards.forEach(addElement);
+
+editButton.addEventListener("click", () => toggleForm(popUpEdit));
+buttonCloseEdit.addEventListener("click", () => toggleForm(popUpEdit));
+
+createButton.addEventListener("click", () => toggleForm(popUpCreate));
+buttonCloseCreate.addEventListener("click", () => toggleForm(popUpCreate));
+formElementCreate.addEventListener("submit", addImg);
+
+buttonCloseImg.addEventListener("click", () => toggleForm(fullImg));
+
+formElementEdit.addEventListener("submit", () => formSubmitEditHandler);
+
+function toggleForm(form) {
+  form.classList.toggle("pop-up_disabled");
+  if (!form.className.includes("pop-up_disabled")) {
+    if (form.id === "pop-up-edit") {
+      nameInputEdit.value = document.querySelector(".profile__name").textContent;
+      jobInputEdit.value = document.querySelector(".profile__description").textContent;
+    } else if (form.id === "pop-up-create") {
+      nameInputCreate.value = "";
+      linkInputCreate.value = "";
+    }
   }
 }
 
-function toggleCreateForm() {
-  popUpCreate.classList.toggle("pop-up_disabled");
-  if (!popUpCreate.className.includes("pop-up_disabled")) {
-    nameInputCreate.value = "";
-    linkInputCreate.value = "";
-  }
-}
-
-function toggleFullImg() {
-  fullImg.classList.toggle("pop-up_disabled");
-}
-
-closeButtonImg.addEventListener("click", toggleFullImg);
-
-editButton.addEventListener("click", toggleEditForm);
-closeButtonEdit.addEventListener("click", toggleEditForm);
-
-createButton.addEventListener("click", toggleCreateForm);
-closeButtonCreate.addEventListener("click", toggleCreateForm);
-
-function formSubmitHandler(evt) {
+function formSubmitEditHandler(evt) {
   evt.preventDefault();
-  const profileName = document.querySelector(".profile__name");
-  const profileDescription = document.querySelector(".profile__description");
   profileName.textContent = nameInputEdit.value;
   profileDescription.textContent = jobInputEdit.value;
-  toggleEditForm();
+  toggleForm(popUpEdit);
 }
-formElementEdit.addEventListener("submit", formSubmitHandler);
-
-function addElement(item) {
+function createCard(item) {
   const elementTemplate = document.querySelector("#element").content;
-  const elementsAll = document.querySelector(".elements");
-  const element = elementTemplate.querySelector(".elements__element").cloneNode(true);
-  element.querySelector(".elements__card").src = item.link;
-  element.querySelector(".elements__name").textContent = item.name;
-  elementsAll.prepend(element);
-  const elementLike = element.querySelector(".elements__like");
-  const elementDelete = element.querySelector(".elements__urn");
-  elementDelete.addEventListener("click", function () {
-    let arrValue = initialCards.find(function (val) {
-      return val.link.includes(elementDelete.parentElement.querySelector(".elements__card").getAttribute("src"));
-    });
-    let arrIndex = initialCards.indexOf(arrValue);
-    initialCards.splice(arrIndex, 1);
-    element.remove();
-  });
+  const cardElement = elementTemplate.querySelector(".elements__element").cloneNode(true);
+  cardElement.querySelector(".elements__card").src = item.link;
+  cardElement.querySelector(".elements__name").textContent = item.name;
+  cardElement.querySelector(".elements__card").setAttribute("alt", item.name);
+  const elementLike = cardElement.querySelector(".elements__like");
+  const elementDelete = cardElement.querySelector(".elements__urn");
+  elementDelete.onclick = function () {
+    cardElement.remove();
+  };
   elementLike.addEventListener("click", function () {
     elementLike.classList.toggle("elements__like_active");
   });
-  const img = element.querySelector(".elements__card");
+  const img = cardElement.querySelector(".elements__card");
+
   img.addEventListener("click", function () {
-    toggleFullImg();
-    fullImg.querySelector(".full-img").src = img.src;
-    fullImg.querySelector(".full-img__info").textContent = element.textContent;
+    fullImgSrc.src = img.src
+    fullImgInfo.textContent = cardElement.textContent;
+    fullImgSrc.setAttribute("alt", cardElement.textContent.trim());
+    toggleForm(fullImg);
   });
+  return cardElement;
 }
 
-function formAddImg(evt) {
+function addElement(item) {
+  elementsAll.prepend(createCard(item));
+}
+
+function addImg(evt) {
   evt.preventDefault();
   obj = {
     name: nameInputCreate.value,
     link: linkInputCreate.value,
   };
-  initialCards.push(obj);
   addElement(obj);
-  toggleCreateForm();
+  toggleForm(popUpCreate);
 }
-
-formElementCreate.addEventListener("submit", formAddImg);

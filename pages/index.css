@@ -22,6 +22,7 @@
 @import url("../blocks/footer/footer.css");
 @import url("../blocks/footer/__copyright/footer__copyright.css");
 @import url("../blocks/pop-up/pop-up.css");
+@import url("../blocks/pop-up/_full-img/pop-up_full-img.css");
 @import url("../blocks/pop-up/_disabled/pop-up_disabled.css");
 @import url("../blocks/form/__title/form__title.css");
 @import url("../blocks/form/__submit-button/form__submit-button.css");
