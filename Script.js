@@ -25,10 +25,10 @@ const initialCards = [
   },
 ];
 
-const editButton = document.querySelector(".profile__edit-button");
+const buttonEdit = document.querySelector(".profile__edit-button");
 const buttonCloseEdit = document.querySelector("#edit-close");
 const popUpEdit = document.querySelector("#pop-up-edit");
-const createButton = document.querySelector(".profile__add-button");
+const buttonCreate = document.querySelector(".profile__add-button");
 const buttonCloseCreate = document.querySelector("#create-close");
 const likeButton = document.querySelectorAll(".elements__like");
 const buttonCloseImg = document.querySelector("#img-close");
@@ -43,9 +43,9 @@ const jobInputEdit = document.querySelector("#author-description");
 const nameInputCreate = document.querySelector("#create-name");
 const linkInputCreate = document.querySelector("#create-link");
 
-const fullImg = document.querySelector("#pop-up-full-img");
-const fullImgSrc = fullImg.querySelector(".full-img");
-const fullImgInfo = fullImg.querySelector(".full-img__info");
+const popupFullImg = document.querySelector("#pop-up-full-img");
+const fullImg = popupFullImg.querySelector(".full-img");
+const fullImgInfo = popupFullImg.querySelector(".full-img__info");
 
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
@@ -54,16 +54,16 @@ const elementsAll = document.querySelector(".elements");
 
 initialCards.forEach(addElement);
 
-editButton.addEventListener("click", () => toggleForm(popUpEdit));
+buttonEdit.addEventListener("click", () => toggleForm(popUpEdit));
 buttonCloseEdit.addEventListener("click", () => toggleForm(popUpEdit));
 
-createButton.addEventListener("click", () => toggleForm(popUpCreate));
+buttonCreate.addEventListener("click", () => toggleForm(popUpCreate));
 buttonCloseCreate.addEventListener("click", () => toggleForm(popUpCreate));
 formElementCreate.addEventListener("submit", addImg);
 
-buttonCloseImg.addEventListener("click", () => toggleForm(fullImg));
+buttonCloseImg.addEventListener("click", () => toggleForm(popupFullImg));
 
-formElementEdit.addEventListener("submit", () => formSubmitEditHandler);
+formElementEdit.addEventListener("submit", () => submitFormEditHandler);
 
 function toggleForm(form) {
   form.classList.toggle("pop-up_disabled");
@@ -78,7 +78,7 @@ function toggleForm(form) {
   }
 }
 
-function formSubmitEditHandler(evt) {
+function submitFormEditHandler(evt) {
   evt.preventDefault();
   profileName.textContent = nameInputEdit.value;
   profileDescription.textContent = jobInputEdit.value;
@@ -101,10 +101,10 @@ function createCard(item) {
   const img = cardElement.querySelector(".elements__card");
 
   img.addEventListener("click", function () {
-    fullImgSrc.src = img.src
+    fullImg.src = img.src;
     fullImgInfo.textContent = cardElement.textContent;
-    fullImgSrc.setAttribute("alt", cardElement.textContent.trim());
-    toggleForm(fullImg);
+    fullImg.setAttribute("alt", cardElement.textContent.trim());
+    toggleForm(popupFullImg);
   });
   return cardElement;
 }
