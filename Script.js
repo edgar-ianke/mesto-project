@@ -54,35 +54,38 @@ const elementsAll = document.querySelector(".elements");
 
 initialCards.forEach(addElement);
 
-buttonEdit.addEventListener("click", () => toggleForm(popUpEdit));
-buttonCloseEdit.addEventListener("click", () => toggleForm(popUpEdit));
+buttonEdit.addEventListener("click", () => openForm(popUpEdit));
+buttonCloseEdit.addEventListener("click", function () {
+  closeForm(popUpEdit);
+  nameInputEdit.value = document.querySelector(".profile__name").textContent;
+  jobInputEdit.value = document.querySelector(".profile__description").textContent;
+});
 
-buttonCreate.addEventListener("click", () => toggleForm(popUpCreate));
-buttonCloseCreate.addEventListener("click", () => toggleForm(popUpCreate));
+buttonCreate.addEventListener("click", () => openForm(popUpCreate));
+buttonCloseCreate.addEventListener("click", function () {
+  closeForm(popUpCreate);
+  nameInputCreate.value = "";
+  linkInputCreate.value = "";
+});
 formElementCreate.addEventListener("submit", addImg);
 
-buttonCloseImg.addEventListener("click", () => toggleForm(popupFullImg));
+buttonCloseImg.addEventListener("click", () => closeForm(popupFullImg));
 
 formElementEdit.addEventListener("submit", () => submitFormEditHandler);
 
-function toggleForm(form) {
-  form.classList.toggle("pop-up_disabled");
-  if (!form.className.includes("pop-up_disabled")) {
-    if (form.id === "pop-up-edit") {
-      nameInputEdit.value = document.querySelector(".profile__name").textContent;
-      jobInputEdit.value = document.querySelector(".profile__description").textContent;
-    } else if (form.id === "pop-up-create") {
-      nameInputCreate.value = "";
-      linkInputCreate.value = "";
-    }
-  }
+function openForm(form) {
+  form.classList.remove("pop-up_disabled");
+}
+
+function closeForm(form) {
+  form.classList.add("pop-up_disabled");
 }
 
 function submitFormEditHandler(evt) {
   evt.preventDefault();
   profileName.textContent = nameInputEdit.value;
   profileDescription.textContent = jobInputEdit.value;
-  toggleForm(popUpEdit);
+  closeForm(popUpEdit);
 }
 function createCard(item) {
   const elementTemplate = document.querySelector("#element").content;
@@ -104,7 +107,7 @@ function createCard(item) {
     fullImg.src = img.src;
     fullImgInfo.textContent = cardElement.textContent;
     fullImg.setAttribute("alt", cardElement.textContent.trim());
-    toggleForm(popupFullImg);
+    openForm(popupFullImg);
   });
   return cardElement;
 }
@@ -120,5 +123,5 @@ function addImg(evt) {
     link: linkInputCreate.value,
   };
   addElement(obj);
-  toggleForm(popUpCreate);
+  closeForm(popUpCreate);
 }
