@@ -57,21 +57,21 @@ initialCards.forEach(addElement);
 buttonEdit.addEventListener("click", () => openForm(popUpEdit));
 buttonCloseEdit.addEventListener("click", function () {
   closeForm(popUpEdit);
-  nameInputEdit.value = document.querySelector(".profile__name").textContent;
-  jobInputEdit.value = document.querySelector(".profile__description").textContent;
+  nameInputEdit.value = profileName.textContent;
+  jobInputEdit.value = profileDescription.textContent;
 });
 
-buttonCreate.addEventListener("click", () => openForm(popUpCreate));
-buttonCloseCreate.addEventListener("click", function () {
-  closeForm(popUpCreate);
+buttonCreate.addEventListener("click", function () {
+  openForm(popUpCreate);
   nameInputCreate.value = "";
   linkInputCreate.value = "";
 });
+buttonCloseCreate.addEventListener("click", () => closeForm(popUpCreate));
 formElementCreate.addEventListener("submit", addImg);
 
 buttonCloseImg.addEventListener("click", () => closeForm(popupFullImg));
 
-formElementEdit.addEventListener("submit", () => submitFormEditHandler);
+formElementEdit.addEventListener("submit", submitFormEditHandler);
 
 function openForm(form) {
   form.classList.remove("pop-up_disabled");
