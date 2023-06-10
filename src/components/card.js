@@ -1,17 +1,8 @@
-import {
-  popUpCreate,
-  nameInputCreate,
-  linkInputCreate,
-  openForm,
-  closeForm,
-  fullImg,
-  fullImgInfo,
-  popupFullImg,
-} from "./modal";
+import { openForm, fullImg, fullImgInfo, popupFullImg, renderSaving, closeForm, popUpCreate } from "./modal";
+import { getCards, loadCard, removeCard, addLike, removeLike } from "./api";
+import { userInfo } from "./utils";
 
 const elementsAll = document.querySelector(".elements");
-
-const userInfo = {}
 
 function createCard(item) {
   const elementTemplate = document.querySelector("#element").content;
@@ -19,19 +10,40 @@ function createCard(item) {
   cardElement.querySelector(".elements__card").src = item.link;
   cardElement.querySelector(".elements__name").textContent = item.name;
   cardElement.querySelector(".elements__card").setAttribute("alt", item.name);
+  cardElement.id = item._id;
   const elementLike = cardElement.querySelector(".elements__like");
   const elementDelete = cardElement.querySelector(".elements__urn");
-  elementDelete.onclick = function () {
+  if (item.owner._id !== userInfo._id) {
+    elementDelete.remove();
+  }
+  const elementLikeCounter = cardElement.querySelector(".elements__like-counter");
+  elementLikeCounter.textContent = item.likes.length;
+  if (
+    item.likes.some(function (el) {
+      return el._id === userInfo._id;
+    })
+  ) {
+    elementLike.classList.add("elements__like_active");
+  }
+  elementDelete.onclick = function (evt) {
     cardElement.remove();
+    deleteCard(evt.target.parentNode.id);
   };
-  elementLike.addEventListener("click", function () {
+  elementLike.addEventListener("click", function (evt) {
     elementLike.classList.toggle("elements__like_active");
+    if (elementLike.classList.contains("elements__like_active")) {
+      putLike(evt.target.parentNode.parentNode.parentNode.id);
+      elementLikeCounter.textContent++;
+    } else {
+      elementLikeCounter.textContent--;
+      deleteLike(evt.target.parentNode.parentNode.parentNode.id);
+    }
   });
   const img = cardElement.querySelector(".elements__card");
 
   img.addEventListener("click", function () {
     fullImg.src = img.src;
-    fullImgInfo.textContent = cardElement.textContent;
+    fullImgInfo.textContent = cardElement.lastElementChild.firstElementChild.textContent;
     fullImg.setAttribute("alt", cardElement.textContent.trim());
     openForm(popupFullImg);
   });
@@ -39,27 +51,43 @@ function createCard(item) {
 }
 
 function addElement(item) {
-  elementsAll.prepend(createCard(item));
+  elementsAll.append(createCard(item));
 }
 
 function addImg(evt) {
   evt.preventDefault();
-  const obj = {
-    name: nameInputCreate.value,
-    link: linkInputCreate.value,
-  };
-  addElement(obj);
-  closeForm(popUpCreate);
+  postCard(evt);
 }
-export { addImg, addElement };
-
-fetch("https://nomoreparties.co/v1/plus-cohort-25/users/me", {
-  headers: {
-    authorization: "02ffe6ee-1e50-4771-9330-975ddbfb736c",
-  },
-})
-  .then((res) => res.json())
-  .then((result) => {
-
-    console.log(result);
+function getInitialCards() {
+  getCards().then((result) => {
+    result.forEach(addElement);
   });
+}
+
+function postCard(evt) {
+  const buttonText = evt.target.lastElementChild.textContent;
+  renderSaving(evt, true, buttonText);
+  loadCard()
+    .then(() => {
+      elementsAll.innerHTML = "";
+      getInitialCards();
+    })
+    .finally(() => {
+      closeForm(popUpCreate);
+      renderSaving(evt, false, buttonText);
+    });
+}
+
+function deleteCard(cardId) {
+  removeCard(cardId);
+}
+
+function putLike(cardId) {
+  addLike(cardId);
+}
+function deleteLike(cardId) {
+  removeLike(cardId);
+}
+
+
+export { addImg, addElement, createCard, elementsAll, getInitialCards };

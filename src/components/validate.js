@@ -1,13 +1,12 @@
-import { profileName, profileDescription, nameInputEdit, jobInputEdit, closeForm, popUpEdit } from "./modal";
+import { editProfile } from "./utils";
 
 const formElementEdit = document.querySelector("#edit-form");
 const formElementCreate = document.querySelector("#create-form");
+const formElementAvatar = document.querySelector("#avatar-form");
 
 function submitFormEditHandler(evt) {
   evt.preventDefault();
-  profileName.textContent = nameInputEdit.value;
-  profileDescription.textContent = jobInputEdit.value;
-  closeForm(popUpEdit);
+  editProfile(evt);
 }
 
 function checkValidity(formElement, inputElement) {
@@ -66,5 +65,4 @@ function toggleButton(formInputElementsAll, buttonElement) {
     buttonElement.disabled = false;
   }
 }
-
-export { formElementCreate, formElementEdit, submitFormEditHandler, hideError };
+export { formElementCreate, formElementEdit, formElementAvatar, submitFormEditHandler, hideError, toggleButton };

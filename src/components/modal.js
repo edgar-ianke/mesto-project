@@ -1,10 +1,3 @@
-const buttonEdit = document.querySelector(".profile__edit-button");
-const buttonCloseEdit = document.querySelector("#edit-close");
-const popUpEdit = document.querySelector("#pop-up-edit");
-const buttonCreate = document.querySelector(".profile__add-button");
-const buttonCloseCreate = document.querySelector("#create-close");
-const buttonCloseImg = document.querySelector("#img-close");
-const popUpCreate = document.querySelector("#pop-up-create");
 const nameInputEdit = document.querySelector("#author-name");
 const jobInputEdit = document.querySelector("#author-description");
 
@@ -15,8 +8,10 @@ const popupFullImg = document.querySelector("#pop-up-full-img");
 const fullImg = popupFullImg.querySelector(".full-img");
 const fullImgInfo = popupFullImg.querySelector(".full-img__info");
 
-const profileName = document.querySelector(".profile__name");
-const profileDescription = document.querySelector(".profile__description");
+const popUpEdit = document.querySelector("#pop-up-edit");
+const popUpCreate = document.querySelector("#pop-up-create");
+const popUpAvatar = document.querySelector("#pop-up-avatar");
+const linkInputAvatar = document.querySelector("#avatar-link");
 
 function openForm(form) {
   form.classList.remove("pop-up_disabled");
@@ -25,23 +20,28 @@ function openForm(form) {
 function closeForm(form) {
   form.classList.add("pop-up_disabled");
 }
+
+function renderSaving(evt, isSaving, buttonText) {
+  if (isSaving) {
+    evt.target.lastElementChild.textContent = "Сохранение...";
+  } else {
+    evt.target.lastElementChild.textContent = buttonText;
+  }
+}
+
 export {
-  buttonEdit,
-  buttonCloseEdit,
-  popUpEdit,
-  buttonCreate,
-  buttonCloseCreate,
-  buttonCloseImg,
-  popUpCreate,
   nameInputEdit,
   jobInputEdit,
   nameInputCreate,
   linkInputCreate,
   fullImg,
   fullImgInfo,
-  profileName,
-  profileDescription,
   popupFullImg,
+  popUpCreate,
+  popUpEdit,
+  popUpAvatar,
   openForm,
   closeForm,
+  linkInputAvatar,
+  renderSaving,
 };

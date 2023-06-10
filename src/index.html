@@ -11,13 +11,15 @@
     </header>
     <main>
       <section class="profile">
-        <img src="<%=require('./images/image-custo.jpg')%>" alt="Аватар" class="profile__avatar" />
+        <div class="profile__avatar-fade">
+          <img src="" alt="Аватар" class="profile__avatar" />
+        </div>
         <div class="profile__info">
           <div class="profile__name-and-edit-container">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <h1 class="profile__name"></h1>
             <button class="profile__edit-button" type="button"></button>
           </div>
-          <p class="profile__description">Исследователь океана</p>
+          <p class="profile__description"></p>
         </div>
         <button class="profile__add-button" type="button"></button>
       </section>
@@ -35,11 +37,11 @@
             class="form__input"
             id="author-name"
             name="author-name"
-            value="Жак-Ив Кусто"
+            value=""
             required
             minlength="2"
             maxlength="40"
-            pattern="^[a-zA-Zа-яА-ЯёЁ\s-]+$"
+            pattern="^[a-zA-Zа-яА-ЯЁё\s\-]+$"
           />
           <span class="form__error-message" id="author-name-error"></span>
           <input
@@ -47,11 +49,11 @@
             class="form__input"
             id="author-description"
             name="author-description"
-            value="Исследователь окена"
+            value=""
             required
             minlength="2"
             maxlength="200"
-            pattern="^[a-zA-Zа-яА-ЯёЁ\s-]+$"
+            pattern="^[a-zA-Zа-яА-ЯЁё\s\-]+$"
           />
           <span class="form__error-message" id="author-description-error"></span>
           <button type="submit" class="form__submit-button" id="pop-up-edit-submit">Сохранить</button>
@@ -72,7 +74,7 @@
             placeholder="Название"
             minlength="2"
             maxlength="30"
-            pattern="^[a-zA-Zа-яА-ЯёЁ\s-]+$"
+            pattern="^[a-zA-Zа-яА-ЯЁё\s\-]+$"
             required
           />
           <span class="form__error-message" id="create-name-error"></span>
@@ -91,6 +93,17 @@
         <button type="button" class="pop-up__close-icon" id="create-close"></button>
       </div>
     </div>
+    <div class="pop-up pop-up_disabled" id="pop-up-avatar">
+      <div class="pop-up__container">
+        <form class="form" id="avatar-form" novalidate>
+          <h3 class="form__title">Обновить аватар</h3>
+          <input type="url" class="form__input" id="avatar-link" value="" placeholder="Ссылка на аватар" required />
+          <span class="form__error-message" id="avatar-link-error"></span>
+          <button type="submit" class="form__submit-button">Сохранить</button>
+        </form>
+        <button type="button" class="pop-up__close-icon" id="avatar-close"></button>
+      </div>
+    </div>
     <div class="pop-up pop-up_full-img pop-up_disabled" id="pop-up-full-img">
       <div class="pop-up__img-container">
         <img class="full-img" src="" />
@@ -99,12 +112,15 @@
       </div>
     </div>
     <template id="element">
-      <div class="elements__element">
+      <div class="elements__element" id="">
         <img src="<%=require('./images/urn.svg')%>" class="elements__urn" />
         <img src="" alt="Картинка на каникулах" class="elements__card" />
         <div class="elements__details">
           <h2 class="elements__name"></h2>
-          <button type="button" class="elements__like" tabindex="1"></button>
+          <div class="elements__like-section">
+            <button type="button" class="elements__like" tabindex="1"></button>
+            <p class="elements__like-counter">0</p>
+          </div>
         </div>
       </div>
     </template>
