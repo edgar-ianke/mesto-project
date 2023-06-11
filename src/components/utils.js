@@ -1,5 +1,5 @@
 import { getInfo, patchProfile, newAvatar } from "./api";
-import { nameInputEdit, jobInputEdit, renderSaving, closeForm, popUpEdit, popUpAvatar } from "./modal";
+import { nameInputEdit, jobInputEdit, renderSaving, closePopUp, popUpEdit, popUpAvatar } from "./modal";
 import { getInitialCards } from "./card";
 
 const buttonEdit = document.querySelector(".profile__edit-button");
@@ -36,7 +36,7 @@ function updateAvatar(evt) {
       avatarEdit.src = res.avatar;
     })
     .finally(() => {
-      closeForm(popUpAvatar);
+      closePopUp(popUpAvatar);
       renderSaving(evt, false, buttonText);
     });
 }
@@ -49,7 +49,7 @@ function editProfile(evt) {
       profileDescription.textContent = res.about;
     })
     .finally(() => {
-      closeForm(popUpEdit);
+      closePopUp(popUpEdit);
       renderSaving(evt, false, buttonText);
     });
 }

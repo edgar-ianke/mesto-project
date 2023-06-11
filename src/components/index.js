@@ -1,11 +1,11 @@
-import "../../pages/index.css";
+import "../../src/pages/index.css";
 import {
   nameInputEdit,
   jobInputEdit,
   nameInputCreate,
   linkInputCreate,
-  openForm,
-  closeForm,
+  openPopUp,
+  closePopUp,
   popupFullImg,
   popUpEdit,
   popUpCreate,
@@ -25,67 +25,65 @@ import {
   buttonCloseAvatar,
 } from "./utils";
 
-import { formElementAvatar, formElementCreate, formElementEdit, hideError, submitFormEditHandler } from "./validate";
+import {
+  disableButton,
+  formElementAvatar,
+  formElementCreate,
+  formElementEdit,
+  hideError,
+  submitFormEditHandler,
+  toggleButton,
+} from "./validate";
 import { addImg } from "./card";
 import { getUserInfo, updateAvatar } from "./utils";
 
 buttonEdit.addEventListener("click", function () {
   nameInputEdit.value = profileName.textContent;
   jobInputEdit.value = profileDescription.textContent;
-  hideError(formElementEdit, nameInputEdit);
-  hideError(formElementEdit, jobInputEdit);
-  const buttonElement = popUpEdit.querySelector(".form__submit-button");
-  buttonElement.classList.add("form__submit-button_disabled");
-  buttonElement.disabled = true;
-  openForm(popUpEdit);
+  hideError(formElementEdit, nameInputEdit, "form__input_error");
+  hideError(formElementEdit, jobInputEdit, "form__input_error");
+  disableButton(popUpEdit);
+  openPopUp(popUpEdit);
 });
+
 buttonCloseEdit.addEventListener("click", function (evt) {
-  closeForm(popUpEdit);
+  closePopUp(popUpEdit);
 });
 
 buttonCreate.addEventListener("click", function (evt) {
   nameInputCreate.value = "";
   linkInputCreate.value = "";
-  hideError(formElementCreate, nameInputCreate);
-  hideError(formElementCreate, linkInputCreate);
-  const buttonElement = popUpCreate.querySelector(".form__submit-button");
-  buttonElement.classList.add("form__submit-button_disabled");
-  buttonElement.disabled = true;
-  openForm(popUpCreate);
+  hideError(formElementCreate, nameInputCreate, "form__input_error");
+  hideError(formElementCreate, linkInputCreate, "form__input_error");
+  disableButton(popUpCreate);
+  openPopUp(popUpCreate);
 });
 buttonCloseCreate.addEventListener("click", function (evt) {
-  closeForm(popUpCreate);
+  closePopUp(popUpCreate);
 });
 formElementCreate.addEventListener("submit", addImg);
 
-buttonCloseImg.addEventListener("click", () => closeForm(popupFullImg));
+buttonCloseImg.addEventListener("click", () => closePopUp(popupFullImg));
 
 popUpEdit.addEventListener("mousedown", (evt) => {
   if (evt.target.id === "pop-up-edit") {
-    closeForm(popUpEdit);
+    closePopUp(popUpEdit);
   }
 });
-document.addEventListener("keydown", (evt) => {
-  if (evt.key === "Escape") {
-    closeForm(popUpEdit);
-    closeForm(popUpCreate);
-    closeForm(popupFullImg);
-    closeForm(popUpAvatar);
-  }
-});
+
 popUpCreate.addEventListener("mousedown", (evt) => {
   if (evt.target.id === "pop-up-create") {
-    closeForm(popUpCreate);
+    closePopUp(popUpCreate);
   }
 });
 popupFullImg.addEventListener("mousedown", (evt) => {
   if (evt.target.id === "pop-up-full-img") {
-    closeForm(popupFullImg);
+    closePopUp(popupFullImg);
   }
 });
 popUpAvatar.addEventListener("mousedown", (evt) => {
   if (evt.target.id === "pop-up-avatar") {
-    closeForm(popUpAvatar);
+    closePopUp(popUpAvatar);
   }
 });
 formElementEdit.addEventListener("submit", submitFormEditHandler);
@@ -94,13 +92,11 @@ getUserInfo();
 avatarEdit.addEventListener("click", function () {
   linkInputAvatar.value = "";
   hideError(formElementAvatar, linkInputAvatar);
-  const buttonElement = popUpAvatar.querySelector(".form__submit-button");
-  buttonElement.classList.add("form__submit-button_disabled");
-  buttonElement.disabled = true;
-  openForm(popUpAvatar);
+  disableButton(popUpAvatar);
+  openPopUp(popUpAvatar);
 });
 buttonCloseAvatar.addEventListener("click", function (evt) {
-  closeForm(popUpAvatar);
+  closePopUp(popUpAvatar);
 });
 formElementAvatar.addEventListener("submit", function (evt) {
   evt.preventDefault();

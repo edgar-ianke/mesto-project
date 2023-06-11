@@ -13,12 +13,23 @@ const popUpCreate = document.querySelector("#pop-up-create");
 const popUpAvatar = document.querySelector("#pop-up-avatar");
 const linkInputAvatar = document.querySelector("#avatar-link");
 
-function openForm(form) {
-  form.classList.remove("pop-up_disabled");
+function openPopUp(popUp) {
+  popUp.classList.remove("pop-up_disabled");
+  document.addEventListener("keydown", closeOnEsc);
+}
+function closeOnEsc(evt) {
+  if (evt.key === "Escape") {
+    const allPopUps = Array.from(document.querySelectorAll(".pop-up"));
+    const activePopUp = allPopUps.find(function (item) {
+      return !item.classList.contains("pop-up_disabled");
+    });
+    closePopUp(activePopUp);
+  }
 }
 
-function closeForm(form) {
-  form.classList.add("pop-up_disabled");
+function closePopUp(popUp) {
+  popUp.classList.add("pop-up_disabled");
+  document.removeEventListener("keydown", closeOnEsc);
 }
 
 function renderSaving(evt, isSaving, buttonText) {
@@ -40,8 +51,8 @@ export {
   popUpCreate,
   popUpEdit,
   popUpAvatar,
-  openForm,
-  closeForm,
+  openPopUp,
+  closePopUp,
   linkInputAvatar,
   renderSaving,
 };

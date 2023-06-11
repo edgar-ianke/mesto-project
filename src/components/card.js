@@ -1,4 +1,4 @@
-import { openForm, fullImg, fullImgInfo, popupFullImg, renderSaving, closeForm, popUpCreate } from "./modal";
+import { openPopUp, fullImg, fullImgInfo, popupFullImg, renderSaving, closePopUp, popUpCreate } from "./modal";
 import { getCards, loadCard, removeCard, addLike, removeLike } from "./api";
 import { userInfo } from "./utils";
 
@@ -45,7 +45,7 @@ function createCard(item) {
     fullImg.src = img.src;
     fullImgInfo.textContent = cardElement.lastElementChild.firstElementChild.textContent;
     fullImg.setAttribute("alt", cardElement.textContent.trim());
-    openForm(popupFullImg);
+    openPopUp(popupFullImg);
   });
   return cardElement;
 }
@@ -73,7 +73,7 @@ function postCard(evt) {
       getInitialCards();
     })
     .finally(() => {
-      closeForm(popUpCreate);
+      closePopUp(popUpCreate);
       renderSaving(evt, false, buttonText);
     });
 }
