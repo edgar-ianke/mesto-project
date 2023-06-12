@@ -42,7 +42,6 @@ buttonEdit.addEventListener("click", function () {
   jobInputEdit.value = profileDescription.textContent;
   hideError(formElementEdit, nameInputEdit, "form__input_error");
   hideError(formElementEdit, jobInputEdit, "form__input_error");
-  // const buttonElement = formElement.querySelector(submitButtonSelector);
   disableButton(popUpEdit.firstElementChild.firstElementChild.lastElementChild, "form__submit-button_disabled");
   openPopUp(popUpEdit);
 });
