@@ -53,17 +53,15 @@ function hasInvalidInput(formInputElementsAll) {
 }
 function toggleButton(formInputElementsAll, buttonElement, inactiveButtonClass) {
   if (hasInvalidInput(formInputElementsAll)) {
-    buttonElement.classList.add(inactiveButtonClass);
-    buttonElement.disabled = true;
+    disableButton(buttonElement, inactiveButtonClass)
   } else {
     buttonElement.classList.remove(inactiveButtonClass);
     buttonElement.disabled = false;
   }
 }
 
-function disableButton(form) {
-  const buttonElement = form.querySelector(".form__submit-button");
-  buttonElement.classList.add("form__submit-button_disabled");
+function disableButton(buttonElement, inactiveButtonClass) {
+  buttonElement.classList.add(inactiveButtonClass);
   buttonElement.disabled = true;
 }
 

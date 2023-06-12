@@ -42,10 +42,10 @@ buttonEdit.addEventListener("click", function () {
   jobInputEdit.value = profileDescription.textContent;
   hideError(formElementEdit, nameInputEdit, "form__input_error");
   hideError(formElementEdit, jobInputEdit, "form__input_error");
-  disableButton(popUpEdit);
+  // const buttonElement = formElement.querySelector(submitButtonSelector);
+  disableButton(popUpEdit.firstElementChild.firstElementChild.lastElementChild, "form__submit-button_disabled");
   openPopUp(popUpEdit);
 });
-
 buttonCloseEdit.addEventListener("click", function (evt) {
   closePopUp(popUpEdit);
 });
@@ -55,7 +55,7 @@ buttonCreate.addEventListener("click", function (evt) {
   linkInputCreate.value = "";
   hideError(formElementCreate, nameInputCreate, "form__input_error");
   hideError(formElementCreate, linkInputCreate, "form__input_error");
-  disableButton(popUpCreate);
+  disableButton(popUpCreate.firstElementChild.firstElementChild.lastElementChild, "form__submit-button_disabled");
   openPopUp(popUpCreate);
 });
 buttonCloseCreate.addEventListener("click", function (evt) {
@@ -92,7 +92,7 @@ getUserInfo();
 avatarEdit.addEventListener("click", function () {
   linkInputAvatar.value = "";
   hideError(formElementAvatar, linkInputAvatar);
-  disableButton(popUpAvatar);
+  disableButton(popUpAvatar.firstElementChild.firstElementChild.lastElementChild, "form__submit-button_disabled");
   openPopUp(popUpAvatar);
 });
 buttonCloseAvatar.addEventListener("click", function (evt) {
