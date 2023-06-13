@@ -1,4 +1,14 @@
-import { openPopUp, fullImg, fullImgInfo, popupFullImg, renderSaving, closePopUp, popUpCreate } from "./modal";
+import {
+  openPopUp,
+  fullImg,
+  fullImgInfo,
+  popupFullImg,
+  renderSaving,
+  closePopUp,
+  popUpCreate,
+  nameInputCreate,
+  linkInputCreate,
+} from "./modal";
 import { getCards, loadCard, removeCard, addLike, removeLike } from "./api";
 import { userInfo } from "./utils";
 
@@ -7,9 +17,10 @@ const elementsAll = document.querySelector(".elements");
 function createCard(item) {
   const elementTemplate = document.querySelector("#element").content;
   const cardElement = elementTemplate.querySelector(".elements__element").cloneNode(true);
-  cardElement.querySelector(".elements__card").src = item.link;
+  const cardElementImg = cardElement.querySelector(".elements__card");
+  cardElementImg.src = item.link;
   cardElement.querySelector(".elements__name").textContent = item.name;
-  cardElement.querySelector(".elements__card").setAttribute("alt", item.name);
+  cardElementImg.setAttribute("alt", item.name);
   cardElement.id = item._id;
   const elementLike = cardElement.querySelector(".elements__like");
   const elementDelete = cardElement.querySelector(".elements__urn");
@@ -26,23 +37,18 @@ function createCard(item) {
     elementLike.classList.add("elements__like_active");
   }
   elementDelete.onclick = function (evt) {
-    cardElement.remove();
-    deleteCard(evt.target.parentNode.id);
+    deleteCard(evt.target.parentNode.id, cardElement);
   };
   elementLike.addEventListener("click", function (evt) {
     elementLike.classList.toggle("elements__like_active");
     if (elementLike.classList.contains("elements__like_active")) {
-      putLike(evt.target.parentNode.parentNode.parentNode.id);
-      elementLikeCounter.textContent++;
+      putLike(item._id, elementLikeCounter);
     } else {
-      elementLikeCounter.textContent--;
-      deleteLike(evt.target.parentNode.parentNode.parentNode.id);
+      deleteLike(item._id, elementLikeCounter);
     }
   });
-  const img = cardElement.querySelector(".elements__card");
-
-  img.addEventListener("click", function () {
-    fullImg.src = img.src;
+  cardElementImg.addEventListener("click", function () {
+    fullImg.src = cardElementImg.src;
     fullImgInfo.textContent = cardElement.lastElementChild.firstElementChild.textContent;
     fullImg.setAttribute("alt", cardElement.textContent.trim());
     openPopUp(popupFullImg);
@@ -58,19 +64,12 @@ function addImg(evt) {
   evt.preventDefault();
   postCard(evt);
 }
-function getInitialCards() {
-  getCards().then((result) => {
-    result.forEach(addElement);
-  });
-}
-
 function postCard(evt) {
   const buttonText = evt.target.lastElementChild.textContent;
   renderSaving(evt, true, buttonText);
-  loadCard()
-    .then(() => {
-      elementsAll.innerHTML = "";
-      getInitialCards();
+  loadCard(nameInputCreate.value, linkInputCreate.value)
+    .then((res) => {
+      elementsAll.prepend(createCard(res));
     })
     .finally(() => {
       closePopUp(popUpCreate);
@@ -78,16 +77,21 @@ function postCard(evt) {
     });
 }
 
-function deleteCard(cardId) {
-  removeCard(cardId);
+function deleteCard(cardId, cardElement) {
+  removeCard(cardId).then(() => {
+    cardElement.remove();
+  });
 }
 
-function putLike(cardId) {
-  addLike(cardId);
+function putLike(cardId, counter) {
+  addLike(cardId).then((res) => {
+    counter.textContent = res.likes.length;
+  });
 }
-function deleteLike(cardId) {
-  removeLike(cardId);
+function deleteLike(cardId, counter) {
+  removeLike(cardId).then((res) => {
+    counter.textContent = res.likes.length;
+  });
 }
 
-
-export { addImg, addElement, createCard, elementsAll, getInitialCards };
+export { addImg, addElement, createCard, elementsAll };

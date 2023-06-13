@@ -1,17 +1,11 @@
-import { linkInputAvatar, linkInputCreate, nameInputCreate, nameInputEdit, jobInputEdit } from "./modal";
-
 function getInfo() {
   return fetch("https://nomoreparties.co/v1/plus-cohort-25/users/me", {
     headers: {
       authorization: "02ffe6ee-1e50-4771-9330-975ddbfb736c",
     },
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Ошибка: ${res.status}`);
-    }
-  });
+  })
+    .then((res) => handleError(res))
+    .catch((error) => console.error(`Ошибка при загрузке данных профиля ${error}`));
 }
 
 function getCards() {
@@ -19,16 +13,12 @@ function getCards() {
     headers: {
       authorization: "02ffe6ee-1e50-4771-9330-975ddbfb736c",
     },
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Ошибка: ${res.status}`);
-    }
-  });
+  })
+    .then((res) => handleError(res))
+    .catch((error) => console.error(`Ошибка при загрузке карточек ${error}`));
 }
 
-function patchProfile() {
+function patchProfile(name, about) {
   return fetch("https://nomoreparties.co/v1/plus-cohort-25/users/me", {
     method: "PATCH",
     headers: {
@@ -36,19 +26,15 @@ function patchProfile() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      name: nameInputEdit.value,
-      about: jobInputEdit.value,
+      name: name,
+      about: about,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Ошибка: ${res.status}`);
-    }
-  });
+  })
+    .then((res) => handleError(res))
+    .catch((error) => console.error(`Ошибка при обновлении профиля ${error}`));
 }
 
-function loadCard() {
+function loadCard(name, link) {
   return fetch("https://nomoreparties.co/v1/plus-cohort-25/cards", {
     method: "POST",
     headers: {
@@ -56,16 +42,12 @@ function loadCard() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      name: nameInputCreate.value,
-      link: linkInputCreate.value,
+      name: name,
+      link: link,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Ошибка: ${res.status}`);
-    }
-  });
+  })
+    .then((res) => handleError(res))
+    .catch((error) => console.error(`Ошибка при добавлении карточки ${error}`));
 }
 
 function removeCard(cardId) {
@@ -74,13 +56,9 @@ function removeCard(cardId) {
     headers: {
       authorization: "02ffe6ee-1e50-4771-9330-975ddbfb736c",
     },
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Ошибка: ${res.status}`);
-    }
-  });
+  })
+    .then((res) => handleError(res))
+    .catch((error) => console.error(`Ошибка при удалении карточки ${error}`));
 }
 
 function addLike(cardId) {
@@ -90,13 +68,9 @@ function addLike(cardId) {
       authorization: "02ffe6ee-1e50-4771-9330-975ddbfb736c",
       "Content-Type": "application/json",
     },
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Ошибка: ${res.status}`);
-    }
-  });
+  })
+    .then((res) => handleError(res))
+    .catch((error) => console.error(`Ошибка при добавлении лайка ${error}`));
 }
 
 function removeLike(cardId) {
@@ -106,16 +80,12 @@ function removeLike(cardId) {
       authorization: "02ffe6ee-1e50-4771-9330-975ddbfb736c",
       "Content-Type": "application/json",
     },
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Ошибка: ${res.status}`);
-    }
-  });
+  })
+    .then((res) => handleError(res))
+    .catch((error) => console.error(`Ошибка при удалении лайка ${error}`));
 }
 
-function newAvatar() {
+function newAvatar(link) {
   return fetch("https://nomoreparties.co/v1/plus-cohort-25/users/me/avatar", {
     method: "PATCH",
     headers: {
@@ -123,15 +93,19 @@ function newAvatar() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      avatar: linkInputAvatar.value,
+      avatar: link,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Ошибка: ${res.status}`);
-    }
-  });
+  })
+    .then((res) => handleError(res))
+    .catch((error) => console.error(`Ошибка при обновлении аватара ${error}`));
+}
+
+function handleError(res) {
+  if (res.ok) {
+    return res.json();
+  } else {
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
 }
 
 export { getInfo, getCards, patchProfile, loadCard, removeCard, addLike, removeLike, newAvatar };

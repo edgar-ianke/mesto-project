@@ -1,6 +1,14 @@
-import { getInfo, patchProfile, newAvatar } from "./api";
-import { nameInputEdit, jobInputEdit, renderSaving, closePopUp, popUpEdit, popUpAvatar } from "./modal";
-import { getInitialCards } from "./card";
+import { getInfo, patchProfile, newAvatar, getCards } from "./api";
+import {
+  nameInputEdit,
+  jobInputEdit,
+  renderSaving,
+  closePopUp,
+  popUpEdit,
+  popUpAvatar,
+  linkInputAvatar,
+} from "./modal";
+import { addElement } from "./card";
 
 const buttonEdit = document.querySelector(".profile__edit-button");
 const buttonCloseEdit = document.querySelector("#edit-close");
@@ -17,21 +25,23 @@ const profileDescription = document.querySelector(".profile__description");
 let userInfo = {};
 
 function getUserInfo() {
-  getInfo().then((result) => {
-    userInfo = Object.assign({}, result);
-    profileName.textContent = result.name;
-    profileDescription.textContent = result.about;
-    nameInputEdit.value = result.name;
-    jobInputEdit.value = result.about;
-    avatarEdit.src = result.avatar;
-    getInitialCards();
-  });
+  Promise.all([getInfo(), getCards()])
+    .then(([infoRes, cardsRes]) => {
+      userInfo = Object.assign({}, infoRes);
+      profileName.textContent = infoRes.name;
+      profileDescription.textContent = infoRes.about;
+      nameInputEdit.value = infoRes.name;
+      jobInputEdit.value = infoRes.about;
+      avatarEdit.src = infoRes.avatar;
+      cardsRes.forEach(addElement);
+    })
+    .catch((error) => console.error(`Ошибка getUserInfo ${error}`));
 }
 
 function updateAvatar(evt) {
-  const buttonText = evt.target.lastElementChild.textContent;
+  const buttonText = evt.target.querySelector(".form__submit-button").textContent;
   renderSaving(evt, true, buttonText);
-  newAvatar()
+  newAvatar(linkInputAvatar.value)
     .then((res) => {
       avatarEdit.src = res.avatar;
     })
@@ -41,9 +51,9 @@ function updateAvatar(evt) {
     });
 }
 function editProfile(evt) {
-  const buttonText = evt.target.lastElementChild.textContent;
+  const buttonText = evt.target.querySelector(".form__submit-button").textContent;
   renderSaving(evt, true, buttonText);
-  patchProfile()
+  patchProfile(nameInputEdit.value, jobInputEdit.value)
     .then((res) => {
       profileName.textContent = res.name;
       profileDescription.textContent = res.about;

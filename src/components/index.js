@@ -42,7 +42,7 @@ buttonEdit.addEventListener("click", function () {
   jobInputEdit.value = profileDescription.textContent;
   hideError(formElementEdit, nameInputEdit, "form__input_error");
   hideError(formElementEdit, jobInputEdit, "form__input_error");
-  disableButton(popUpEdit.firstElementChild.firstElementChild.lastElementChild, "form__submit-button_disabled");
+  disableButton(popUpEdit.querySelector(".form__submit-button"), "form__submit-button_disabled");
   openPopUp(popUpEdit);
 });
 buttonCloseEdit.addEventListener("click", function (evt) {
@@ -54,7 +54,7 @@ buttonCreate.addEventListener("click", function (evt) {
   linkInputCreate.value = "";
   hideError(formElementCreate, nameInputCreate, "form__input_error");
   hideError(formElementCreate, linkInputCreate, "form__input_error");
-  disableButton(popUpCreate.firstElementChild.firstElementChild.lastElementChild, "form__submit-button_disabled");
+  disableButton(popUpCreate.querySelector(".form__submit-button"), "form__submit-button_disabled");
   openPopUp(popUpCreate);
 });
 buttonCloseCreate.addEventListener("click", function (evt) {
@@ -91,7 +91,7 @@ getUserInfo();
 avatarEdit.addEventListener("click", function () {
   linkInputAvatar.value = "";
   hideError(formElementAvatar, linkInputAvatar);
-  disableButton(popUpAvatar.firstElementChild.firstElementChild.lastElementChild, "form__submit-button_disabled");
+  disableButton(popUpAvatar.querySelector(".form__submit-button"), "form__submit-button_disabled");
   openPopUp(popUpAvatar);
 });
 buttonCloseAvatar.addEventListener("click", function (evt) {
@@ -100,5 +100,4 @@ buttonCloseAvatar.addEventListener("click", function (evt) {
 formElementAvatar.addEventListener("submit", function (evt) {
   evt.preventDefault();
   updateAvatar(evt);
-  avatarEdit.src = linkInputAvatar.value;
 });
