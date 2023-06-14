@@ -4,8 +4,8 @@ function getInfo() {
       authorization: "02ffe6ee-1e50-4771-9330-975ddbfb736c",
     },
   })
-    .then((res) => handleError(res))
-    .catch((error) => console.error(`Ошибка при загрузке данных профиля ${error}`));
+    .then(handleError)
+
 }
 
 function getCards() {
@@ -14,8 +14,8 @@ function getCards() {
       authorization: "02ffe6ee-1e50-4771-9330-975ddbfb736c",
     },
   })
-    .then((res) => handleError(res))
-    .catch((error) => console.error(`Ошибка при загрузке карточек ${error}`));
+    .then(handleError)
+
 }
 
 function patchProfile(name, about) {
@@ -30,8 +30,8 @@ function patchProfile(name, about) {
       about: about,
     }),
   })
-    .then((res) => handleError(res))
-    .catch((error) => console.error(`Ошибка при обновлении профиля ${error}`));
+    .then(handleError)
+
 }
 
 function loadCard(name, link) {
@@ -46,8 +46,8 @@ function loadCard(name, link) {
       link: link,
     }),
   })
-    .then((res) => handleError(res))
-    .catch((error) => console.error(`Ошибка при добавлении карточки ${error}`));
+    .then(handleError)
+
 }
 
 function removeCard(cardId) {
@@ -57,8 +57,8 @@ function removeCard(cardId) {
       authorization: "02ffe6ee-1e50-4771-9330-975ddbfb736c",
     },
   })
-    .then((res) => handleError(res))
-    .catch((error) => console.error(`Ошибка при удалении карточки ${error}`));
+    .then(handleError)
+
 }
 
 function addLike(cardId) {
@@ -69,8 +69,8 @@ function addLike(cardId) {
       "Content-Type": "application/json",
     },
   })
-    .then((res) => handleError(res))
-    .catch((error) => console.error(`Ошибка при добавлении лайка ${error}`));
+    .then(handleError)
+
 }
 
 function removeLike(cardId) {
@@ -81,8 +81,8 @@ function removeLike(cardId) {
       "Content-Type": "application/json",
     },
   })
-    .then((res) => handleError(res))
-    .catch((error) => console.error(`Ошибка при удалении лайка ${error}`));
+    .then(handleError)
+
 }
 
 function newAvatar(link) {
@@ -96,8 +96,8 @@ function newAvatar(link) {
       avatar: link,
     }),
   })
-    .then((res) => handleError(res))
-    .catch((error) => console.error(`Ошибка при обновлении аватара ${error}`));
+    .then(handleError)
+
 }
 
 function handleError(res) {

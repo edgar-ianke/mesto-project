@@ -9,7 +9,7 @@ import {
   nameInputCreate,
   linkInputCreate,
 } from "./modal";
-import { getCards, loadCard, removeCard, addLike, removeLike } from "./api";
+import { loadCard, removeCard, addLike, removeLike } from "./api";
 import { userInfo } from "./utils";
 
 const elementsAll = document.querySelector(".elements");
@@ -39,18 +39,18 @@ function createCard(item) {
   elementDelete.onclick = function (evt) {
     deleteCard(evt.target.parentNode.id, cardElement);
   };
-  elementLike.addEventListener("click", function (evt) {
-    elementLike.classList.toggle("elements__like_active");
-    if (elementLike.classList.contains("elements__like_active")) {
-      putLike(item._id, elementLikeCounter);
+  elementLike.addEventListener("click", function () {
+
+    if (!elementLike.classList.contains("elements__like_active")) {
+      putLike(item._id, elementLikeCounter, elementLike);
     } else {
-      deleteLike(item._id, elementLikeCounter);
+      deleteLike(item._id, elementLikeCounter, elementLike);
     }
   });
   cardElementImg.addEventListener("click", function () {
     fullImg.src = cardElementImg.src;
-    fullImgInfo.textContent = cardElement.lastElementChild.firstElementChild.textContent;
-    fullImg.setAttribute("alt", cardElement.textContent.trim());
+    fullImgInfo.textContent = item.name;
+    fullImg.setAttribute("alt", item.name);
     openPopUp(popupFullImg);
   });
   return cardElement;
@@ -71,6 +71,7 @@ function postCard(evt) {
     .then((res) => {
       elementsAll.prepend(createCard(res));
     })
+    .catch((error) => console.error(`Ошибка при добавлении карточки ${error}`))
     .finally(() => {
       closePopUp(popUpCreate);
       renderSaving(evt, false, buttonText);
@@ -78,20 +79,28 @@ function postCard(evt) {
 }
 
 function deleteCard(cardId, cardElement) {
-  removeCard(cardId).then(() => {
-    cardElement.remove();
-  });
+  removeCard(cardId)
+    .then(() => {
+      cardElement.remove();
+    })
+    .catch((error) => console.error(`Ошибка при удалении карточки ${error}`));
 }
 
-function putLike(cardId, counter) {
-  addLike(cardId).then((res) => {
-    counter.textContent = res.likes.length;
-  });
+function putLike(cardId, counter, elementLike) {
+  addLike(cardId)
+    .then((res) => {
+      counter.textContent = res.likes.length;
+      elementLike.classList.add("elements__like_active");
+    })
+    .catch((error) => console.error(`Ошибка при добавлении лайка ${error}`));
 }
-function deleteLike(cardId, counter) {
-  removeLike(cardId).then((res) => {
-    counter.textContent = res.likes.length;
-  });
+function deleteLike(cardId, counter, elementLike) {
+  removeLike(cardId)
+    .then((res) => {
+      counter.textContent = res.likes.length;
+      elementLike.classList.remove("elements__like_active");
+    })
+    .catch((error) => console.error(`Ошибка при удалении лайка ${error}`));
 }
 
 export { addImg, addElement, createCard, elementsAll };

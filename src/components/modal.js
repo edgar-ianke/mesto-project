@@ -13,6 +13,10 @@ const popUpCreate = document.querySelector("#pop-up-create");
 const popUpAvatar = document.querySelector("#pop-up-avatar");
 const linkInputAvatar = document.querySelector("#avatar-link");
 
+const buttonSubmitCreateCard = popUpCreate.querySelector(".form__submit-button");
+const buttonSubmitEditCard = popUpEdit.querySelector(".form__submit-button");
+const buttonSubmitAvatarCard = popUpAvatar.querySelector(".form__submit-button");
+
 function openPopUp(popUp) {
   popUp.classList.remove("pop-up_disabled");
   document.addEventListener("keydown", closeOnEsc);
@@ -55,4 +59,7 @@ export {
   closePopUp,
   linkInputAvatar,
   renderSaving,
+  buttonSubmitCreateCard,
+  buttonSubmitEditCard, 
+  buttonSubmitAvatarCard
 };

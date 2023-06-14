@@ -9,26 +9,26 @@ function submitFormEditHandler(evt) {
   editProfile(evt);
 }
 
-function checkValidity(formElement, inputElement, inputErrorClass) {
+function checkValidity(inputElement, inputErrorClass) {
   if (inputElement.validity.patternMismatch) {
     inputElement.setCustomValidity("Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы");
   } else {
     inputElement.setCustomValidity("");
   }
   if (!inputElement.validity.valid) {
-    showError(formElement, inputElement, inputElement.validationMessage, inputErrorClass);
+    showError(inputElement, inputElement.validationMessage, inputErrorClass);
   } else {
-    hideError(formElement, inputElement, inputErrorClass);
+    hideError(inputElement, inputErrorClass);
   }
 }
 
-function showError(formElement, inputElement, errorMessage, inputErrorClass) {
+function showError(inputElement, errorMessage, inputErrorClass = "form__input_error") {
   const formError = inputElement.nextElementSibling;
   inputElement.classList.add(inputErrorClass);
   formError.textContent = errorMessage;
 }
 
-function hideError(formElement, inputElement, inputErrorClass) {
+function hideError(inputElement, inputErrorClass = "form__input_error") {
   const formError = inputElement.nextElementSibling;
   inputElement.classList.remove(inputErrorClass);
   formError.textContent = "";
@@ -40,7 +40,7 @@ function setEventListeners(formElement, inputSelector, submitButtonSelector, ina
   toggleButton(formInputElementsAll, buttonElement, inactiveButtonClass);
   formInputElementsAll.forEach((inputElement) =>
     inputElement.addEventListener("input", function () {
-      checkValidity(formElement, inputElement, inputErrorClass);
+      checkValidity(inputElement, inputErrorClass);
       toggleButton(formInputElementsAll, buttonElement, inactiveButtonClass);
     })
   );
@@ -60,7 +60,7 @@ function toggleButton(formInputElementsAll, buttonElement, inactiveButtonClass) 
   }
 }
 
-function disableButton(buttonElement, inactiveButtonClass) {
+function disableButton(buttonElement, inactiveButtonClass = "form__submit-button_disabled") {
   buttonElement.classList.add(inactiveButtonClass);
   buttonElement.disabled = true;
 }

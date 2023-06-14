@@ -11,6 +11,9 @@ import {
   popUpCreate,
   popUpAvatar,
   linkInputAvatar,
+  buttonSubmitCreateCard,
+  buttonSubmitEditCard, 
+  buttonSubmitAvatarCard
 } from "./modal";
 
 import {
@@ -32,7 +35,6 @@ import {
   formElementEdit,
   hideError,
   submitFormEditHandler,
-  toggleButton,
 } from "./validate";
 import { addImg } from "./card";
 import { getUserInfo, updateAvatar } from "./utils";
@@ -40,24 +42,24 @@ import { getUserInfo, updateAvatar } from "./utils";
 buttonEdit.addEventListener("click", function () {
   nameInputEdit.value = profileName.textContent;
   jobInputEdit.value = profileDescription.textContent;
-  hideError(formElementEdit, nameInputEdit, "form__input_error");
-  hideError(formElementEdit, jobInputEdit, "form__input_error");
-  disableButton(popUpEdit.querySelector(".form__submit-button"), "form__submit-button_disabled");
+  hideError(nameInputEdit);
+  hideError(jobInputEdit);
+  disableButton(buttonSubmitEditCard);
   openPopUp(popUpEdit);
 });
-buttonCloseEdit.addEventListener("click", function (evt) {
+buttonCloseEdit.addEventListener("click", function () {
   closePopUp(popUpEdit);
 });
 
-buttonCreate.addEventListener("click", function (evt) {
+buttonCreate.addEventListener("click", function () {
   nameInputCreate.value = "";
   linkInputCreate.value = "";
-  hideError(formElementCreate, nameInputCreate, "form__input_error");
-  hideError(formElementCreate, linkInputCreate, "form__input_error");
-  disableButton(popUpCreate.querySelector(".form__submit-button"), "form__submit-button_disabled");
+  hideError(nameInputCreate);
+  hideError(linkInputCreate);
+  disableButton(buttonSubmitCreateCard);
   openPopUp(popUpCreate);
 });
-buttonCloseCreate.addEventListener("click", function (evt) {
+buttonCloseCreate.addEventListener("click", function () {
   closePopUp(popUpCreate);
 });
 formElementCreate.addEventListener("submit", addImg);
@@ -90,11 +92,11 @@ getUserInfo();
 
 avatarEdit.addEventListener("click", function () {
   linkInputAvatar.value = "";
-  hideError(formElementAvatar, linkInputAvatar);
-  disableButton(popUpAvatar.querySelector(".form__submit-button"), "form__submit-button_disabled");
+  hideError(linkInputAvatar);
+  disableButton(buttonSubmitAvatarCard);
   openPopUp(popUpAvatar);
 });
-buttonCloseAvatar.addEventListener("click", function (evt) {
+buttonCloseAvatar.addEventListener("click", function () {
   closePopUp(popUpAvatar);
 });
 formElementAvatar.addEventListener("submit", function (evt) {

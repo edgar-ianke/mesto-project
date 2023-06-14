@@ -45,6 +45,7 @@ function updateAvatar(evt) {
     .then((res) => {
       avatarEdit.src = res.avatar;
     })
+    .catch((error) => console.error(`Ошибка при обновлении аватара ${error}`))
     .finally(() => {
       closePopUp(popUpAvatar);
       renderSaving(evt, false, buttonText);
@@ -58,6 +59,7 @@ function editProfile(evt) {
       profileName.textContent = res.name;
       profileDescription.textContent = res.about;
     })
+    .catch((error) => console.error(`Ошибка при обновлении профиля ${error}`))
     .finally(() => {
       closePopUp(popUpEdit);
       renderSaving(evt, false, buttonText);
