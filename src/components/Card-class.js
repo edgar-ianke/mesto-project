@@ -1,5 +1,5 @@
 import deleteCard, { putLike, deleteLike } from "./cards";
-import { userInfo } from "./utils";
+import { popupWithImage, userInfo } from "./utils";
 
 export default class Card {
   constructor(data, selector, handleCardClick) {
@@ -45,9 +45,7 @@ export default class Card {
     this._element.querySelector(".elements__urn").addEventListener("click", () => {
       this.handleDelete();
     });
-    this._element.querySelector(".elements__card").addEventListener("click", () => {
-      this.cardHandler(this.name, this.link);
-    });
+    this._element.querySelector(".elements__card").addEventListener("click", () => this.cardHandler(this));
   }
   handleLike() {
     {

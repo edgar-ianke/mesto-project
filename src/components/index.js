@@ -47,7 +47,7 @@ buttonEdit.addEventListener("click", function () {
   hideError(nameInputEdit);
   hideError(jobInputEdit);
   disableButton(buttonSubmitEditCard);
-  popUpEditXX.open();
+  // popUpEditXX.open();
 });
 buttonCloseEdit.addEventListener("click", function () {
   closePopUp(popUpEdit);

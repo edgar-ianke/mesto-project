@@ -12,8 +12,7 @@ import { addElement, elementsAll } from "./cards";
 import PopupWithImage from "./PopupWithImage";
 import Card from "./Card-class";
 
-export const popupWithImage = new PopupWithImage('.pop-up_full-img');
-console.log(popupWithImage)
+export const popupWithImage = new PopupWithImage(".pop-up_full-img");
 
 const buttonEdit = document.querySelector(".profile__edit-button");
 const buttonCloseEdit = document.querySelector("#edit-close");
@@ -39,7 +38,9 @@ function getUserInfo() {
       jobInputEdit.value = infoRes.about;
       avatarEdit.src = infoRes.avatar;
       cardsRes.forEach((item) => {
-        const card = new Card(item, "#element", popupWithImage.open);
+        const card = new Card(item, "#element", (item) => {
+          popupWithImage.open(item);
+        });
         card.generate();
       });
     })
