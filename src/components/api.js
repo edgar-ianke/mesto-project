@@ -77,7 +77,7 @@ function removeLike(cardId) {
   return fetch(`https://nomoreparties.co/v1/plus-cohort-25/cards/likes/${cardId}`, {
     method: "DELETE",
     headers: {
-      authorization: "02ffe6ee-1e50-4771-9330-975ddbfb736c",
+    authorization: "02ffe6ee-1e50-4771-9330-975ddbfb736c",
       "Content-Type": "application/json",
     },
   })

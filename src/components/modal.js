@@ -1,3 +1,6 @@
+//import {popUpEditXX} from './index.js'
+
+
 const nameInputEdit = document.querySelector("#author-name");
 const jobInputEdit = document.querySelector("#author-description");
 
@@ -18,21 +21,18 @@ const buttonSubmitEditCard = popUpEdit.querySelector(".form__submit-button");
 const buttonSubmitAvatarCard = popUpAvatar.querySelector(".form__submit-button");
 
 function openPopUp(popUp) {
-  popUp.classList.remove("pop-up_disabled");
+  popUp.classList.add("pop-up_active");
   document.addEventListener("keydown", closeOnEsc);
 }
 function closeOnEsc(evt) {
   if (evt.key === "Escape") {
-    const allPopUps = Array.from(document.querySelectorAll(".pop-up"));
-    const activePopUp = allPopUps.find(function (item) {
-      return !item.classList.contains("pop-up_disabled");
-    });
+    const activePopUp = document.querySelector('.pop-up_active');
     closePopUp(activePopUp);
   }
 }
 
 function closePopUp(popUp) {
-  popUp.classList.add("pop-up_disabled");
+  popUp.classList.remove("pop-up_active");
   document.removeEventListener("keydown", closeOnEsc);
 }
 

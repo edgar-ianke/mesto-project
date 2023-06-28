@@ -8,7 +8,11 @@ import {
   popUpAvatar,
   linkInputAvatar,
 } from "./modal";
-import { addElement } from "./card";
+import { addElement, elementsAll } from "./cards";
+import PopupWithImage from "./PopupWithImage";
+import Card from "./Card-class";
+
+const popupWithImage = new PopupWithImage();
 
 const buttonEdit = document.querySelector(".profile__edit-button");
 const buttonCloseEdit = document.querySelector("#edit-close");
@@ -33,7 +37,10 @@ function getUserInfo() {
       nameInputEdit.value = infoRes.name;
       jobInputEdit.value = infoRes.about;
       avatarEdit.src = infoRes.avatar;
-      cardsRes.forEach(addElement);
+      cardsRes.forEach((item) => {
+        const card = new Card(item, "#element", popupWithImage.open);
+        card.generate();
+      });
     })
     .catch((error) => console.error(`Ошибка getUserInfo ${error}`));
 }

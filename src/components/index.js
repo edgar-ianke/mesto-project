@@ -12,8 +12,8 @@ import {
   popUpAvatar,
   linkInputAvatar,
   buttonSubmitCreateCard,
-  buttonSubmitEditCard, 
-  buttonSubmitAvatarCard
+  buttonSubmitEditCard,
+  buttonSubmitAvatarCard,
 } from "./modal";
 
 import {
@@ -36,16 +36,18 @@ import {
   hideError,
   submitFormEditHandler,
 } from "./validate";
-import { addImg } from "./card";
+import { addImg } from "./cards";
 import { getUserInfo, updateAvatar } from "./utils";
+import Popup from "./Popup";
 
+export const popUpEditXX = new Popup("#pop-up-edit");
 buttonEdit.addEventListener("click", function () {
   nameInputEdit.value = profileName.textContent;
   jobInputEdit.value = profileDescription.textContent;
   hideError(nameInputEdit);
   hideError(jobInputEdit);
   disableButton(buttonSubmitEditCard);
-  openPopUp(popUpEdit);
+  popUpEditXX.open();
 });
 buttonCloseEdit.addEventListener("click", function () {
   closePopUp(popUpEdit);
@@ -102,4 +104,4 @@ buttonCloseAvatar.addEventListener("click", function () {
 formElementAvatar.addEventListener("submit", function (evt) {
   evt.preventDefault();
   updateAvatar(evt);
-});
+})
