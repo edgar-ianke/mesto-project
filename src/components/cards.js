@@ -10,6 +10,7 @@ import {
   linkInputCreate,
 } from "./modal";
 import { loadCard, removeCard, addLike, removeLike } from "./api";
+import {api} from './Api-class'
 import { userInfo } from "./utils";
 
 const elementsAll = document.querySelector(".elements");
