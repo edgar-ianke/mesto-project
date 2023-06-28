@@ -1,4 +1,3 @@
-import { getInfo, patchProfile, newAvatar, getCards } from "./api";
 import {api} from './Api-class'
 import {
   nameInputEdit,
@@ -75,6 +74,10 @@ function editProfile(evt) {
       renderSaving(evt, false, buttonText);
     });
 }
+function submitFormEditHandler(evt) {
+  evt.preventDefault();
+  editProfile(evt);
+}
 
 export {
   buttonEdit,
@@ -86,6 +89,7 @@ export {
   buttonCloseAvatar,
   profileName,
   profileDescription,
+  submitFormEditHandler,
   updateAvatar,
   getUserInfo,
   editProfile,

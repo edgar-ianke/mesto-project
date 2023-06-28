@@ -108,4 +108,4 @@ function handleError(res) {
   }
 }
 
-export { getInfo, getCards, patchProfile, loadCard, removeCard, addLike, removeLike, newAvatar };
+//export { getInfo, getCards, patchProfile, loadCard, removeCard, addLike, removeLike, newAvatar };

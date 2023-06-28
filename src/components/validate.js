@@ -1,13 +1,10 @@
-import { editProfile } from "./utils";
+
 
 const formElementEdit = document.querySelector("#edit-form");
 const formElementCreate = document.querySelector("#create-form");
 const formElementAvatar = document.querySelector("#avatar-form");
 
-function submitFormEditHandler(evt) {
-  evt.preventDefault();
-  editProfile(evt);
-}
+
 
 function checkValidity(inputElement, inputErrorClass) {
   if (inputElement.validity.patternMismatch) {
@@ -88,7 +85,7 @@ export {
   formElementCreate,
   formElementEdit,
   formElementAvatar,
-  submitFormEditHandler,
+
   hideError,
   toggleButton,
   disableButton,
