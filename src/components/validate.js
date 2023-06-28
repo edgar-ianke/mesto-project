@@ -74,19 +74,19 @@ function enableValidationAll({
     setEventListeners(formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass)
   );
 }
-enableValidationAll({
-  formElementsAll: ".form",
-  inputSelector: ".form__input",
-  submitButtonSelector: ".form__submit-button",
-  inactiveButtonClass: "form__submit-button_disabled",
-  inputErrorClass: "form__input_error",
-});
-export {
-  formElementCreate,
-  formElementEdit,
-  formElementAvatar,
+// enableValidationAll({
+//   formElementsAll: ".form",
+//   inputSelector: ".form__input",
+//   submitButtonSelector: ".form__submit-button",
+//   inactiveButtonClass: "form__submit-button_disabled",
+//   inputErrorClass: "form__input_error",
+// });
+// export {
+//   formElementCreate,
+//   formElementEdit,
+//   formElementAvatar,
 
-  hideError,
-  toggleButton,
-  disableButton,
-};
+//   hideError,
+//   toggleButton,
+//   disableButton,
+// };

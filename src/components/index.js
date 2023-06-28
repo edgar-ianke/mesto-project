@@ -29,27 +29,36 @@ import {
   submitFormEditHandler,
 } from "./utils";
 
-import {
-  disableButton,
-  formElementAvatar,
-  formElementCreate,
-  formElementEdit,
-  hideError,
-} from "./validate";
+import {settingForm, FormValidator} from './Validate-class'
+
 import { addImg } from "./cards";
 import { getUserInfo, updateAvatar } from "./utils";
 import Popup from "./Popup";
 
 export const popUpEditXX = new Popup("#pop-up-edit");
 
+///////////////////
+const formElementEdit = document.querySelector("#edit-form");
+const formElementCreate = document.querySelector("#create-form");
+const formElementAvatar = document.querySelector("#avatar-form");
+
+const cardForm = new FormValidator({settingForm}, formElementCreate);
+const userForm = new FormValidator({settingForm}, formElementEdit);
+const avatarForm = new FormValidator({settingForm}, formElementAvatar);
+
+cardForm.enableValidation()
+userForm.enableValidation()
+avatarForm.enableValidation()
+///////////////////
+
 buttonEdit.addEventListener("click", function () {
   nameInputEdit.value = profileName.textContent;
   jobInputEdit.value = profileDescription.textContent;
   openPopUp(popUpEdit);
-  hideError(nameInputEdit);
-  hideError(jobInputEdit);
-  disableButton(buttonSubmitEditCard);
   //popUpEditXX.open();
+  userForm._hideError(nameInputEdit);
+  userForm._hideError(jobInputEdit);
+  userForm._disableButton(buttonSubmitEditCard);
 });
 buttonCloseEdit.addEventListener("click", function () {
   closePopUp(popUpEdit)
@@ -59,9 +68,9 @@ buttonCloseEdit.addEventListener("click", function () {
 buttonCreate.addEventListener("click", function () {
   nameInputCreate.value = "";
   linkInputCreate.value = "";
-  hideError(nameInputCreate);
-  hideError(linkInputCreate);
-  disableButton(buttonSubmitCreateCard);
+  cardForm._hideError(nameInputCreate);
+  cardForm._hideError(linkInputCreate);
+  cardForm._disableButton(buttonSubmitCreateCard);
   openPopUp(popUpCreate);
   //popUpEditXX.open();
 });
@@ -103,8 +112,8 @@ getUserInfo();
 
 avatarEdit.addEventListener("click", function () {
   linkInputAvatar.value = "";
-  hideError(linkInputAvatar);
-  disableButton(buttonSubmitAvatarCard);
+  avatarForm._hideError(linkInputAvatar);
+  avatarForm._disableButton(buttonSubmitAvatarCard);
   openPopUp(popUpAvatar);
   //popUpEditXX.open();
 });
@@ -116,3 +125,4 @@ formElementAvatar.addEventListener("submit", function (evt) {
   evt.preventDefault();
   updateAvatar(evt);
 })
+
