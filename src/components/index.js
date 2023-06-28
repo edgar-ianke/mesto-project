@@ -44,6 +44,7 @@ export const popUpEditXX = new Popup("#pop-up-edit");
 buttonEdit.addEventListener("click", function () {
   nameInputEdit.value = profileName.textContent;
   jobInputEdit.value = profileDescription.textContent;
+  openPopUp(popUpEdit);
   hideError(nameInputEdit);
   hideError(jobInputEdit);
   disableButton(buttonSubmitEditCard);
