@@ -1,5 +1,5 @@
-import {putLike, deleteLike} from './cards'
-
+import deleteCard, { putLike, deleteLike } from "./cards";
+import { userInfo } from "./utils";
 
 export default class Card {
   constructor(data, selector, handleCardClick) {
@@ -22,8 +22,18 @@ export default class Card {
     this._element = this._getElement();
     this._element.querySelector(".elements__card").src = this.link;
     this._element.querySelector(".elements__name").textContent = this.name;
-    this._element.querySelector(".elements__like-counter").textContent = this.likes.length;   
+    this._element.querySelector(".elements__like-counter").textContent = this.likes.length;
+    if (
+      this.likes.some((item) => {
+        return item._id === userInfo._id;
+      })
+    ) {
+      this._element.querySelector(".elements__like").classList.add("elements__like_active");
+    }
     this._setEventListeners();
+    if (this.owner._id !== userInfo._id) {
+      this._element.querySelector(".elements__urn").remove();
+    }
     document.querySelector(".elements").append(this._element);
     return this._element;
   }
@@ -32,17 +42,31 @@ export default class Card {
     this._element.querySelector(".elements__like").addEventListener("click", () => {
       this.handleLike();
     });
+    this._element.querySelector(".elements__urn").addEventListener("click", () => {
+      this.handleDelete();
+    });
+    this._element.querySelector(".elements__card").addEventListener("click", () => {
+      this.cardHandler(this.name, this.link);
+    });
   }
   handleLike() {
     {
       if (!this._element.querySelector(".elements__like").classList.contains("elements__like_active")) {
-        putLike(this._id, this._element.querySelector(".elements__like-counter"), this._getElement().querySelector(".elements__like"));
+        putLike(
+          this._id,
+          this._element.querySelector(".elements__like-counter"),
+          this._element.querySelector(".elements__like")
+        );
       } else {
-        deleteLike(this._id, this._element.querySelector(".elements__like-counter"), this._getElement().querySelector(".elements__like"));
+        deleteLike(
+          this._id,
+          this._element.querySelector(".elements__like-counter"),
+          this._element.querySelector(".elements__like")
+        );
       }
     }
   }
   handleDelete() {
-    console.log("=");
+    deleteCard(this._id, this._element);
   }
 }

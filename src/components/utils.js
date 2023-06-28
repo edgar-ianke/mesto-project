@@ -12,7 +12,8 @@ import { addElement, elementsAll } from "./cards";
 import PopupWithImage from "./PopupWithImage";
 import Card from "./Card-class";
 
-const popupWithImage = new PopupWithImage();
+export const popupWithImage = new PopupWithImage('.pop-up_full-img');
+console.log(popupWithImage)
 
 const buttonEdit = document.querySelector(".profile__edit-button");
 const buttonCloseEdit = document.querySelector("#edit-close");

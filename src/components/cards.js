@@ -37,7 +37,7 @@ function createCard(item) {
   //   elementLike.classList.add("elements__like_active");
   // }
   // elementDelete.onclick = function (evt) {
-  //   deleteCard(evt.target.parentNode.id, cardElement);
+  //   deleteCard(evtde.target.parentNode.id, cardElement);
   // };
   // elementLike.addEventListener("click", function () {
 
@@ -78,7 +78,7 @@ function postCard(evt) {
     });
 }
 
-function deleteCard(cardId, cardElement) {
+ export default function deleteCard(cardId, cardElement) {
   removeCard(cardId)
     .then(() => {
       cardElement.remove();
@@ -89,7 +89,6 @@ function deleteCard(cardId, cardElement) {
 function putLike(cardId, counter, elementLike) {
   addLike(cardId)
     .then((res) => {
-      console.log(elementLike)
       counter.textContent = res.likes.length;
       elementLike.classList.add("elements__like_active");
     })
