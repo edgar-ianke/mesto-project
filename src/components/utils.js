@@ -1,4 +1,4 @@
-import { getInfo, patchProfile, newAvatar, getCards } from "./api";
+import {api} from './Api-class'
 import {
   nameInputEdit,
   jobInputEdit,
@@ -29,7 +29,7 @@ const profileDescription = document.querySelector(".profile__description");
 let userInfo = {};
 
 function getUserInfo() {
-  Promise.all([getInfo(), getCards()])
+  Promise.all([api.getInfo(), api.getCards()])
     .then(([infoRes, cardsRes]) => {
       userInfo = Object.assign({}, infoRes);
       profileName.textContent = infoRes.name;
@@ -50,7 +50,7 @@ function getUserInfo() {
 function updateAvatar(evt) {
   const buttonText = evt.target.querySelector(".form__submit-button").textContent;
   renderSaving(evt, true, buttonText);
-  newAvatar(linkInputAvatar.value)
+  api.newAvatar(linkInputAvatar.value)
     .then((res) => {
       avatarEdit.src = res.avatar;
     })
@@ -63,7 +63,7 @@ function updateAvatar(evt) {
 function editProfile(evt) {
   const buttonText = evt.target.querySelector(".form__submit-button").textContent;
   renderSaving(evt, true, buttonText);
-  patchProfile(nameInputEdit.value, jobInputEdit.value)
+  api.patchProfile(nameInputEdit.value, jobInputEdit.value)
     .then((res) => {
       profileName.textContent = res.name;
       profileDescription.textContent = res.about;
@@ -73,6 +73,10 @@ function editProfile(evt) {
       closePopUp(popUpEdit);
       renderSaving(evt, false, buttonText);
     });
+}
+function submitFormEditHandler(evt) {
+  evt.preventDefault();
+  editProfile(evt);
 }
 
 export {
@@ -85,6 +89,7 @@ export {
   buttonCloseAvatar,
   profileName,
   profileDescription,
+  submitFormEditHandler,
   updateAvatar,
   getUserInfo,
   editProfile,

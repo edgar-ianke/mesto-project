@@ -1,13 +1,10 @@
-import { editProfile } from "./utils";
+
 
 const formElementEdit = document.querySelector("#edit-form");
 const formElementCreate = document.querySelector("#create-form");
 const formElementAvatar = document.querySelector("#avatar-form");
 
-function submitFormEditHandler(evt) {
-  evt.preventDefault();
-  editProfile(evt);
-}
+
 
 function checkValidity(inputElement, inputErrorClass) {
   if (inputElement.validity.patternMismatch) {
@@ -77,19 +74,19 @@ function enableValidationAll({
     setEventListeners(formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass)
   );
 }
-enableValidationAll({
-  formElementsAll: ".form",
-  inputSelector: ".form__input",
-  submitButtonSelector: ".form__submit-button",
-  inactiveButtonClass: "form__submit-button_disabled",
-  inputErrorClass: "form__input_error",
-});
-export {
-  formElementCreate,
-  formElementEdit,
-  formElementAvatar,
-  submitFormEditHandler,
-  hideError,
-  toggleButton,
-  disableButton,
-};
+// enableValidationAll({
+//   formElementsAll: ".form",
+//   inputSelector: ".form__input",
+//   submitButtonSelector: ".form__submit-button",
+//   inactiveButtonClass: "form__submit-button_disabled",
+//   inputErrorClass: "form__input_error",
+// });
+// export {
+//   formElementCreate,
+//   formElementEdit,
+//   formElementAvatar,
+
+//   hideError,
+//   toggleButton,
+//   disableButton,
+// };

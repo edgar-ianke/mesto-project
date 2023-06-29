@@ -9,7 +9,7 @@ import {
   nameInputCreate,
   linkInputCreate,
 } from "./modal";
-import { loadCard, removeCard, addLike, removeLike } from "./api";
+import {api} from './Api-class'
 import { userInfo } from "./utils";
 
 const elementsAll = document.querySelector(".elements");
@@ -28,7 +28,7 @@ function addImg(evt) {
 function postCard(evt) {
   const buttonText = evt.target.lastElementChild.textContent;
   renderSaving(evt, true, buttonText);
-  loadCard(nameInputCreate.value, linkInputCreate.value)
+  api.loadCard(nameInputCreate.value, linkInputCreate.value)
     .then((res) => {
       elementsAll.prepend(createCard(res));
     })
@@ -40,7 +40,7 @@ function postCard(evt) {
 }
 
  export default function deleteCard(cardId, cardElement) {
-  removeCard(cardId)
+  api.removeCard(cardId)
     .then(() => {
       cardElement.remove();
     })
@@ -48,7 +48,7 @@ function postCard(evt) {
 }
 
 function putLike(cardId, counter, elementLike) {
-  addLike(cardId)
+  api.addLike(cardId)
     .then((res) => {
       counter.textContent = res.likes.length;
       elementLike.classList.add("elements__like_active");
@@ -56,7 +56,7 @@ function putLike(cardId, counter, elementLike) {
     .catch((error) => console.error(`Ошибка при добавлении лайка ${error}`));
 }
 function deleteLike(cardId, counter, elementLike) {
-  removeLike(cardId)
+  api.removeLike(cardId)
     .then((res) => {
       counter.textContent = res.likes.length;
       elementLike.classList.remove("elements__like_active");
