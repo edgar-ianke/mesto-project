@@ -37,7 +37,7 @@ function getUserInfo() {
       nameInputEdit.value = infoRes.name;
       jobInputEdit.value = infoRes.about;
       avatarEdit.src = infoRes.avatar;
-      const section = new Section(
+      const sectionCards = new Section(
         {
           data: cardsRes,
           renderer: (item) => {
@@ -45,13 +45,12 @@ function getUserInfo() {
               popupWithImage.open(item);
             });
             const cardElement = card.generate();
-            section.addItem(cardElement);
+            sectionCards.addItem(cardElement);
           },
         },
         ".elements"
       );
-      console.log(infoRes);
-      section.renderItems();
+      sectionCards.renderItems();
     })
     .catch((error) => console.error(`Ошибка getUserInfo ${error}`));
 }

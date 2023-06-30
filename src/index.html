@@ -36,7 +36,7 @@
             type="text"
             class="form__input"
             id="author-name"
-            name="author-name"
+            name="name"
             value=""
             required
             minlength="2"
@@ -48,7 +48,7 @@
             type="text"
             class="form__input"
             id="author-description"
-            name="author-description"
+            name="about"
             value=""
             required
             minlength="2"
@@ -69,7 +69,7 @@
             type="text"
             class="form__input"
             id="create-name"
-            name="create-name"
+            name="name"
             value=""
             placeholder="Название"
             minlength="2"
@@ -82,7 +82,7 @@
             type="url"
             class="form__input"
             id="create-link"
-            name="create-link"
+            name="link"
             placeholder="Ссылка на картинку"
             value=""
             required
@@ -97,7 +97,7 @@
       <div class="pop-up__container">
         <form class="form" id="avatar-form" novalidate>
           <h3 class="form__title">Обновить аватар</h3>
-          <input type="url" class="form__input" id="avatar-link" value="" placeholder="Ссылка на аватар" required />
+          <input type="url" class="form__input" id="avatar-link" name="link" value="" placeholder="Ссылка на аватар" required />
           <span class="form__error-message" id="avatar-link-error"></span>
           <button type="submit" class="form__submit-button">Сохранить</button>
         </form>

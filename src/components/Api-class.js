@@ -41,6 +41,18 @@ class Api {
       }),
     }).then(this.handleError);
   }
+  getInitialData() { // Это совмещенные методы getCards и patchProfile
+    return Promise.all([
+      fetch(`${this._adress}/users/me`, {
+        headers: this._headers,
+      }),
+      fetch(`${this._adress}/cards`, {
+        headers: this._headers,
+      }),
+    ]).then((responses) => {
+      responses.forEach(this.handleError);
+    });
+  }
 
   loadCard(name, link) {
     return fetch(`${this._adress}/cards`, {

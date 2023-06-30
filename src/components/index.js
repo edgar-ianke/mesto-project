@@ -34,10 +34,10 @@ import {settingForm, FormValidator} from './Validate-class'
 import { addImg } from "./cards";
 import { getUserInfo, updateAvatar } from "./utils";
 import Popup from "./Popup";
-
+import { popupForm } from "./PopupWithForms";
 ///////////////////
 const popupUser = new Popup("#pop-up-edit");
-const popopCard = new Popup("#pop-up-create");
+const popupCard = new Popup("#pop-up-create");
 const popupAvatar = new Popup("#pop-up-avatar");
 const popupImg = new Popup("#pop-up-full-img");
 
@@ -75,11 +75,11 @@ buttonCreate.addEventListener("click", function () {
   cardForm._hideError(linkInputCreate);
   cardForm._disableButton(buttonSubmitCreateCard);
   //openPopUp(popUpCreate);
-  popopCard.open();
+  popupCard.open();
 });
 buttonCloseCreate.addEventListener("click", function () {
   //closePopUp(popUpCreate);
-  popopCard.close();
+  popupCard.close();
 });
 formElementCreate.addEventListener("submit", addImg);
 
@@ -95,7 +95,7 @@ popUpEdit.addEventListener("mousedown", (evt) => {
 popUpCreate.addEventListener("mousedown", (evt) => {
   if (evt.target.id === "pop-up-create") {
     //closePopUp(popUpCreate);
-    popopCard.close();
+    popupCard.close();
   }
 });
 popupFullImg.addEventListener("mousedown", (evt) => {

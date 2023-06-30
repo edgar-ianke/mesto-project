@@ -17,7 +17,6 @@ function getCards() {
     .then(handleError)
 
 }
-
 function patchProfile(name, about) {
   return fetch("https://nomoreparties.co/v1/plus-cohort-25/users/me", {
     method: "PATCH",
