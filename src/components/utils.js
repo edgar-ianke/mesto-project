@@ -1,4 +1,4 @@
-import {api} from './Api-class'
+import { api } from "./Api-class";
 import {
   nameInputEdit,
   jobInputEdit,
@@ -11,6 +11,7 @@ import {
 import { addElement, elementsAll } from "./cards";
 import PopupWithImage from "./PopupWithImage";
 import Card from "./Card-class";
+import Section from "./Section";
 
 export const popupWithImage = new PopupWithImage(".pop-up_full-img");
 
@@ -27,7 +28,6 @@ const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
 
 let userInfo = {};
-
 function getUserInfo() {
   Promise.all([api.getInfo(), api.getCards()])
     .then(([infoRes, cardsRes]) => {
@@ -37,12 +37,21 @@ function getUserInfo() {
       nameInputEdit.value = infoRes.name;
       jobInputEdit.value = infoRes.about;
       avatarEdit.src = infoRes.avatar;
-      cardsRes.forEach((item) => {
-        const card = new Card(item, "#element", (item) => {
-          popupWithImage.open(item);
-        });
-        card.generate();
-      });
+      const section = new Section(
+        {
+          data: cardsRes,
+          renderer: (item) => {
+            const card = new Card(item, "#element", (item) => {
+              popupWithImage.open(item);
+            });
+            const cardElement = card.generate();
+            section.addItem(cardElement);
+          },
+        },
+        ".elements"
+      );
+      console.log(infoRes);
+      section.renderItems();
     })
     .catch((error) => console.error(`Ошибка getUserInfo ${error}`));
 }
@@ -50,7 +59,8 @@ function getUserInfo() {
 function updateAvatar(evt) {
   const buttonText = evt.target.querySelector(".form__submit-button").textContent;
   renderSaving(evt, true, buttonText);
-  api.newAvatar(linkInputAvatar.value)
+  api
+    .newAvatar(linkInputAvatar.value)
     .then((res) => {
       avatarEdit.src = res.avatar;
     })
@@ -63,7 +73,8 @@ function updateAvatar(evt) {
 function editProfile(evt) {
   const buttonText = evt.target.querySelector(".form__submit-button").textContent;
   renderSaving(evt, true, buttonText);
-  api.patchProfile(nameInputEdit.value, jobInputEdit.value)
+  api
+    .patchProfile(nameInputEdit.value, jobInputEdit.value)
     .then((res) => {
       profileName.textContent = res.name;
       profileDescription.textContent = res.about;

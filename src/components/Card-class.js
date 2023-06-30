@@ -34,7 +34,6 @@ export default class Card {
     if (this.owner._id !== userInfo._id) {
       this._element.querySelector(".elements__urn").remove();
     }
-    document.querySelector(".elements").append(this._element);
     return this._element;
   }
 
