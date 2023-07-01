@@ -7,14 +7,14 @@ const jobInputEdit = document.querySelector("#author-description");
 const nameInputCreate = document.querySelector("#create-name");
 const linkInputCreate = document.querySelector("#create-link");
 
-const popupFullImg = document.querySelector("#pop-up-full-img");
-const fullImg = popupFullImg.querySelector(".full-img");
-const fullImgInfo = popupFullImg.querySelector(".full-img__info");
-
 const popUpEdit = document.querySelector("#pop-up-edit");
 const popUpCreate = document.querySelector("#pop-up-create");
 const popUpAvatar = document.querySelector("#pop-up-avatar");
+const popupFullImg = document.querySelector("#pop-up-full-img");
+
 const linkInputAvatar = document.querySelector("#avatar-link");
+const fullImg = popupFullImg.querySelector(".full-img");
+const fullImgInfo = popupFullImg.querySelector(".full-img__info");
 
 const buttonSubmitCreateCard = popUpCreate.querySelector(".form__submit-button");
 const buttonSubmitEditCard = popUpEdit.querySelector(".form__submit-button");
