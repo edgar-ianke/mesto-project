@@ -1,4 +1,4 @@
-import "../../src/pages/index.css";
+import "./index.css";
 import {
   nameInputEdit,
   jobInputEdit,
@@ -14,7 +14,7 @@ import {
   buttonSubmitCreateCard,
   buttonSubmitEditCard,
   buttonSubmitAvatarCard,
-} from "./modal";
+} from "../components/modal";
 
 import {
   buttonEdit,
@@ -27,16 +27,16 @@ import {
   avatarEdit,
   buttonCloseAvatar,
   submitFormEditHandler,
-} from "./utils";
+} from "../components/utils";
 
-import {settingForm, FormValidator} from './Validate-class'
-import {} from "./UserInfo";
+import {settingForm, FormValidator} from '../components/Validate-class'
+import {} from "../components/UserInfo";
 
-import { addImg } from "./cards";
-import { getUserInfo, updateAvatar } from "./utils";
-import Popup from "./Popup";
-import { popupForm } from "./PopupWithForms";
-import {getProfileInfo} from "./UserInfo";
+import { addImg } from "../components/cards";
+import { getUserInfo, updateAvatar } from "../components/utils";
+import Popup from "../components/Popup";
+import { popupForm } from "../components/PopupWithForms";
+import {getProfileInfo} from "../components/UserInfo";
 ///////////////////
 const popupUser = new Popup("#pop-up-edit");
 const popupCard = new Popup("#pop-up-create");
@@ -132,5 +132,3 @@ formElementAvatar.addEventListener("submit", function (evt) {
   updateAvatar(evt);
 })
 
-
-import {} from "./UserInfo";

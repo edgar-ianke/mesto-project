@@ -13,7 +13,11 @@
 @import url("../blocks/profile/__name-and-edit-container/profile__name-and-edit-container.css");
 @import url("../blocks/profile/__info/profile__info.css");
 @import url("../blocks/elements/elements.css");
+
 @import url("../blocks/elements/__element/elements__element.css");
+@import url("../blocks/elements/__element/elements__imgContainer.css");
+@import url("../blocks/elements/__card/elements__card.css");
+
 @import url("../blocks/elements/__details/elements__details.css");
 @import url("../blocks/elements/__like-section/elements__like-section.css");
 @import url("../blocks/elements/__like/elements__like.css");
@@ -38,3 +42,4 @@
 @import url("../blocks/full-img/__info/full-img__info.css");
 @import url("../blocks/form/__input/_error/form__input_error.css");
 @import url("../blocks/form/__error-message/form__error-message.css");
+

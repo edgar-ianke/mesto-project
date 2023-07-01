@@ -12,7 +12,7 @@ import { addElement, elementsAll } from "./cards";
 import PopupWithImage from "./PopupWithImage";
 import Card from "./Card-class";
 import Section from "./Section";
-import {getProfileInfo} from "./UserInfo";
+import { getProfileInfo } from "./UserInfo";
 
 export const popupWithImage = new PopupWithImage(".pop-up_full-img");
 
@@ -71,39 +71,49 @@ function updateAvatar(evt) {
     });
 }
 function editProfile(evt) {
+  // renderSaving(evt, false, "Сохранение...");
+
+  //  Promise.resolve()
+  //  .then(() => {
+  //    getProfileInfo.setUserInfo()})
+  //  .finally(() => {
+  //    renderSaving(evt, false, "Сохранить");
+  //    closePopUp(popUpEdit);
+  //  });
+
   const buttonText = evt.target.querySelector(".form__submit-button").textContent;
   renderSaving(evt, true, buttonText);
-  //getProfileInfo.setUserInfo()
+
   api
-      .patchProfile(nameInputEdit.value, jobInputEdit.value)
-      .then((res) => {
-        profileName.textContent = res.name;
-        profileDescription.textContent = res.about;
-      })
-      .catch((error) => console.error(`Ошибка при обновлении профиля ${error}`))
-     .finally(() => {
-       closePopUp(popUpEdit);
-       renderSaving(evt, false, buttonText);
-     });
-}
+    .patchProfile(nameInputEdit.value, jobInputEdit.value)
+    .then((res) => {
+      profileName.textContent = res.name;
+      profileDescription.textContent = res.about;
+    })
+    .catch((error) => console.error(`Ошибка при обновлении профиля ${error}`))
+    .finally(() => {
+      closePopUp(popUpEdit);
+      renderSaving(evt, false, buttonText);
+      });
+    }
 function submitFormEditHandler(evt) {
-  evt.preventDefault();
-  editProfile(evt);
-}
+        evt.preventDefault();
+        editProfile(evt);
+      }
 
 export {
-  buttonEdit,
-  buttonCloseEdit,
-  avatarEdit,
-  buttonCreate,
-  buttonCloseCreate,
-  buttonCloseImg,
-  buttonCloseAvatar,
-  profileName,
-  profileDescription,
-  submitFormEditHandler,
-  updateAvatar,
-  getUserInfo,
-  editProfile,
-  userInfo,
-};
+    buttonEdit,
+    buttonCloseEdit,
+    avatarEdit,
+    buttonCreate,
+    buttonCloseCreate,
+    buttonCloseImg,
+    buttonCloseAvatar,
+    profileName,
+    profileDescription,
+    submitFormEditHandler,
+    updateAvatar,
+    getUserInfo,
+    editProfile,
+    userInfo,
+  };
