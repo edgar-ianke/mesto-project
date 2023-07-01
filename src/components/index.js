@@ -30,11 +30,13 @@ import {
 } from "./utils";
 
 import {settingForm, FormValidator} from './Validate-class'
+import {} from "./UserInfo";
 
 import { addImg } from "./cards";
 import { getUserInfo, updateAvatar } from "./utils";
 import Popup from "./Popup";
 import { popupForm } from "./PopupWithForms";
+import {getProfileInfo} from "./UserInfo";
 ///////////////////
 const popupUser = new Popup("#pop-up-edit");
 const popupCard = new Popup("#pop-up-create");
@@ -45,9 +47,9 @@ const formElementEdit = document.querySelector("#edit-form");
 const formElementCreate = document.querySelector("#create-form");
 const formElementAvatar = document.querySelector("#avatar-form");
 
-const cardForm = new FormValidator({settingForm}, formElementCreate);
-const userForm = new FormValidator({settingForm}, formElementEdit);
-const avatarForm = new FormValidator({settingForm}, formElementAvatar);
+const cardForm = new FormValidator(settingForm, formElementCreate);
+const userForm = new FormValidator(settingForm, formElementEdit);
+const avatarForm = new FormValidator(settingForm, formElementAvatar);
 
 cardForm.enableValidation()
 userForm.enableValidation()
@@ -112,6 +114,7 @@ popUpAvatar.addEventListener("mousedown", (evt) => {
 });
 formElementEdit.addEventListener("submit", submitFormEditHandler);
 getUserInfo();
+//getProfileInfo.getUserInfo();
 
 avatarEdit.addEventListener("click", function () {
   linkInputAvatar.value = "";
@@ -129,3 +132,5 @@ formElementAvatar.addEventListener("submit", function (evt) {
   updateAvatar(evt);
 })
 
+
+import {} from "./UserInfo";

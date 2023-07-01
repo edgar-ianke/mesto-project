@@ -8,12 +8,12 @@ export const settingForm = {
 }
 
 export class FormValidator {
-    constructor({ settingForm }, form, test) {
-        this._allForm = settingForm.formElementsAll;
-        this._inputSelector = settingForm.inputSelector;
-        this._submitButton = settingForm.submitButtonSelector;
-        this._inactiveButton = settingForm.inactiveButtonClass;
-        this._inputError = settingForm.inputErrorClass;
+    constructor(setting, form) {
+        this._allForm = setting.formElementsAll;
+        this._inputSelector = setting.inputSelector;
+        this._submitButton = setting.submitButtonSelector;
+        this._inactiveButton = setting.inactiveButtonClass;
+        this._inputError = setting.inputErrorClass;
         this._form = form;
     }
     enableValidation() {
