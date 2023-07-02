@@ -39,29 +39,29 @@ function postCard(evt) {
     });
 }
 
- export default function deleteCard(cardId, cardElement) {
-  api.removeCard(cardId)
-    .then(() => {
-      cardElement.remove();
-    })
-    .catch((error) => console.error(`Ошибка при удалении карточки ${error}`));
-}
+//  export default function deleteCard(cardId, cardElement) {
+//   api.removeCard(cardId)
+//     .then(() => {
+//       cardElement.remove();
+//     })
+//     .catch((error) => console.error(`Ошибка при удалении карточки ${error}`));
+// }
 
-function putLike(cardId, counter, elementLike) {
-  api.addLike(cardId)
-    .then((res) => {
-      counter.textContent = res.likes.length;
-      elementLike.classList.add("elements__like_active");
-    })
-    .catch((error) => console.error(`Ошибка при добавлении лайка ${error}`));
-}
-function deleteLike(cardId, counter, elementLike) {
-  api.removeLike(cardId)
-    .then((res) => {
-      counter.textContent = res.likes.length;
-      elementLike.classList.remove("elements__like_active");
-    })
-    .catch((error) => console.error(`Ошибка при удалении лайка ${error}`));
-}
+// function putLike(cardId, counter, elementLike) {
+//   api.addLike(cardId)
+//     .then((res) => {
+//       counter.textContent = res.likes.length;
+//       elementLike.classList.add("elements__like_active");
+//     })
+//     .catch((error) => console.error(`Ошибка при добавлении лайка ${error}`));
+// }
+// function deleteLike(cardId, counter, elementLike) {
+//   api.removeLike(cardId)
+//     .then((res) => {
+//       counter.textContent = res.likes.length;
+//       elementLike.classList.remove("elements__like_active");
+//     })
+//     .catch((error) => console.error(`Ошибка при удалении лайка ${error}`));
+// }
 
-export { addImg, addElement, createCard, elementsAll, putLike, deleteLike };
+export { addImg, addElement, createCard, elementsAll};

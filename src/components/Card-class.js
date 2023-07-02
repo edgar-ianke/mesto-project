@@ -1,5 +1,6 @@
 import deleteCard, { putLike, deleteLike } from "./cards";
 import { popupWithImage, userInfo } from "./utils";
+import {api} from "./Api-class";
 
 export default class Card {
   constructor(data, selector, handleCardClick) {
@@ -39,31 +40,53 @@ export default class Card {
 
   _setEventListeners() {
     this._element.querySelector(".elements__like").addEventListener("click", () => {
-      this.handleLike();
+      this._handleLike();
     });
     this._element.querySelector(".elements__urn").addEventListener("click", () => {
-      this.handleDelete();
+      this._deleteCard();
     });
     this._element.querySelector(".elements__card").addEventListener("click", () => this.cardHandler(this));
   }
-  handleLike() {
+  _handleLike() {
     {
       if (!this._element.querySelector(".elements__like").classList.contains("elements__like_active")) {
-        putLike(
-          this._id,
-          this._element.querySelector(".elements__like-counter"),
-          this._element.querySelector(".elements__like")
-        );
+        this._putLike()
+        // putLike(
+        //   this._id,
+        //   this._element.querySelector(".elements__like-counter"),
+        //   this._element.querySelector(".elements__like")
+        // );
       } else {
-        deleteLike(
-          this._id,
-          this._element.querySelector(".elements__like-counter"),
-          this._element.querySelector(".elements__like")
-        );
+        this._deleteLike()
+        // deleteLike(
+        //   this._id,
+        //   this._element.querySelector(".elements__like-counter"),
+        //   this._element.querySelector(".elements__like")
+        // );
       }
     }
   }
-  handleDelete() {
-    deleteCard(this._id, this._element);
+  _deleteCard() {
+    api.removeCard(this._id)
+      .then(() => {
+        this._element.remove();
+      })
+      .catch((error) => console.error(`Ошибка при удалении карточки ${error}`));
+  }
+  _putLike() {
+    api.addLike(this._id)
+      .then((res) => {
+        this._element.querySelector(".elements__like-counter").textContent = res.likes.length;
+        this._element.querySelector(".elements__like").classList.add("elements__like_active");
+      })
+      .catch((error) => console.error(`Ошибка при добавлении лайка ${error}`));
+  }
+  _deleteLike() {
+    api.removeLike(this._id)
+      .then((res) => {
+        this._element.querySelector(".elements__like-counter").textContent = res.likes.length;
+        this._element.querySelector(".elements__like").classList.remove("elements__like_active");
+      })
+      .catch((error) => console.error(`Ошибка при удалении лайка ${error}`));
   }
 }
