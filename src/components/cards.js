@@ -14,30 +14,27 @@ import { userInfo } from "./utils";
 
 const elementsAll = document.querySelector(".elements");
 
-function createCard(item) {
-}
-
 function addElement(item) {
   elementsAll.append(createCard(item));
 }
 
-function addImg(evt) {
-  evt.preventDefault();
-  postCard(evt);
-}
-function postCard(evt) {
-  const buttonText = evt.target.lastElementChild.textContent;
-  renderSaving(evt, true, buttonText);
-  api.loadCard(nameInputCreate.value, linkInputCreate.value)
-    .then((res) => {
-      elementsAll.prepend(createCard(res));
-    })
-    .catch((error) => console.error(`Ошибка при добавлении карточки ${error}`))
-    .finally(() => {
-      closePopUp(popUpCreate);
-      renderSaving(evt, false, buttonText);
-    });
-}
+// function addImg(evt) {
+//   evt.preventDefault();
+//   postCard(evt);
+// }
+// function postCard(evt) {
+//   const buttonText = evt.target.lastElementChild.textContent;
+//   renderSaving(evt, true, buttonText);
+//   api.loadCard(nameInputCreate.value, linkInputCreate.value)
+//     .then((res) => {
+//       elementsAll.prepend(createCard(res));
+//     })
+//     .catch((error) => console.error(`Ошибка при добавлении карточки ${error}`))
+//     .finally(() => {
+//       closePopUp(popUpCreate);
+//       renderSaving(evt, false, buttonText);
+//     });
+// }
 
 //  export default function deleteCard(cardId, cardElement) {
 //   api.removeCard(cardId)
@@ -64,4 +61,4 @@ function postCard(evt) {
 //     .catch((error) => console.error(`Ошибка при удалении лайка ${error}`));
 // }
 
-export { addImg, addElement, createCard, elementsAll};
+//export { addElement, elementsAll};

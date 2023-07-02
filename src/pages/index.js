@@ -29,15 +29,19 @@ import {
   submitFormEditHandler,
 } from "../components/utils";
 
-import {settingForm, FormValidator} from '../components/Validate-class'
-import {} from "../components/UserInfo";
+import { settingForm, FormValidator } from '../components/Validate-class'
+import { } from "../components/UserInfo";
 
 import { addImg } from "../components/cards";
 import { getUserInfo, updateAvatar } from "../components/utils";
 import Popup from "../components/Popup";
 import { popupForm } from "../components/PopupWithForms";
-import {getProfileInfo} from "../components/UserInfo";
+import { getProfileInfo } from "../components/UserInfo";
+import { api } from "../components/Api-class";
+import Card from "../components/Card-class";
+import Section from "../components/Section";
 ///////////////////
+
 const popupUser = new Popup("#pop-up-edit");
 const popupCard = new Popup("#pop-up-create");
 const popupAvatar = new Popup("#pop-up-avatar");
@@ -71,8 +75,9 @@ buttonCloseEdit.addEventListener("click", function () {
 });
 
 buttonCreate.addEventListener("click", function () {
-  nameInputCreate.value = "";
-  linkInputCreate.value = "";
+  //nameInputCreate.value = "";
+  //linkInputCreate.value = "";
+  document.forms.card.reset();
   cardForm._hideError(nameInputCreate);
   cardForm._hideError(linkInputCreate);
   cardForm._disableButton(buttonSubmitCreateCard);
@@ -83,9 +88,31 @@ buttonCloseCreate.addEventListener("click", function () {
   //closePopUp(popUpCreate);
   popupCard.close();
 });
-formElementCreate.addEventListener("submit", addImg);
+// < -------------------------- добавление карточки
+// formElementCreate.addEventListener("submit", addImg); 
 
-buttonCloseImg.addEventListener("click", () => closePopUp(popupFullImg)); // <--- popUpEditXX.close()
+formElementCreate.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+  const { name, link } = evt.target.elements;
+  //evt.submitter.textContent = 'Сохранение...'
+  api.loadCard(name.value, link.value)
+    .then((res) => {
+      const sectionCards = new Section(
+        { data: res, 
+          renderer: (res) => {
+            const card = new Card(res, "#element", (res) => {
+              popupWithImage.open(res);
+            });
+            const cardElement = card.generate();
+            sectionCards.addItem(cardElement);
+          },
+        }, ".elements")
+    })
+  popupCard.close()
+});
+// < -------------------------- добавление карточки
+
+buttonCloseImg.addEventListener("click", () => popupImg.close());
 
 popUpEdit.addEventListener("mousedown", (evt) => {
   if (evt.target.id === "pop-up-edit") {
@@ -94,12 +121,11 @@ popUpEdit.addEventListener("mousedown", (evt) => {
   }
 });
 
-popUpCreate.addEventListener("mousedown", (evt) => {
-  if (evt.target.id === "pop-up-create") {
-    //closePopUp(popUpCreate);
-    popupCard.close();
-  }
-});
+// popUpCreate.addEventListener("mousedown", (evt) => {
+//   if (evt.target.id === "pop-up-create") {
+//     //popupCard.close();
+//   }
+// });
 popupFullImg.addEventListener("mousedown", (evt) => {
   if (evt.target.id === "pop-up-full-img") {
     //closePopUp(popupFullImg);
