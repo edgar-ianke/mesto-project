@@ -42,10 +42,10 @@ function getUserInfo() {
         {
           data: cardsRes,
           renderer: (item) => {
-            const card = new Card(item, "#element", (item) => {
+            const cards = new Card(item, "#element", (item) => {
               popupWithImage.open(item);
             });
-            const cardElement = card.generate();
+            const cardElement = cards.generate();
             sectionCards.addItem(cardElement);
           },
         },
@@ -53,7 +53,7 @@ function getUserInfo() {
       );
       sectionCards.renderItems();
     })
-    .catch((error) => console.error(`Ошибка getUserInfo ${error}`));
+    .catch((error) => console.error(`Ошибка ${error}`));
 }
 
 function updateAvatar(evt) {
@@ -71,49 +71,51 @@ function updateAvatar(evt) {
     });
 }
 function editProfile(evt) {
-  // renderSaving(evt, false, "Сохранение...");
-
-  //  Promise.resolve()
-  //  .then(() => {
-  //    getProfileInfo.setUserInfo()})
-  //  .finally(() => {
-  //    renderSaving(evt, false, "Сохранить");
-  //    closePopUp(popUpEdit);
-  //  });
-
   const buttonText = evt.target.querySelector(".form__submit-button").textContent;
   renderSaving(evt, true, buttonText);
 
-  api
-    .patchProfile(nameInputEdit.value, jobInputEdit.value)
-    .then((res) => {
-      profileName.textContent = res.name;
-      profileDescription.textContent = res.about;
+  Promise.resolve()
+    .then(() => {
+      getProfileInfo.setUserInfo();
     })
-    .catch((error) => console.error(`Ошибка при обновлении профиля ${error}`))
     .finally(() => {
       closePopUp(popUpEdit);
       renderSaving(evt, false, buttonText);
-      });
-    }
+    });
+
+  // const buttonText = evt.target.querySelector(".form__submit-button").textContent;
+  // renderSaving(evt, true, buttonText);
+
+  // api
+  //   .patchProfile(nameInputEdit.value, jobInputEdit.value)
+  //   .then((res) => {
+  //     profileName.textContent = res.name;
+  //     profileDescription.textContent = res.about;
+  //   })
+  //   .catch((error) => console.error(`Ошибка при обновлении профиля ${error}`))
+  //   .finally(() => {
+  //     closePopUp(popUpEdit);
+  //     renderSaving(evt, false, buttonText);
+  //     });
+}
 function submitFormEditHandler(evt) {
-        evt.preventDefault();
-        editProfile(evt);
-      }
+  evt.preventDefault();
+  editProfile(evt);
+}
 
 export {
-    buttonEdit,
-    buttonCloseEdit,
-    avatarEdit,
-    buttonCreate,
-    buttonCloseCreate,
-    buttonCloseImg,
-    buttonCloseAvatar,
-    profileName,
-    profileDescription,
-    submitFormEditHandler,
-    updateAvatar,
-    getUserInfo,
-    editProfile,
-    userInfo,
-  };
+  buttonEdit,
+  buttonCloseEdit,
+  avatarEdit,
+  buttonCreate,
+  buttonCloseCreate,
+  buttonCloseImg,
+  buttonCloseAvatar,
+  profileName,
+  profileDescription,
+  submitFormEditHandler,
+  updateAvatar,
+  getUserInfo,
+  //editProfile,
+  userInfo,
+};

@@ -40,7 +40,9 @@ import { getProfileInfo } from "../components/UserInfo";
 import { api } from "../components/Api-class";
 import Card from "../components/Card-class";
 import Section from "../components/Section";
+import PopupWithImage from "../components/PopupWithImage";
 ///////////////////
+export const popupWithImage = new PopupWithImage(".pop-up_full-img");
 
 const popupUser = new Popup("#pop-up-edit");
 const popupCard = new Popup("#pop-up-create");
@@ -97,17 +99,23 @@ formElementCreate.addEventListener("submit", (evt) => {
   //evt.submitter.textContent = 'Сохранение...'
   api.loadCard(name.value, link.value)
     .then((res) => {
+      //////////////////
+      console.log(res)
       const sectionCards = new Section(
-        { data: res, 
-          renderer: (res) => {
-            const card = new Card(res, "#element", (res) => {
-              popupWithImage.open(res);
+        {
+          data: res,
+          renderer: (item) => {
+            const card = new Card(item, "#element", (item) => {
+              popupWithImage.open(item);
             });
             const cardElement = card.generate();
             sectionCards.addItem(cardElement);
           },
         }, ".elements")
+      console.log(sectionCards)
+      //////////////////
     })
+    .catch((error) => console.error(`Ошибка ${error}`));
   popupCard.close()
 });
 // < -------------------------- добавление карточки
