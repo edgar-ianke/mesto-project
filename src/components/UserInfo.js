@@ -1,31 +1,33 @@
 import { api } from './Api-class'
 
 const objSelectors = {
-    name: document.querySelector(".profile__name"),
-    description: document.querySelector(".profile__description"),
-    avatar: document.querySelector(".profile__avatar")
+    name: ".profile__name",
+    description: ".profile__description",
+    avatar: ".form__input"
 }
 class UserInfo {
     constructor(selectors) {
-        this._name = selectors.name,
-            this._aboutMe = selectors.description,
-            this._avatar = selectors.avatar
+        this._name = document.querySelector(selectors.name),
+            this._aboutMe = document.querySelector(selectors.description),
+            this._avatar = document.querySelector(selectors.avatar)
     }
 
     getUserInfo() {
         // возвращает объект с данными пользователя
-        let userInfo = {};
+        const userInfo = {}
         api.getInfo()
             .then((data) => {
-                userInfo = Object.assign({}, data);
-                this._name.textContent = userInfo.name;
-                this._aboutMe.textContent = userInfo.about;
-                this._avatar.src = userInfo.avatar;
+                userInfo.name = data.name;
+                userInfo.about = data.about;
+                userInfo.avatar = data.avatar;
             })
             .catch(() => {
                 console.log('Что то не так c UserInfo.getUserInfo()')
             })
+        console.log(userInfo)
+        return userInfo
     }
+
     setUserInfo() {
         //  принимает новые данные пользователя, отправляет их на сервер и добавляет их на страницу
         const nameInputEdit = document.querySelector("#author-name");
@@ -41,5 +43,7 @@ class UserInfo {
             })
     }
 }
+
 export const getProfileInfo = new UserInfo(objSelectors)
 getProfileInfo.getUserInfo()
+
