@@ -25,15 +25,16 @@ import {
   profileDescription,
   avatarEdit,
   buttonCloseAvatar,
- // submitFormEditHandler,
+  // submitFormEditHandler,
 } from "../components/utils";
 import { settingForm, FormValidator } from '../components/Validate-class'
 
 import { addImg } from "../components/cards";
 import { getUserInfo, updateAvatar } from "../components/utils";
 import Popup from "../components/Popup";
-import { popupForm } from "../components/PopupWithForms";
-//import { getProfileInfo } from "../components/UserInfo";
+//import PopupWithForms, { popupForm } from "../components/PopupWithForms";
+import PopupWithForms from "../components/PopupWithForms";
+import { getProfileInfo } from "../components/UserInfo";
 import { api } from "../components/Api-class";
 import Card from "../components/Card-class";
 import Section from "../components/Section";
@@ -63,21 +64,24 @@ buttonEdit.addEventListener("click", function () {
   // nameInputEdit.value = profileName.textContent;
   // jobInputEdit.value = profileDescription.textContent;
   //openPopUp(popUpEdit);
-  popupForm.open();
-  popupForm.setEventListeners();
+  // popupForm.open();
+  // popupForm.setEventListeners();
+  popupProfileForm.open();
+  popupProfileForm.setEventListeners();
   userForm._hideError(nameInputEdit);
   userForm._hideError(jobInputEdit);
   userForm._disableButton(buttonSubmitEditCard);
 });
 buttonCloseEdit.addEventListener("click", function () {
   //closePopUp(popUpEdit)
-  popupForm.close();
+  //popupForm.close();
+  popupProfileForm.close();
 });
 
 buttonCreate.addEventListener("click", function () {
   //nameInputCreate.value = "";
   //linkInputCreate.value = "";
-  document.forms.card.reset();
+  document.forms.card.reset(); /*<-------- не забыть убрать*/
   cardForm._hideError(nameInputCreate);
   cardForm._hideError(linkInputCreate);
   cardForm._disableButton(buttonSubmitCreateCard);
@@ -97,8 +101,6 @@ formElementCreate.addEventListener("submit", (evt) => {
   //evt.submitter.textContent = 'Сохранение...'
   api.loadCard(name.value, link.value)
     .then((res) => {
-      //////////////////
-      console.log(res)
       const sectionCards = new Section(
         {
           data: res,
@@ -111,7 +113,6 @@ formElementCreate.addEventListener("submit", (evt) => {
           },
         }, ".elements")
       console.log(sectionCards)
-      //////////////////
     })
     .catch((error) => console.error(`Ошибка ${error}`));
   popupCard.close()
@@ -123,7 +124,8 @@ buttonCloseImg.addEventListener("click", () => popupImg.close());
 popUpEdit.addEventListener("mousedown", (evt) => {
   if (evt.target.id === "pop-up-edit") {
     //closePopUp(popUpEdit);
-    popupForm.close();
+    //popupForm.close();
+    popupProfileForm.close()
   }
 });
 
@@ -141,7 +143,8 @@ popupFullImg.addEventListener("mousedown", (evt) => {
 popUpAvatar.addEventListener("mousedown", (evt) => {
   if (evt.target.id === "pop-up-avatar") {
     //closePopUp(popUpAvatar);
-    popupAvatar.close();
+    //popupAvatar.close();
+    popupAvatarForm.close()
   }
 });
 // formElementEdit.addEventListener("submit", submitFormEditHandler);
@@ -153,14 +156,63 @@ avatarEdit.addEventListener("click", function () {
   avatarForm._hideError(linkInputAvatar);
   avatarForm._disableButton(buttonSubmitAvatarCard);
   //openPopUp(popUpAvatar);
-  popupAvatar.open();
+  //popupAvatar.open();
+  popupAvatarForm.open()
 });
 buttonCloseAvatar.addEventListener("click", function () {
   //closePopUp(popUpAvatar);
-  popupAvatar.close();
+  //popupAvatar.close();
+  popupAvatarForm.close()
 });
-formElementAvatar.addEventListener("submit", function (evt) {
-  evt.preventDefault();
-  updateAvatar(evt);
-})
+// formElementAvatar.addEventListener("submit", function (evt) {
+//   evt.preventDefault();
+//   updateAvatar(evt);
+// })
 
+////////////////////////////// 
+const popupProfileForm = new PopupWithForms('#pop-up-edit', { formSubmitHandler: submitProfileForm });
+popupProfileForm.setEventListeners();
+
+function submitProfileForm(profile) {
+  popupProfileForm.renderSaving(true);
+
+  api.patchProfile(profile)
+    .then((data) => {
+      getProfileInfo.setUserInfo(data);
+      popupProfileForm.close()
+    })
+    .catch((err) => { api.handleError(err) })
+    .finally(() => { popupProfileForm.renderSaving(false) })
+}
+
+////////////////////////////// 
+const popupAvatarForm = new PopupWithForms('#pop-up-avatar', { formSubmitHandler: submitAvatarForm });
+popupAvatarForm.setEventListeners();
+
+function submitAvatarForm({link}) {
+  popupAvatarForm.renderSaving(true);
+  api.newAvatar(link)
+    .then((data) => {
+      getProfileInfo.setUserInfo(data);
+      popupAvatarForm.close();
+    })
+    .catch((err) => { api.handleError(err)})
+    .finally(() => { popupAvatarForm.renderSaving(false) })
+}
+
+////////////////////////////// 
+const cardSection = new Section(/*{ data, renderer }, selector */)
+const popupCardForm = new PopupWithForms('#pop-up-create', { formSubmitHandler: submitCardForm });
+popupCardForm.setEventListeners();
+
+function submitCardForm(card) {
+  popupCardForm.renderSaving(true);
+
+  api.patchProfile(card)
+    .then((card) => {
+      // X <------ здесь нужно вызвать метод Section.addItem(element) 
+      popupCardForm.close()
+    })
+    .catch((err) => { api.handleError(err) })
+    .finally(() => { popupCardForm.renderSaving(false) })
+}

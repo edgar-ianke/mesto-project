@@ -3,9 +3,9 @@ import { api } from './Api-class'
 const objSelectors = {
     name: ".profile__name",
     description: ".profile__description",
-    avatar: ".form__input"
+    avatar: ".profile__avatar"
 }
-export default class UserInfo {
+class UserInfo {
     constructor(selectors) {
         this._dataName = document.querySelector(selectors.name),
         this._dataAbout = document.querySelector(selectors.description),
@@ -14,11 +14,13 @@ export default class UserInfo {
 
     getUserInfo() {
         // возвращает объект с данными пользователя
-        return {name: this.name, about: this._about}
+        return {name: this.name, about: this._about};
+    }
+    getUserId() {
+        return this._id = id;
     }
 
-
-    setUserInfo({name, about, avatar}) {
+    setUserInfo({name, about, avatar, id}) {
         //  принимает новые данные пользователя, отправляет их на сервер и добавляет их на страницу
 
         // this._name.textContent = name;
@@ -28,13 +30,14 @@ export default class UserInfo {
         this._name = name;
         this._about = about;
         this._avatar = avatar;
-
+        this._id = id;
         this._dataName.textContent = this._name;
         this._dataAbout.textContent = this._about;
-        this._dataAvatar.textContent = this._avatar;
+        this._dataAvatar.src = this._avatar;
 
     }
 }
 
 export const getProfileInfo = new UserInfo(objSelectors)
+
 

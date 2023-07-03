@@ -26,13 +26,13 @@ export default class Card {
     this._element.querySelector(".elements__like-counter").textContent = this.likes.length;
     if (
       this.likes.some((item) => {
-        return item._id === userInfo._id;
+        return item._id === userInfo._id;  /*<--------------------- class */
       })
     ) {
       this._element.querySelector(".elements__like").classList.add("elements__like_active");
     }
     this._setEventListeners();
-    if (this.owner._id !== userInfo._id) {
+    if (this.owner._id !== userInfo._id) { /*<--------------------- class */
       this._element.querySelector(".elements__urn").remove();
     }
     return this._element;
