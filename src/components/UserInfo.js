@@ -14,7 +14,7 @@ export default class UserInfo {
 
     getUserInfo() {
         // возвращает объект с данными пользователя
-        return {name: this.name, about: this._aboutMe}
+        return {name: this.name, about: this._about}
     }
 
 

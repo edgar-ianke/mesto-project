@@ -22,10 +22,17 @@ export class FormValidator {
         const buttonElement = this._form.querySelector(this._submitButton);
         this._toggleButton(formInputElementsAll, buttonElement);
         
-        formInputElementsAll.forEach(function(inputElement) {
-            inputElement.addEventListener("input", function () {
-                that._checkValidity(inputElement);
-                that._toggleButton(formInputElementsAll, buttonElement);
+        // formInputElementsAll.forEach(function(inputElement) {
+        //     inputElement.addEventListener("input", function () {
+        //         that._checkValidity(inputElement);
+        //         that._toggleButton(formInputElementsAll, buttonElement);
+        //     })
+        // });
+
+        formInputElementsAll.forEach((inputElement) => {
+            inputElement.addEventListener("input", () => {
+                this._checkValidity(inputElement);
+                this._toggleButton(formInputElementsAll, buttonElement);
             })
         });
     }
@@ -53,20 +60,30 @@ export class FormValidator {
             inputElement.setCustomValidity("");
         }
         if (!inputElement.validity.valid) {
-            this._showError(inputElement, inputElement.validationMessage, this._inputError);
+            this._showError(inputElement, inputElement.validationMessage, /*this._inputError*/);
         } else {
-            this._hideError(inputElement, this._inputError);
+            this._hideError(inputElement, /*this._inputError*/);
         }
     }
-    _showError(inputElement, errorMessage, inputErrorClass) {
+    // _showError(inputElement, errorMessage, inputErrorClass) {
+    //     const formError = inputElement.nextElementSibling;
+    //     inputElement.classList.add(inputErrorClass);
+    //     formError.textContent = errorMessage;
+    // }
+    // _hideError(inputElement, inputErrorClass) {
+    //     const formError = inputElement.nextElementSibling;
+    //     inputElement.classList.remove(inputErrorClass);
+    //     formError.textContent = "";
+    // }
+    _showError(inputElement, errorMessage) {
         const formError = inputElement.nextElementSibling;
-        inputElement.classList.add(inputErrorClass);
+        inputElement.classList.add(this._inputError);
         formError.textContent = errorMessage;
     }
 
-    _hideError(inputElement, inputErrorClass) {
+    _hideError(inputElement) {
         const formError = inputElement.nextElementSibling;
-        inputElement.classList.remove(inputErrorClass);
+        inputElement.classList.remove(this._inputError);
         formError.textContent = "";
     }
 }

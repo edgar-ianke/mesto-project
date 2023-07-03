@@ -28,13 +28,12 @@ import {
  // submitFormEditHandler,
 } from "../components/utils";
 import { settingForm, FormValidator } from '../components/Validate-class'
-import { } from "../components/UserInfo";
 
 import { addImg } from "../components/cards";
 import { getUserInfo, updateAvatar } from "../components/utils";
 import Popup from "../components/Popup";
 import { popupForm } from "../components/PopupWithForms";
-import { getProfileInfo } from "../components/UserInfo";
+//import { getProfileInfo } from "../components/UserInfo";
 import { api } from "../components/Api-class";
 import Card from "../components/Card-class";
 import Section from "../components/Section";
