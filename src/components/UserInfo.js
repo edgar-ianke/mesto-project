@@ -5,7 +5,7 @@ const objSelectors = {
     description: ".profile__description",
     avatar: ".form__input"
 }
-class UserInfo {
+export default class UserInfo {
     constructor(selectors) {
         this._dataName = document.querySelector(selectors.name),
         this._dataAbout = document.querySelector(selectors.description),

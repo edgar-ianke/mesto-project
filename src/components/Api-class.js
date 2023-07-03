@@ -31,7 +31,7 @@ class Api {
     }).then(this.handleError);
   }
 
-  patchProfile(name, about) {
+  patchProfile({name, about}) {
     return fetch(`${this._adress}/users/me`, {
       method: "PATCH",
       headers: this._headers,

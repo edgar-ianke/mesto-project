@@ -10,7 +10,7 @@ export default class Popup {
   }
   open() {
     this._element.classList.add("pop-up_active");
-    // this.setEventListeners()
+    this.setEventListeners()
   }
   close() {
     this._element.classList.remove("pop-up_active");

@@ -32,12 +32,11 @@ let userInfo = {};
 function getUserInfo() {
   Promise.all([api.getInfo(), api.getCards()])
     .then(([infoRes, cardsRes]) => {
-      console.log(infoRes)
       userInfo = Object.assign({}, infoRes);
       profileName.textContent = infoRes.name;
       profileDescription.textContent = infoRes.about;
-      nameInputEdit.value = infoRes.name;
-      jobInputEdit.value = infoRes.about;
+      // nameInputEdit.value = infoRes.name;
+      // jobInputEdit.value = infoRes.about;
       avatarEdit.src = infoRes.avatar;
       const sectionCards = new Section(
         {
@@ -71,18 +70,18 @@ function updateAvatar(evt) {
       renderSaving(evt, false, buttonText);
     });
 }
-function editProfile(evt) {
-  const buttonText = evt.target.querySelector(".form__submit-button").textContent;
-  renderSaving(evt, true, buttonText);
+// function editProfile(evt) {
+//   const buttonText = evt.target.querySelector(".form__submit-button").textContent;
+//   renderSaving(evt, true, buttonText);
 
-  Promise.resolve()
-    .then(() => {
-      getProfileInfo.setUserInfo();
-    })
-    .finally(() => {
-      closePopUp(popUpEdit);
-      renderSaving(evt, false, buttonText);
-    });
+//   Promise.resolve()
+//     .then(() => {
+//       getProfileInfo.setUserInfo();
+//     })
+//     .finally(() => {
+//       closePopUp(popUpEdit);
+//       renderSaving(evt, false, buttonText);
+//     });
 
   // const buttonText = evt.target.querySelector(".form__submit-button").textContent;
   // renderSaving(evt, true, buttonText);
@@ -98,11 +97,11 @@ function editProfile(evt) {
   //     closePopUp(popUpEdit);
   //     renderSaving(evt, false, buttonText);
   //     });
-}
-function submitFormEditHandler(evt) {
-  evt.preventDefault();
-  editProfile(evt);
-}
+// }
+// function submitFormEditHandler(evt) {
+//   evt.preventDefault();
+//   editProfile(evt);
+// }
 
 export {
   buttonEdit,
@@ -114,7 +113,7 @@ export {
   buttonCloseAvatar,
   profileName,
   profileDescription,
-  submitFormEditHandler,
+ // submitFormEditHandler,
   updateAvatar,
   getUserInfo,
   //editProfile,

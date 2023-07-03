@@ -1,12 +1,12 @@
 import Popup from "./Popup";
+import { getProfileInfo } from "./UserInfo";
+import { api } from "./Api-class";
 export default class PopupWithForms extends Popup {
   constructor(selector, formSubmitHandler) {
     super(selector);
     this._formElement = document.querySelector(selector);
     this._form = this._formElement.querySelector(".form");
-    this.formSubmitHandler = formSubmitHandler; // (data) => {
-    //     api.patchProfile({data})
-    //   }
+    this.formSubmitHandler = formSubmitHandler;
     this.submitButton = this._formElement.querySelector(".form__submit-button");
     this.submitButtonText = this.submitButton.textContent;
   }
@@ -20,11 +20,19 @@ export default class PopupWithForms extends Popup {
   }
   setEventListeners() {
     super.setEventListeners();
+    //console.log(this._getInputValues)
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
       this.renderSaving(true);
-      console.log(this._getInputValues());
-      
+      api
+        .patchProfile(this._getInputValues())
+        .then((data) => {
+          getProfileInfo.setUserInfo(data);
+        })
+        .finally(() => {
+          this.renderSaving(false);
+          this.close();
+        });
     });
   }
   close() {
@@ -39,22 +47,21 @@ export default class PopupWithForms extends Popup {
     }
   }
 }
-export const popupForm = new PopupWithForms("#pop-up-edit", submitProfileForm);
+export const popupForm = new PopupWithForms("#pop-up-edit", 10);
 popupForm._getInputValues();
-
-function submitProfileForm(evt) {
-    evt.preventDefault();
-    popupForm.renderSaving(true);
-    api.patchProfile(data).then((data) => {
-      getProfileInfo.setUserInfo(data);
-      popupForm.close();
-    });
-    console.log("evt");
-    popupForm.renderSaving(false);
-}
+// function submitProfileForm(evt) {
+//     evt.preventDefault();
+//     popupForm.renderSaving(true);
+//     api.patchProfile(data).then((data) => {
+//       getProfileInfo.setUserInfo(data);
+//       popupForm.close();
+//     });
+//     console.log("evt");
+//     popupForm.renderSaving(false);
+// }
 function submitCardForm(evt) {
   evt.preventDefault();
-  api.patchProfile(data);
+  // api.patchProfile(data);
   this.renderSaving(false);
   this.close();
 }

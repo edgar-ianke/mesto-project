@@ -25,7 +25,7 @@ import {
   profileDescription,
   avatarEdit,
   buttonCloseAvatar,
-  submitFormEditHandler,
+ // submitFormEditHandler,
 } from "../components/utils";
 import { settingForm, FormValidator } from '../components/Validate-class'
 import { } from "../components/UserInfo";
