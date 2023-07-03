@@ -32,6 +32,7 @@ let userInfo = {};
 function getUserInfo() {
   Promise.all([api.getInfo(), api.getCards()])
     .then(([infoRes, cardsRes]) => {
+      console.log(infoRes)
       userInfo = Object.assign({}, infoRes);
       profileName.textContent = infoRes.name;
       profileDescription.textContent = infoRes.about;

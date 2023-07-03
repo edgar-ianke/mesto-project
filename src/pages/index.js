@@ -15,7 +15,6 @@ import {
   buttonSubmitEditCard,
   buttonSubmitAvatarCard,
 } from "../components/modal";
-
 import {
   buttonEdit,
   buttonCloseEdit,
@@ -28,7 +27,6 @@ import {
   buttonCloseAvatar,
   submitFormEditHandler,
 } from "../components/utils";
-
 import { settingForm, FormValidator } from '../components/Validate-class'
 import { } from "../components/UserInfo";
 
@@ -44,7 +42,7 @@ import PopupWithImage from "../components/PopupWithImage";
 ///////////////////
 export const popupWithImage = new PopupWithImage(".pop-up_full-img");
 
-const popupUser = new Popup("#pop-up-edit");
+//const popupUser = new Popup("#pop-up-edit");
 const popupCard = new Popup("#pop-up-create");
 const popupAvatar = new Popup("#pop-up-avatar");
 const popupImg = new Popup("#pop-up-full-img");
@@ -63,17 +61,18 @@ avatarForm.enableValidation()
 ///////////////////
 
 buttonEdit.addEventListener("click", function () {
-  nameInputEdit.value = profileName.textContent;
-  jobInputEdit.value = profileDescription.textContent;
+  // nameInputEdit.value = profileName.textContent;
+  // jobInputEdit.value = profileDescription.textContent;
   //openPopUp(popUpEdit);
-  popupUser.open();
+  popupForm.open();
+  popupForm.setEventListeners();
   userForm._hideError(nameInputEdit);
   userForm._hideError(jobInputEdit);
   userForm._disableButton(buttonSubmitEditCard);
 });
 buttonCloseEdit.addEventListener("click", function () {
   //closePopUp(popUpEdit)
-  popupUser.close();
+  popupForm.close();
 });
 
 buttonCreate.addEventListener("click", function () {
@@ -125,7 +124,7 @@ buttonCloseImg.addEventListener("click", () => popupImg.close());
 popUpEdit.addEventListener("mousedown", (evt) => {
   if (evt.target.id === "pop-up-edit") {
     //closePopUp(popUpEdit);
-    popupUser.close();
+    popupForm.close();
   }
 });
 
@@ -146,7 +145,7 @@ popUpAvatar.addEventListener("mousedown", (evt) => {
     popupAvatar.close();
   }
 });
-formElementEdit.addEventListener("submit", submitFormEditHandler);
+// formElementEdit.addEventListener("submit", submitFormEditHandler);
 getUserInfo();
 //getProfileInfo.getUserInfo();
 
