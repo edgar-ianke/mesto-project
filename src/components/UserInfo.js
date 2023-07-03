@@ -7,46 +7,34 @@ const objSelectors = {
 }
 class UserInfo {
     constructor(selectors) {
-        this._name = document.querySelector(selectors.name),
-            this._aboutMe = document.querySelector(selectors.description),
-            this._avatar = document.querySelector(selectors.avatar)
+        this._dataName = document.querySelector(selectors.name),
+        this._dataAbout = document.querySelector(selectors.description),
+        this._dataAvatar = document.querySelector(selectors.avatar)
     }
 
     getUserInfo() {
         // возвращает объект с данными пользователя
-        const userInfo = {}
-        api.getInfo()
-            .then((data) => {
-                console.log(data)
-                userInfo.name = data.name;
-                userInfo.about = data.about;
-                userInfo.avatar = data.avatar;
-                userInfo.cohort = data.cohort;
-                userInfo._id = data._id;
-            })
-            .catch(() => {
-                console.log('Что то не так c UserInfo.getUserInfo()')
-            })
-        console.log(userInfo)
-        return userInfo
+        return {name: this.name, about: this._aboutMe}
     }
 
-    setUserInfo() {
-        //  принимает новые данные пользователя, отправляет их на сервер и добавляет их на страницу
-        const nameInputEdit = document.querySelector("#author-name");
-        const jobInputEdit = document.querySelector("#author-description");
 
-        api.patchProfile(nameInputEdit.value, jobInputEdit.value)
-            .then((res) => {
-                this._name.textContent = res.name;
-                this._aboutMe.textContent = res.about;
-            })
-            .catch(() => {
-                console.log('Что то не так c UserInfo.setUserInfo()')
-            })
+    setUserInfo({name, about, avatar}) {
+        //  принимает новые данные пользователя, отправляет их на сервер и добавляет их на страницу
+
+        // this._name.textContent = name;
+        // this._aboutMe.textContent = about;
+        // this._aboutMe.textContent = avatar;
+
+        this._name = name;
+        this._about = about;
+        this._avatar = avatar;
+
+        this._dataName.textContent = this._name;
+        this._dataAbout.textContent = this._about;
+        this._dataAvatar.textContent = this._avatar;
+
     }
 }
 
 export const getProfileInfo = new UserInfo(objSelectors)
-getProfileInfo.getUserInfo()
 
