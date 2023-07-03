@@ -17,9 +17,12 @@ class UserInfo {
         const userInfo = {}
         api.getInfo()
             .then((data) => {
+                console.log(data)
                 userInfo.name = data.name;
                 userInfo.about = data.about;
                 userInfo.avatar = data.avatar;
+                userInfo.cohort = data.cohort;
+                userInfo._id = data._id;
             })
             .catch(() => {
                 console.log('Что то не так c UserInfo.getUserInfo()')
