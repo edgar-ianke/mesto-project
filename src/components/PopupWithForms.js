@@ -91,11 +91,11 @@ function submitCardForm(evt) {
       this.close();
     });
 }
-function submitAvatarForm(data) {
+function submitAvatarForm(evt) {
   evt.preventDefault();
   this.renderSaving(true);
   api
-    .newAvatar(data)
+    .newAvatar(this._getInputValues())
     .then((data) => getProfileInfo.setUserInfo(data))
     .catch((err) => {
       api.handleError(err);
