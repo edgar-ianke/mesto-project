@@ -1,42 +1,33 @@
 import Popup from "./Popup";
 import { getProfileInfo } from "./UserInfo";
 import { api } from "./Api-class";
-
+import Card from "./Card-class";
+import { popupWithImage } from "./utils";
+import Section from "./Section";
 export default class PopupWithForms extends Popup {
-  constructor(selector, {formSubmitHandler}) {
+  constructor(selector, formSubmitHandler) {
     super(selector);
-    this._formElement = document.querySelector(selector);
-    this._form = this._formElement.querySelector(".form");
-    this._formSubmitHandler = formSubmitHandler;
-    this._submitButton = this._formElement.querySelector(".form__submit-button");
+    this._popupElement = document.querySelector(selector);
+    this._form = this._popupElement.querySelector(".form");
+    this._formSubmitHandler = formSubmitHandler.bind(this);
+    this._submitButton = this._popupElement.querySelector(".form__submit-button");
     this._submitButtonText = this._submitButton.textContent;
   }
   _getInputValues() {
-    const allInputs = this._formElement.querySelectorAll(".form__input");
+    const allInputs = this._popupElement.querySelectorAll(".form__input");
     this.formValues = Array.from(allInputs).reduce((acc, currValue) => {
       acc[currValue.name] = currValue.value;
-      console.log(acc)
       return acc;
     }, {});
     return this.formValues;
   }
   setEventListeners() {
     super.setEventListeners();
-    //console.log(this._getInputValues)
-    this._form.addEventListener("submit", (evt) => {
-      evt.preventDefault();
-      //this.renderSaving(true);
-      // api
-      //   .patchProfile(this._getInputValues())
-      //   .then((data) => {
-      //     getProfileInfo.setUserInfo(data);
-      //   })
-      //   .finally(() => {
-      //     this.renderSaving(false);
-      //     this.close();
-      //   });
-      this._formSubmitHandler(this._getInputValues())
-    });
+    this._form.addEventListener("submit", this._formSubmitHandler);
+  }
+  removeEventListeners() {
+    super.removeEventListeners();
+    this._form.removeEventListener("submit", this._formSubmitHandler);
   }
 
   close() {
@@ -52,25 +43,65 @@ export default class PopupWithForms extends Popup {
     }
   }
 }
-export const popupForm = new PopupWithForms("#pop-up-edit", 10);
-// popupForm._getInputValues();
-// function submitProfileForm(evt) {
-//     evt.preventDefault();
-//     popupForm.renderSaving(true);
-//     api.patchProfile(data).then((data) => {
-//       getProfileInfo.setUserInfo(data);
-//       popupForm.close();
-//     });
-//     console.log("evt");
-//     popupForm.renderSaving(false);
-// }
-// function submitCardForm(evt) {
-//   evt.preventDefault();
-//   // api.patchProfile(data);
-//   this.renderSaving(false);
-//   this.close();
-// }
-// function submitAvatarForm(evt) {
-//   evt.preventDefault();
-//   api.newAvatar(data);
-// }
+export const popupProfileForm = new PopupWithForms("#pop-up-edit", submitProfileForm);
+export const popupAvatarForm = new PopupWithForms("#pop-up-avatar", submitAvatarForm);
+export const popupCardForm = new PopupWithForms("#pop-up-create", submitCardForm);
+function submitProfileForm(evt) {
+  evt.preventDefault();
+  this.renderSaving(true);
+  api
+    .patchProfile(this._getInputValues())
+    .then((data) => {
+      getProfileInfo.setUserInfo(data);
+    })
+    .catch((err) => {
+      api.handleError(err);
+    })
+    .finally(() => {
+      this.renderSaving(false);
+      this.close();
+    });
+}
+function submitCardForm(evt) {
+  evt.preventDefault();
+  this.renderSaving(true);
+  api
+    .loadCard(this._getInputValues())
+    .then((res) => {
+      const sectionCardSingle = new Section(
+        {
+          data: [res],
+          renderer: (item) => {
+            const cardSingle = new Card(item, "#element", (img) => {
+              popupWithImage.open(img);
+            });
+            const cardElement = cardSingle.generate();
+            sectionCardSingle.perependItem(cardElement);
+          },
+        },
+        ".elements"
+      );
+      sectionCardSingle.renderItems();
+    })
+    .catch((err) => {
+      api.handleError(err);
+    })
+    .finally(() => {
+      this.renderSaving(false);
+      this.close();
+    });
+}
+function submitAvatarForm(data) {
+  evt.preventDefault();
+  this.renderSaving(true);
+  api
+    .newAvatar(data)
+    .then((data) => getProfileInfo.setUserInfo(data))
+    .catch((err) => {
+      api.handleError(err);
+    })
+    .finally(() => {
+      this.renderSaving(false);
+      this.close();
+    });
+}

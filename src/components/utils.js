@@ -57,18 +57,18 @@ function getUserInfo() {
 }
 
 function updateAvatar(evt) {
-  const buttonText = evt.target.querySelector(".form__submit-button").textContent;
-  renderSaving(evt, true, buttonText);
-  api
-    .newAvatar(linkInputAvatar.value)
-    .then((res) => {
-      avatarEdit.src = res.avatar;
-    })
-    .catch((error) => console.error(`Ошибка при обновлении аватара ${error}`))
-    .finally(() => {
-      closePopUp(popUpAvatar);
-      renderSaving(evt, false, buttonText);
-    });
+  // const buttonText = evt.target.querySelector(".form__submit-button").textContent;
+  // renderSaving(evt, true, buttonText);
+  // api
+  //   .newAvatar(linkInputAvatar.value)
+  //   .then((res) => {
+  //     avatarEdit.src = res.avatar;
+  //   })
+  //   .catch((error) => console.error(`Ошибка при обновлении аватара ${error}`))
+  //   .finally(() => {
+  //     closePopUp(popUpAvatar);
+  //     renderSaving(evt, false, buttonText);
+  //   });
 }
 // function editProfile(evt) {
 //   const buttonText = evt.target.querySelector(".form__submit-button").textContent;

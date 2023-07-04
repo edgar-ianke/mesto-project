@@ -14,7 +14,7 @@ export default class Popup {
   }
   close() {
     this._element.classList.remove("pop-up_active");
-    this._removeEventListeners()
+    this.removeEventListeners()
   }
 
   setEventListeners() {
@@ -22,7 +22,7 @@ export default class Popup {
     this._button.addEventListener("click", this.functionClose);
     this._element.addEventListener("mousedown", this.functionClose);
   }
-  _removeEventListeners() {
+  removeEventListeners() {
     document.removeEventListener("keydown", this.functionClose);
     this._button.removeEventListener("click", this.functionClose);
     this._element.removeEventListener("mousedown", this.functionClose);
