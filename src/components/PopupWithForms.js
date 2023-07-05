@@ -1,8 +1,7 @@
 import Popup from "./Popup";
-import { getProfileInfo } from "./UserInfo";
+import { profileInfo } from "../pages";
 import { api } from "./Api-class";
 import Card from "./Card-class";
-import { popupWithImage } from "./utils";
 import Section from "./Section";
 export default class PopupWithForms extends Popup {
   constructor(selector, formSubmitHandler) {
@@ -10,12 +9,13 @@ export default class PopupWithForms extends Popup {
     this._popupElement = document.querySelector(selector);
     this._form = this._popupElement.querySelector(".form");
     this._formSubmitHandler = formSubmitHandler.bind(this);
-    this._submitButton = this._popupElement.querySelector(".form__submit-button");
-    this._submitButtonText = this._submitButton.textContent;
+    this.submitButton = this._popupElement.querySelector(".form__submit-button");
+    this._submitButtonText = this.submitButton.textContent;
+    const allInputs = this._popupElement.querySelectorAll(".form__input");
+    this.formArray = Array.from(allInputs)
   }
   _getInputValues() {
-    const allInputs = this._popupElement.querySelectorAll(".form__input");
-    this.formValues = Array.from(allInputs).reduce((acc, currValue) => {
+    this.formValues = this.formArray.reduce((acc, currValue) => {
       acc[currValue.name] = currValue.value;
       return acc;
     }, {});
@@ -37,22 +37,19 @@ export default class PopupWithForms extends Popup {
 
   renderSaving(isSaving) {
     if (isSaving) {
-      this._submitButton.textContent = "Сохранение...";
+      this.submitButton.textContent = "Сохранение...";
     } else {
-      this._submitButton.textContent = this._submitButtonText;
+      this.submitButton.textContent = this._submitButtonText;
     }
   }
 }
-export const popupProfileForm = new PopupWithForms("#pop-up-edit", submitProfileForm);
-export const popupAvatarForm = new PopupWithForms("#pop-up-avatar", submitAvatarForm);
-export const popupCardForm = new PopupWithForms("#pop-up-create", submitCardForm);
 function submitProfileForm(evt) {
   evt.preventDefault();
   this.renderSaving(true);
   api
     .patchProfile(this._getInputValues())
     .then((data) => {
-      getProfileInfo.setUserInfo(data);
+      profileInfo.setUserInfo(data);
     })
     .catch((err) => {
       api.handleError(err);
@@ -96,7 +93,7 @@ function submitAvatarForm(evt) {
   this.renderSaving(true);
   api
     .newAvatar(this._getInputValues())
-    .then((data) => getProfileInfo.setUserInfo(data))
+    .then((data) => profileInfo.setUserInfo(data))
     .catch((err) => {
       api.handleError(err);
     })

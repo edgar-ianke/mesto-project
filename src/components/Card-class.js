@@ -1,6 +1,5 @@
-import deleteCard, { putLike, deleteLike } from "./cards";
-import { popupWithImage, userInfo } from "./utils";
 import {api} from "./Api-class";
+import { profileInfo } from "../pages";
 
 export default class Card {
   constructor(data, selector, handleCardClick) {
@@ -26,13 +25,13 @@ export default class Card {
     this._element.querySelector(".elements__like-counter").textContent = this.likes.length;
     if (
       this.likes.some((item) => {
-        return item._id === userInfo._id;  /*<--------------------- class */
+        return item._id === profileInfo._id;
       })
     ) {
       this._element.querySelector(".elements__like").classList.add("elements__like_active");
     }
     this._setEventListeners();
-    if (this.owner._id !== userInfo._id) { /*<--------------------- class */
+    if (this.owner._id !== profileInfo._id) {
       this._element.querySelector(".elements__urn").remove();
     }
     return this._element;
@@ -51,18 +50,8 @@ export default class Card {
     {
       if (!this._element.querySelector(".elements__like").classList.contains("elements__like_active")) {
         this._putLike()
-        // putLike(
-        //   this._id,
-        //   this._element.querySelector(".elements__like-counter"),
-        //   this._element.querySelector(".elements__like")
-        // );
       } else {
         this._deleteLike()
-        // deleteLike(
-        //   this._id,
-        //   this._element.querySelector(".elements__like-counter"),
-        //   this._element.querySelector(".elements__like")
-        // );
       }
     }
   }
