@@ -13,7 +13,7 @@ import {
   formElementAvatar,
   formElementEdit,
   formElementCreate,
-} from "../../utils/consts";
+} from "../utils/consts";
 
 export const popupWithImage = new PopupWithImage(".pop-up_full-img");
 export const popupProfileForm = new PopupWithForms("#pop-up-edit", submitProfileForm);
@@ -32,8 +32,6 @@ avatarForm.enableValidation();
 Promise.all([api.getInfo(), api.getCards()])
   .then(([infoRes, cardsRes]) => {
     profileInfo.setUserInfo(infoRes);
-    popupProfileForm.formArray[0].value = infoRes.name;
-    popupProfileForm.formArray[1].value = infoRes.about;
     const sectionCards = new Section(
       {
         data: cardsRes,
@@ -114,11 +112,14 @@ function submitAvatarForm(evt) {
 buttonEdit.addEventListener("click", function () {
   popupProfileForm.open();
   const user = profileInfo.getUserInfo();
-  console.log(popupProfileForm.formArray)
-  popupProfileForm.formArray[0].value = user.name;
-  popupProfileForm.formArray[1].value = user.about;
+  console.log(popupProfileForm.formArray);
   popupProfileForm.formArray.forEach((element) => {
     userForm._hideError(element);
+    if (element.id === "author-name") {
+      element.value = user.name;
+    } else if ((element.id === "author-description")) {
+      element.value = user.about;
+    }
   });
   userForm._disableButton(popupProfileForm.submitButton);
 });
