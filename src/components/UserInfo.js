@@ -1,11 +1,11 @@
 import { api } from './Api-class'
 
-const objSelectors = {
+export const objSelectors = {
     name: ".profile__name",
     description: ".profile__description",
     avatar: ".profile__avatar"
 }
-class UserInfo {
+export default class UserInfo {
     constructor(selectors) {
         this._dataName = document.querySelector(selectors.name),
         this._dataAbout = document.querySelector(selectors.description),
@@ -20,7 +20,7 @@ class UserInfo {
         return this._id = id;
     }
 
-    setUserInfo({name, about, avatar, id}) {
+    setUserInfo({name, about, avatar, _id}) {
         //  принимает новые данные пользователя, отправляет их на сервер и добавляет их на страницу
 
         // this._name.textContent = name;
@@ -30,7 +30,7 @@ class UserInfo {
         this._name = name;
         this._about = about;
         this._avatar = avatar;
-        this._id = id;
+        this._id = _id;
         this._dataName.textContent = this._name;
         this._dataAbout.textContent = this._about;
         this._dataAvatar.src = this._avatar;
@@ -38,6 +38,6 @@ class UserInfo {
     }
 }
 
-export const getProfileInfo = new UserInfo(objSelectors)
+//export const profileInfo = new UserInfo(objSelectors)
 
 

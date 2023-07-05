@@ -1,54 +1,25 @@
 import "./index.css";
-import {
-  nameInputEdit,
-  jobInputEdit,
-  nameInputCreate,
-  linkInputCreate,
-  openPopUp,
-  closePopUp,
-  popupFullImg,
-  popUpEdit,
-  popUpCreate,
-  popUpAvatar,
-  linkInputAvatar,
-  buttonSubmitCreateCard,
-  buttonSubmitEditCard,
-  buttonSubmitAvatarCard,
-} from "../components/modal";
-import {
-  buttonEdit,
-  buttonCloseEdit,
-  buttonCreate,
-  buttonCloseCreate,
-  buttonCloseImg,
-  profileName,
-  profileDescription,
-  avatarEdit,
-  buttonCloseAvatar,
-  // submitFormEditHandler,
-} from "../components/utils";
 import { settingForm, FormValidator } from "../components/Validate-class";
-
-import { addImg } from "../components/cards";
-import { getUserInfo, updateAvatar } from "../components/utils";
-import Popup from "../components/Popup";
-import PopupWithForms, { popupProfileForm, popupAvatarForm, popupCardForm } from "../components/PopupWithForms";
-// import PopupWithForms from "../components/PopupWithForms";
-import { getProfileInfo } from "../components/UserInfo";
+import PopupWithForms from "../components/PopupWithForms";
 import { api } from "../components/Api-class";
 import Card from "../components/Card-class";
 import Section from "../components/Section";
 import PopupWithImage from "../components/PopupWithImage";
-///////////////////
+import UserInfo, { objSelectors } from "../components/UserInfo";
+import {
+  buttonCreate,
+  buttonEdit,
+  avatarEdit,
+  formElementAvatar,
+  formElementEdit,
+  formElementCreate,
+} from "../../utils/consts";
+
 export const popupWithImage = new PopupWithImage(".pop-up_full-img");
-
-//const popupUser = new Popup("#pop-up-edit");
-const popupCard = new Popup("#pop-up-create");
-const popupImg = new Popup("#pop-up-full-img");
-
-const formElementEdit = document.querySelector("#edit-form");
-const formElementCreate = document.querySelector("#create-form");
-const formElementAvatar = document.querySelector("#avatar-form");
+export const popupProfileForm = new PopupWithForms("#pop-up-edit", submitProfileForm);
+export const popupAvatarForm = new PopupWithForms("#pop-up-avatar", submitAvatarForm);
+export const popupCardForm = new PopupWithForms("#pop-up-create", submitCardForm);
+export const profileInfo = new UserInfo(objSelectors);
 
 const cardForm = new FormValidator(settingForm, formElementCreate);
 const userForm = new FormValidator(settingForm, formElementEdit);
@@ -57,36 +28,117 @@ const avatarForm = new FormValidator(settingForm, formElementAvatar);
 cardForm.enableValidation();
 userForm.enableValidation();
 avatarForm.enableValidation();
-///////////////////
+
+Promise.all([api.getInfo(), api.getCards()])
+  .then(([infoRes, cardsRes]) => {
+    profileInfo.setUserInfo(infoRes);
+    console.log(profileInfo)
+     nameInputEdit.value = infoRes.name;
+     jobInputEdit.value = infoRes.about;
+    const sectionCards = new Section(
+      {
+        data: cardsRes,
+        renderer: (item) => {
+          const cards = new Card(item, "#element", (item) => {
+            popupWithImage.open(item);
+          });
+          const cardElement = cards.generate();
+          sectionCards.addItem(cardElement);
+        },
+      },
+      ".elements"
+    );
+    sectionCards.renderItems();
+  })
+  .catch((error) => console.error(`Ошибка ${error}`));
+
+function submitProfileForm(evt) {
+  evt.preventDefault();
+  this.renderSaving(true);
+  api
+    .patchProfile(this._getInputValues())
+    .then((data) => {
+      profileInfo.setUserInfo(data);
+    })
+    .catch((err) => {
+      api.handleError(err);
+    })
+    .finally(() => {
+      this.renderSaving(false);
+      this.close();
+    });
+}
+function submitCardForm(evt) {
+  evt.preventDefault();
+  this.renderSaving(true);
+  api
+    .loadCard(this._getInputValues())
+    .then((res) => {
+      const sectionCardSingle = new Section(
+        {
+          data: [res],
+          renderer: (item) => {
+            const cardSingle = new Card(item, "#element", (img) => {
+              popupWithImage.open(img);
+            });
+            const cardElement = cardSingle.generate();
+            sectionCardSingle.perependItem(cardElement);
+          },
+        },
+        ".elements"
+      );
+      sectionCardSingle.renderItems();
+    })
+    .catch((err) => {
+      api.handleError(err);
+    })
+    .finally(() => {
+      this.renderSaving(false);
+      this.close();
+    });
+}
+function submitAvatarForm(evt) {
+  evt.preventDefault();
+  this.renderSaving(true);
+  api
+    .newAvatar(this._getInputValues())
+    .then((data) => profileInfo.setUserInfo(data))
+    .catch((err) => {
+      api.handleError(err);
+    })
+    .finally(() => {
+      this.renderSaving(false);
+      this.close();
+    });
+}
+
+//--------------------------------------------------------------------------------------------------//
 
 buttonEdit.addEventListener("click", function () {
-  // nameInputEdit.value = profileName.textContent;
-  // jobInputEdit.value = profileDescription.textContent;
-  //openPopUp(popUpEdit);
   popupProfileForm.open();
-  // popupProfileForm.setEventListeners();
-  // popupProfileForm.open();
-  // popupProfileForm.setEventListeners();
-  //   userForm._hideError(nameInputEdit);
-  //   userForm._hideError(jobInputEdit);
-  //   userForm._disableButton(buttonSubmitEditCard);
-  // });
-  // buttonCloseEdit.addEventListener("click", function () {
-  //   //closePopUp(popUpEdit)
-  //   //popupProfileForm.close();
-  //   popupProfileForm.close();
+  popupProfileForm.formArray.forEach(element => {
+    userForm._hideError(element);
+  })
+  userForm._disableButton(popupProfileForm.submitButton);
 });
 
 buttonCreate.addEventListener("click", function () {
-  //nameInputCreate.value = "";
-  //linkInputCreate.value = "";
-  // document.forms.card.reset(); /*<-------- не забыть убрать*/
-  // cardForm._hideError(nameInputCreate);
-  // cardForm._hideError(linkInputCreate);
-  // cardForm._disableButton(buttonSubmitCreateCard);
-  //openPopUp(popUpCreate);
   popupCardForm.open();
+  popupCardForm.formArray.forEach(element => {
+    userForm._hideError(element);
+  })
+  userForm._disableButton(popupCardForm.submitButton);
 });
+
+avatarEdit.addEventListener("click", function () {
+  popupAvatarForm.open();
+  popupAvatarForm.formArray.forEach(element => {
+    userForm._hideError(element);
+  })
+  userForm._disableButton(popupAvatarForm.submitButton);
+});
+
+
 // buttonCloseCreate.addEventListener("click", function () {
 //   //closePopUp(popUpCreate);
 //   popupCard.close();
@@ -147,16 +199,8 @@ buttonCreate.addEventListener("click", function () {
 //   }
 // });
 // formElementEdit.addEventListener("submit", submitFormEditHandler);
-getUserInfo();
-//getProfileInfo.getUserInfo();
+//profileInfo.getUserInfo();
 
-avatarEdit.addEventListener("click", function () {
-  //   linkInputAvatar.value = "";
-  //   avatarForm._hideError(linkInputAvatar);
-  //   avatarForm._disableButton(buttonSubmitAvatarCard);
-  //   openPopUp(popUpAvatar);
-  popupAvatarForm.open();
-});
 // buttonCloseAvatar.addEventListener("click", function () {
 //   closePopUp(popUpAvatar);
 //   popupAvatar.close();
@@ -176,7 +220,7 @@ avatarEdit.addEventListener("click", function () {
 
 // //   api.patchProfile(profile)
 // //     .then((data) => {
-// //       getProfileInfo.setUserInfo(data);
+// //       profileInfo.setUserInfo(data);
 // //       popupProfileForm.close()
 // //     })
 // //     .catch((err) => { api.handleError(err) })
@@ -191,7 +235,7 @@ avatarEdit.addEventListener("click", function () {
 //   popupAvatarForm.renderSaving(true);
 //   api.newAvatar(link)
 //     .then((data) => {
-//       getProfileInfo.setUserInfo(data);
+//       profileInfo.setUserInfo(data);
 //       popupAvatarForm.close();
 //     })
 //     .catch((err) => { api.handleError(err)})

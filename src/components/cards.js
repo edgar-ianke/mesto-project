@@ -10,7 +10,7 @@ import {
   linkInputCreate,
 } from "./modal";
 import {api} from './Api-class'
-import { userInfo } from "./utils";
+import { userInfo } from "../../utils/utils";
 
 const elementsAll = document.querySelector(".elements");
 
