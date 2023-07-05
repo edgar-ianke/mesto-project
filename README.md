@@ -21,7 +21,7 @@
 Cтуденты Яндекс Практикума, 25-я когорта: 
 1. [Edgar-Ianke](https://github.com/edgar-ianke?tab=repositories/)
 2. [Zyurkalov](https://github.com/Zyurkalov?tab=repositories/)
-июль 2023г
+   июль 2023г
 ------------------------------ 
 ## **Ссылка на GH pages**
 [Ссылка на GH pages](https://edgar-ianke.github.io/mesto-project/)
