@@ -1,5 +1,3 @@
-import { api } from './Api-class'
-
 export const objSelectors = {
     name: ".profile__name",
     description: ".profile__description",

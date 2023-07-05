@@ -1,5 +1,3 @@
-import deleteCard, { putLike, deleteLike } from "./cards";
-import { popupWithImage, } from "../../utils/utils";
 import {api} from "./Api-class";
 import { profileInfo } from "../pages";
 
