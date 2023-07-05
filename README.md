@@ -17,4 +17,11 @@
 4. Figma
 5. JavaScript
 ------------------------------ 
+## **Авторы проекта**
+Cтуденты Яндекс Практикума, 25-я когорта: 
+[Edgar-Ianke](https://github.com/edgar-ianke?tab=repositories/)
+[Zyurkalov](https://github.com/Zyurkalov?tab=repositories/)
+июль 2023г
+------------------------------ 
+## **Ссылка на GH pages**
 [Ссылка на GH pages](https://edgar-ianke.github.io/mesto-project/)
