@@ -32,8 +32,8 @@ avatarForm.enableValidation();
 Promise.all([api.getInfo(), api.getCards()])
   .then(([infoRes, cardsRes]) => {
     profileInfo.setUserInfo(infoRes);
-    //  nameInputEdit.value = infoRes.name;
-    //  jobInputEdit.value = infoRes.about;
+    popupProfileForm.formArray[0].value = infoRes.name;
+    popupProfileForm.formArray[1].value = infoRes.about;
     const sectionCards = new Section(
       {
         data: cardsRes,
@@ -113,24 +113,28 @@ function submitAvatarForm(evt) {
 
 buttonEdit.addEventListener("click", function () {
   popupProfileForm.open();
-  popupProfileForm.formArray.forEach(element => {
+  const user = profileInfo.getUserInfo();
+  console.log(popupProfileForm.formArray)
+  popupProfileForm.formArray[0].value = user.name;
+  popupProfileForm.formArray[1].value = user.about;
+  popupProfileForm.formArray.forEach((element) => {
     userForm._hideError(element);
-  })
+  });
   userForm._disableButton(popupProfileForm.submitButton);
 });
 
 buttonCreate.addEventListener("click", function () {
   popupCardForm.open();
-  popupCardForm.formArray.forEach(element => {
+  popupCardForm.formArray.forEach((element) => {
     userForm._hideError(element);
-  })
+  });
   userForm._disableButton(popupCardForm.submitButton);
 });
 
 avatarEdit.addEventListener("click", function () {
   popupAvatarForm.open();
-  popupAvatarForm.formArray.forEach(element => {
+  popupAvatarForm.formArray.forEach((element) => {
     userForm._hideError(element);
-  })
+  });
   userForm._disableButton(popupAvatarForm.submitButton);
 });

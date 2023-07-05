@@ -11,7 +11,6 @@ export default class UserInfo {
     }
 
     getUserInfo() {
-        // возвращает объект с данными пользователя
         return {name: this.name, about: this._about};
     }
     getUserId() {
@@ -19,11 +18,6 @@ export default class UserInfo {
     }
 
     setUserInfo({name, about, avatar, _id}) {
-        //  принимает новые данные пользователя, отправляет их на сервер и добавляет их на страницу
-
-        // this._name.textContent = name;
-        // this._aboutMe.textContent = about;
-        // this._aboutMe.textContent = avatar;
 
         this._name = name;
         this._about = about;
@@ -36,6 +30,5 @@ export default class UserInfo {
     }
 }
 
-//export const profileInfo = new UserInfo(objSelectors)
 
 
