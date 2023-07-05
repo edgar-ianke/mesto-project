@@ -21,13 +21,6 @@ export class FormValidator {
         const formInputElementsAll = Array.from(this._form.querySelectorAll(this._inputSelector));
         const buttonElement = this._form.querySelector(this._submitButton);
         this._toggleButton(formInputElementsAll, buttonElement);
-        
-        // formInputElementsAll.forEach(function(inputElement) {
-        //     inputElement.addEventListener("input", function () {
-        //         that._checkValidity(inputElement);
-        //         that._toggleButton(formInputElementsAll, buttonElement);
-        //     })
-        // });
 
         formInputElementsAll.forEach((inputElement) => {
             inputElement.addEventListener("input", () => {
@@ -60,21 +53,11 @@ export class FormValidator {
             inputElement.setCustomValidity("");
         }
         if (!inputElement.validity.valid) {
-            this._showError(inputElement, inputElement.validationMessage, /*this._inputError*/);
+            this._showError(inputElement, inputElement.validationMessage);
         } else {
-            this._hideError(inputElement, /*this._inputError*/);
+            this._hideError(inputElement);
         }
     }
-    // _showError(inputElement, errorMessage, inputErrorClass) {
-    //     const formError = inputElement.nextElementSibling;
-    //     inputElement.classList.add(inputErrorClass);
-    //     formError.textContent = errorMessage;
-    // }
-    // _hideError(inputElement, inputErrorClass) {
-    //     const formError = inputElement.nextElementSibling;
-    //     inputElement.classList.remove(inputErrorClass);
-    //     formError.textContent = "";
-    // }
     _showError(inputElement, errorMessage) {
         const formError = inputElement.nextElementSibling;
         inputElement.classList.add(this._inputError);

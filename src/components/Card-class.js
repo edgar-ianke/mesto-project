@@ -19,14 +19,12 @@ export default class Card {
     return cardElement;
   }
   generate() {
-    // console.log(profileInfo._id)
     this._element = this._getElement();
     this._element.querySelector(".elements__card").src = this.link;
     this._element.querySelector(".elements__name").textContent = this.name;
     this._element.querySelector(".elements__like-counter").textContent = this.likes.length;
     if (
       this.likes.some((item) => {
-        //console.log(item._id)
         return item._id === profileInfo._id;
       })
     ) {
