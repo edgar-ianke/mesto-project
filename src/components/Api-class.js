@@ -88,10 +88,6 @@ class Api {
       }),
     }).then(this.handleError);
   }
-
-  test() {
-    console.log("Вжух");
-  }
 }
 
 export const api = new Api({
