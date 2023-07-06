@@ -28,7 +28,7 @@
     <footer class="footer">
       <p class="footer__copyright">&#169; 2020 Mesto Russia</p>
     </footer>
-    <div class="pop-up" id="pop-up-edit">
+    <div class="pop-up pop-up_disabled" id="pop-up-edit">
       <div class="pop-up__container">
         <form class="form" name="edit-form" id="edit-form" novalidate>
           <h3 class="form__title">Редактировать профиль</h3>
@@ -36,8 +36,7 @@
             type="text"
             class="form__input"
             id="author-name"
-            name="name"
-            placeholder="Введите ваше имя"
+            name="author-name"
             value=""
             required
             minlength="2"
@@ -49,8 +48,7 @@
             type="text"
             class="form__input"
             id="author-description"
-            name="about"
-            placeholder="Введите информацию о себе"
+            name="author-description"
             value=""
             required
             minlength="2"
@@ -63,15 +61,15 @@
         <button type="button" class="pop-up__close-icon" id="edit-close"></button>
       </div>
     </div>
-    <div class="pop-up" id="pop-up-create">
+    <div class="pop-up pop-up_disabled" id="pop-up-create">
       <div class="pop-up__container">
-        <form class="form" name="card" id="create-form" novalidate>
+        <form class="form" name="create-form" id="create-form" novalidate>
           <h3 class="form__title">Новое место</h3>
           <input
             type="text"
             class="form__input"
             id="create-name"
-            name="name"
+            name="create-name"
             value=""
             placeholder="Название"
             minlength="2"
@@ -84,29 +82,29 @@
             type="url"
             class="form__input"
             id="create-link"
-            name="link"
+            name="create-link"
             placeholder="Ссылка на картинку"
             value=""
             required
           />
           <span class="form__error-message" id="create-link-error"></span>
-          <button type="submit" class="form__submit-button form__submit-button-card">Создать</button>
+          <button type="submit" class="form__submit-button">Создать</button>
         </form>
         <button type="button" class="pop-up__close-icon" id="create-close"></button>
       </div>
     </div>
-    <div class="pop-up" id="pop-up-avatar">
+    <div class="pop-up pop-up_disabled" id="pop-up-avatar">
       <div class="pop-up__container">
         <form class="form" id="avatar-form" novalidate>
           <h3 class="form__title">Обновить аватар</h3>
-          <input type="url" class="form__input" id="avatar-link" name="link" value="" placeholder="Ссылка на аватар" required />
+          <input type="url" class="form__input" id="avatar-link" value="" placeholder="Ссылка на аватар" required />
           <span class="form__error-message" id="avatar-link-error"></span>
           <button type="submit" class="form__submit-button">Сохранить</button>
         </form>
         <button type="button" class="pop-up__close-icon" id="avatar-close"></button>
       </div>
     </div>
-    <div class="pop-up pop-up_full-img" id="pop-up-full-img">
+    <div class="pop-up pop-up_full-img pop-up_disabled" id="pop-up-full-img">
       <div class="pop-up__img-container">
         <img class="full-img" src="" />
         <p class="full-img__info"></p>
@@ -116,9 +114,7 @@
     <template id="element">
       <div class="elements__element" id="">
         <img src="<%=require('./images/urn.svg')%>" class="elements__urn" />
-        <div class="elements__imgContainer">
-          <img src="" alt="Картинка на каникулах" class="elements__card" />
-        </div>
+        <img src="" alt="Картинка на каникулах" class="elements__card" />
         <div class="elements__details">
           <h2 class="elements__name"></h2>
           <div class="elements__like-section">
