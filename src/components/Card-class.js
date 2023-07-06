@@ -1,4 +1,4 @@
-import {api} from "./Api-class";
+import { api } from "./Api-class";
 import { profileInfo } from "../pages";
 
 export default class Card {
@@ -49,21 +49,23 @@ export default class Card {
   _handleLike() {
     {
       if (!this._element.querySelector(".elements__like").classList.contains("elements__like_active")) {
-        this._putLike()
+        this._putLike();
       } else {
-        this._deleteLike()
+        this._deleteLike();
       }
     }
   }
   _deleteCard() {
-    api.removeCard(this._id)
+    api
+      .removeCard(this._id)
       .then(() => {
         this._element.remove();
       })
       .catch((error) => console.error(`Ошибка при удалении карточки ${error}`));
   }
   _putLike() {
-    api.addLike(this._id)
+    api
+      .addLike(this._id)
       .then((res) => {
         this._element.querySelector(".elements__like-counter").textContent = res.likes.length;
         this._element.querySelector(".elements__like").classList.add("elements__like_active");
@@ -71,7 +73,8 @@ export default class Card {
       .catch((error) => console.error(`Ошибка при добавлении лайка ${error}`));
   }
   _deleteLike() {
-    api.removeLike(this._id)
+    api
+      .removeLike(this._id)
       .then((res) => {
         this._element.querySelector(".elements__like-counter").textContent = res.likes.length;
         this._element.querySelector(".elements__like").classList.remove("elements__like_active");

@@ -1,8 +1,4 @@
 import Popup from "./Popup";
-import { profileInfo } from "../pages";
-import { api } from "./Api-class";
-import Card from "./Card-class";
-import Section from "./Section";
 export default class PopupWithForms extends Popup {
   constructor(selector, formSubmitHandler) {
     super(selector);
@@ -42,63 +38,4 @@ export default class PopupWithForms extends Popup {
       this.submitButton.textContent = this._submitButtonText;
     }
   }
-}
-function submitProfileForm(evt) {
-  evt.preventDefault();
-  this.renderSaving(true);
-  api
-    .patchProfile(this._getInputValues())
-    .then((data) => {
-      profileInfo.setUserInfo(data);
-    })
-    .catch((err) => {
-      api.handleError(err);
-    })
-    .finally(() => {
-      this.renderSaving(false);
-      this.close();
-    });
-}
-function submitCardForm(evt) {
-  evt.preventDefault();
-  this.renderSaving(true);
-  api
-    .loadCard(this._getInputValues())
-    .then((res) => {
-      const sectionCardSingle = new Section(
-        {
-          data: [res],
-          renderer: (item) => {
-            const cardSingle = new Card(item, "#element", (img) => {
-              popupWithImage.open(img);
-            });
-            const cardElement = cardSingle.generate();
-            sectionCardSingle.perependItem(cardElement);
-          },
-        },
-        ".elements"
-      );
-      sectionCardSingle.renderItems();
-    })
-    .catch((err) => {
-      api.handleError(err);
-    })
-    .finally(() => {
-      this.renderSaving(false);
-      this.close();
-    });
-}
-function submitAvatarForm(evt) {
-  evt.preventDefault();
-  this.renderSaving(true);
-  api
-    .newAvatar(this._getInputValues())
-    .then((data) => profileInfo.setUserInfo(data))
-    .catch((err) => {
-      api.handleError(err);
-    })
-    .finally(() => {
-      this.renderSaving(false);
-      this.close();
-    });
 }

@@ -116,7 +116,7 @@ buttonEdit.addEventListener("click", function () {
     userForm._hideError(element);
     if (element.id === "author-name") {
       element.value = user.name;
-    } else if ((element.id === "author-description")) {
+    } else if (element.id === "author-description") {
       element.value = user.about;
     }
   });

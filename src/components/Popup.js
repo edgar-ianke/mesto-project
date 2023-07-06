@@ -6,15 +6,15 @@ export default class Popup {
       if (evt.target === evt.currentTarget || evt.key === "Escape") {
         this.close();
       }
-    }
+    };
   }
   open() {
     this._element.classList.add("pop-up_active");
-    this.setEventListeners()
+    this.setEventListeners();
   }
   close() {
     this._element.classList.remove("pop-up_active");
-    this.removeEventListeners()
+    this.removeEventListeners();
   }
 
   setEventListeners() {
