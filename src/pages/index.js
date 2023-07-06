@@ -112,7 +112,6 @@ function submitAvatarForm(evt) {
 buttonEdit.addEventListener("click", function () {
   popupProfileForm.open();
   const user = profileInfo.getUserInfo();
-  console.log(popupProfileForm.formArray);
   popupProfileForm.formArray.forEach((element) => {
     userForm._hideError(element);
     if (element.id === "author-name") {
