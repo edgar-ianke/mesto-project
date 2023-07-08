@@ -31,7 +31,7 @@ class Api {
     }).then(this.handleError);
   }
 
-  patchProfile({name, about}) {
+  patchProfile({ name, about }) {
     return fetch(`${this._adress}/users/me`, {
       method: "PATCH",
       headers: this._headers,
@@ -54,7 +54,7 @@ class Api {
     });
   }
 
-  loadCard({name, link}) {
+  loadCard({ name, link }) {
     return fetch(`${this._adress}/cards`, {
       method: "POST",
       headers: this._headers,
@@ -79,7 +79,7 @@ class Api {
     }).then(this.handleError);
   }
 
-  newAvatar({link}) {
+  newAvatar({ link }) {
     return fetch(`${this._adress}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
@@ -87,10 +87,6 @@ class Api {
         avatar: link,
       }),
     }).then(this.handleError);
-  }
-
-  test() {
-    console.log("Вжух");
   }
 }
 
