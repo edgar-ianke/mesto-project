@@ -85,31 +85,4 @@ export default class Card {
       })
       .catch((error) => console.error(`Ошибка при удалении лайка ${error}`));
   }
-
-  _deleteCard() {
-    api
-      .removeCard(this._id)
-      .then(() => {
-        this._element.remove();
-      })
-      .catch((error) => console.error(`Ошибка при удалении карточки ${error}`));
-  }
-  _putLike() {
-    api
-      .addLike(this._id)
-      .then((res) => {
-        this._elemLikeCounter.textContent = res.likes.length;
-        this._elemLike.classList.add("elements__like_active");
-      })
-      .catch((error) => console.error(`Ошибка при добавлении лайка ${error}`));
-  }
-  _deleteLike() {
-    api
-      .removeLike(this._id)
-      .then((res) => {
-        this._elemLikeCounter.textContent = res.likes.length;
-        this._elemLike.classList.remove("elements__like_active");
-      })
-      .catch((error) => console.error(`Ошибка при удалении лайка ${error}`));
-  }
 }
