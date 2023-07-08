@@ -6,4 +6,26 @@ const formElementEdit = document.querySelector("#edit-form");
 const formElementCreate = document.querySelector("#create-form");
 const formElementAvatar = document.querySelector("#avatar-form");
 
-export { buttonEdit, avatarEdit, buttonCreate, formElementEdit, formElementCreate, formElementAvatar };
+const objSelectors = {
+  name: ".profile__name",
+  description: ".profile__description",
+  avatar: ".profile__avatar",
+};
+const settingForm = {
+  formElementsAll: ".form",
+  inputSelector: ".form__input",
+  submitButtonSelector: ".form__submit-button",
+  inactiveButtonClass: "form__submit-button_disabled",
+  inputErrorClass: "form__input_error",
+};
+
+export {
+  buttonEdit,
+  avatarEdit,
+  buttonCreate,
+  formElementEdit,
+  formElementCreate,
+  formElementAvatar,
+  objSelectors,
+  settingForm,
+};

@@ -1,8 +1,3 @@
-export const objSelectors = {
-  name: ".profile__name",
-  description: ".profile__description",
-  avatar: ".profile__avatar",
-};
 export default class UserInfo {
   constructor(selectors) {
     (this._dataName = document.querySelector(selectors.name)),

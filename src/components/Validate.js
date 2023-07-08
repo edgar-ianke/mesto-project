@@ -1,12 +1,4 @@
-export const settingForm = {
-  formElementsAll: ".form",
-  inputSelector: ".form__input",
-  submitButtonSelector: ".form__submit-button",
-  inactiveButtonClass: "form__submit-button_disabled",
-  inputErrorClass: "form__input_error",
-};
-
-export class FormValidator {
+export default class Validate {
   constructor(setting, form) {
     this._allForm = setting.formElementsAll;
     this._inputSelector = setting.inputSelector;
@@ -14,34 +6,33 @@ export class FormValidator {
     this._inactiveButton = setting.inactiveButtonClass;
     this._inputError = setting.inputErrorClass;
     this._form = form;
+
+    this._inputList = Array.from(this._form.querySelectorAll(this._inputSelector));
+    this._buttonElem = this._form.querySelector(this._submitButton);
   }
   enableValidation() {
-    const that = this;
-    const formInputElementsAll = Array.from(this._form.querySelectorAll(this._inputSelector));
-    const buttonElement = this._form.querySelector(this._submitButton);
-    this._toggleButton(formInputElementsAll, buttonElement);
-
-    formInputElementsAll.forEach((inputElement) => {
+    this._toggleButton();
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._checkValidity(inputElement);
-        this._toggleButton(formInputElementsAll, buttonElement);
+        this._toggleButton();
       });
     });
   }
-  _toggleButton(formInputElementsAll, buttonElement) {
-    if (this._hasInvalidInput(formInputElementsAll)) {
-      this._disableButton(buttonElement, this._inactiveButton);
+  _toggleButton() {
+    if (this._hasInvalidInput(this._inputList)) {
+      this._disableButton(this._buttonElem, this._inactiveButton);
     } else {
-      buttonElement.classList.remove(this._inactiveButton);
-      buttonElement.disabled = false;
+      this._buttonElem.classList.remove(this._inactiveButton);
+      this._buttonElem.disabled = false;
     }
   }
-  _disableButton(buttonElement) {
-    buttonElement.classList.add(this._inactiveButton);
-    buttonElement.disabled = true;
+  _disableButton() {
+    this._buttonElem.classList.add(this._inactiveButton);
+    this._buttonElem.disabled = true;
   }
-  _hasInvalidInput(formInputElementsAll) {
-    return formInputElementsAll.some(function (inputElement) {
+  _hasInvalidInput() {
+    return (this._inputList).some(function (inputElement) {
       return !inputElement.validity.valid;
     });
   }

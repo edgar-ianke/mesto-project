@@ -2,12 +2,11 @@ import Popup from "./Popup";
 export default class PopupWithForms extends Popup {
   constructor(selector, formSubmitHandler) {
     super(selector);
-    this._popupElement = document.querySelector(selector);
-    this._form = this._popupElement.querySelector(".form");
+    this._form = this._element.querySelector(".form");
     this._formSubmitHandler = formSubmitHandler.bind(this);
-    this.submitButton = this._popupElement.querySelector(".form__submit-button");
+    this.submitButton = this._element.querySelector(".form__submit-button");
     this._submitButtonText = this.submitButton.textContent;
-    const allInputs = this._popupElement.querySelectorAll(".form__input");
+    const allInputs = this._element.querySelectorAll(".form__input");
     this.formArray = Array.from(allInputs)
   }
   _getInputValues() {
