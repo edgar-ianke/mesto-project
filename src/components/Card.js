@@ -46,12 +46,8 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._elemLike.addEventListener("click", () => {
-      this._handleLike();
-    });
-    this._elemUrn.addEventListener("click", () => {
-      this._deleteCard();
-    });
+    this._elemLike.addEventListener("click", () => {this._handleLike()});
+    this._elemUrn.addEventListener("click", () => {this._deleteCard()});
     this._elemImage.addEventListener("click", () => this.cardHandler(this));
   }
   _handleLike() {
@@ -63,6 +59,33 @@ export default class Card {
       }
     }
   }
+  _deleteCard() {
+    api
+      .removeCard(this._id)
+      .then(() => {
+        this._element.remove();
+      })
+      .catch((error) => console.error(`Ошибка при удалении карточки ${error}`));
+  }
+  _putLike() {
+    api
+      .addLike(this._id)
+      .then((res) => {
+        this._elemLikeCounter.textContent = res.likes.length;
+        this._elemLike.classList.add("elements__like_active");
+      })
+      .catch((error) => console.error(`Ошибка при добавлении лайка ${error}`));
+  }
+  _deleteLike() {
+    api
+      .removeLike(this._id)
+      .then((res) => {
+        this._elemLikeCounter.textContent = res.likes.length;
+        this._elemLike.classList.remove("elements__like_active");
+      })
+      .catch((error) => console.error(`Ошибка при удалении лайка ${error}`));
+  }
+
   _deleteCard() {
     api
       .removeCard(this._id)

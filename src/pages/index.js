@@ -59,7 +59,6 @@ Promise.all([api.getInfo(), api.getCards()])
     sectionCards.renderItems();
   })
   .catch((error) => console.error(`Ошибка ${error}`));
-
 function submitProfileForm(evt) {
   evt.preventDefault();
   this.renderSaving(true);
@@ -67,13 +66,13 @@ function submitProfileForm(evt) {
     .patchProfile(this._getInputValues())
     .then((data) => {
       profileInfo.setUserInfo(data);
+      this.close();
     })
     .catch((err) => {
       api.checkResponse(err);
     })
     .finally(() => {
       this.renderSaving(false);
-      this.close();
     });
 }
 function submitCardForm(evt) {
@@ -96,13 +95,13 @@ function submitCardForm(evt) {
         ".elements"
       );
       sectionCardSingle.renderItems();
+      this.close();
     })
     .catch((err) => {
       api.checkResponse(err);
     })
     .finally(() => {
       this.renderSaving(false);
-      this.close();
     });
 }
 function submitAvatarForm(evt) {
@@ -110,7 +109,10 @@ function submitAvatarForm(evt) {
   this.renderSaving(true);
   api
     .newAvatar(this._getInputValues())
-    .then((data) => profileInfo.setUserInfo(data))
+    .then((data) => {
+      profileInfo.setUserInfo(data);
+      this.close();
+    })
     .catch((err) => {
       api.checkResponse(err);
     })
@@ -124,29 +126,28 @@ buttonEdit.addEventListener("click", function () {
   popupProfileForm.open();
   const user = profileInfo.getUserInfo();
   popupProfileForm.formArray.forEach((element) => {
-    userForm._hideError(element);
+    userForm.hideError(element);
     if (element.id === "author-name") {
       element.value = user.name;
     } else if (element.id === "author-description") {
       element.value = user.about;
     }
   });
-  userForm._disableButton(popupProfileForm.submitButton);
+  userForm.disableButton();
 });
 
 buttonCreate.addEventListener("click", function () {
   popupCardForm.open();
   popupCardForm.formArray.forEach((element) => {
-    userForm._hideError(element);
+    cardForm.hideError(element);
   });
-  userForm._disableButton(popupCardForm.submitButton);
+  cardForm.disableButton();
 });
 
 avatarEdit.addEventListener("click", function () {
   popupAvatarForm.open();
   popupAvatarForm.formArray.forEach((element) => {
-    userForm._hideError(element);
+    avatarForm.hideError(element);
   });
-  userForm._disableButton(popupAvatarForm.submitButton);
+  avatarForm.disableButton();
 });
-

@@ -21,13 +21,13 @@ export default class Validate {
   }
   _toggleButton() {
     if (this._hasInvalidInput(this._inputList)) {
-      this._disableButton(this._buttonElem, this._inactiveButton);
+      this.disableButton(this._buttonElem, this._inactiveButton);
     } else {
       this._buttonElem.classList.remove(this._inactiveButton);
       this._buttonElem.disabled = false;
     }
   }
-  _disableButton() {
+  disableButton() {
     this._buttonElem.classList.add(this._inactiveButton);
     this._buttonElem.disabled = true;
   }
@@ -45,7 +45,7 @@ export default class Validate {
     if (!inputElement.validity.valid) {
       this._showError(inputElement, inputElement.validationMessage);
     } else {
-      this._hideError(inputElement);
+      this.hideError(inputElement);
     }
   }
   _showError(inputElement, errorMessage) {
@@ -54,7 +54,7 @@ export default class Validate {
     formError.textContent = errorMessage;
   }
 
-  _hideError(inputElement) {
+  hideError(inputElement) {
     const formError = inputElement.nextElementSibling;
     inputElement.classList.remove(this._inputError);
     formError.textContent = "";
