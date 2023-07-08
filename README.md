@@ -20,9 +20,6 @@
 ## **Авторы проекта:**
 - Cтуденты Яндекс Практикума, 25-я когорта: [Edgar-Ianke](https://github.com/edgar-ianke?tab=repositories/), [Zyurkalov](https://github.com/Zyurkalov?tab=repositories/) июль 2023г
 ------------------------------ 
-<<<<<<< HEAD
-=======
 ## **Ссылка на GH pages**
 OOP-testing
->>>>>>> a2b2b1fef1244d4ac407b9199ca953bebd8e2b2f
 [Ссылка на GH pages](https://edgar-ianke.github.io/mesto-project/)

@@ -8,6 +8,9 @@ export default class Api {
   checkResponse(res) {
     if (res.ok) {
       return res.json();
+    } if (!res.redirected) {
+      alert(`${res.status} Что-то пошло не так :(`)
+      return
     } else {
       return Promise.reject(`Ошибка: ${res.status}`);
     }
