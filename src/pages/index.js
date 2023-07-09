@@ -40,6 +40,13 @@ cardForm.enableValidation();
 userForm.enableValidation();
 avatarForm.enableValidation();
 
+function createClassCard(item) {
+  const cards = new Card(item, "#element", profileInfo.getUserId(), (img) => {
+    popupWithImage.open(img);
+  })
+  return cards.generate();
+}
+
 Promise.all([api.getInfo(), api.getCards()])
   .then(([infoRes, cardsRes]) => {
     profileInfo.setUserInfo(infoRes);
@@ -47,11 +54,7 @@ Promise.all([api.getInfo(), api.getCards()])
       {
         data: cardsRes,
         renderer: (item) => {
-          const cards = new Card(item, "#element", profileInfo.getUserId(), (item) => {
-            popupWithImage.open(item);
-          });
-          const cardElement = cards.generate();
-          sectionCards.addItem(cardElement);
+          sectionCards.addItem(createClassCard(item));
         },
       },
       ".elements"
@@ -75,6 +78,8 @@ function submitProfileForm(profile) {
       this.renderSaving(false);
     });
 }
+
+
 function submitCardForm(card) {
   //evt.preventDefault();
   this.renderSaving(true);
@@ -85,11 +90,7 @@ function submitCardForm(card) {
         {
           data: [res],
           renderer: (item) => {
-            const cardSingle = new Card(item, "#element", profileInfo.getUserId(), (img) => {
-              popupWithImage.open(img);
-            });
-            const cardElement = cardSingle.generate();
-            sectionCardSingle.perependItem(cardElement);
+            sectionCardSingle.perependItem(createClassCard(item))
           },
         },
         ".elements"
