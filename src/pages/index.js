@@ -48,31 +48,29 @@ function createClassCard(item) {
   });
   return cards.generate();
 }
-
+const cardSection = new Section(
+  {
+    renderer: (item) => {
+      cardSection.addItem(createClassCard(item));
+    },
+  },
+  ".elements"
+);
 Promise.all([api.getInfo(), api.getCards()])
   .then(([infoRes, cardsRes]) => {
     profileInfo.setUserInfo(infoRes);
-    const sectionCards = new Section(
-      {
-        data: cardsRes,
-        renderer: (item) => {
-          sectionCards.addItem(createClassCard(item));
-        },
-      },
-      ".elements"
-    );
-    sectionCards.renderItems();
+    cardSection.renderItems(cardsRes);
   })
   .catch((error) => console.error(`Ошибка ${error}`));
+
 function submitProfileForm(profile) {
-  //evt.preventDefault();
   this.renderSaving(true);
   api
     .patchProfile(profile)
     .then((data) => {
       profileInfo.setUserInfo(data);
-      this.close();
     })
+    .then(() => this.close())
     .catch((err) => {
       api.checkResponse(err);
     })
@@ -80,25 +78,14 @@ function submitProfileForm(profile) {
       this.renderSaving(false);
     });
 }
-
 function submitCardForm(card) {
-  //evt.preventDefault();
   this.renderSaving(true);
   api
     .loadCard(card)
-    .then((res) => {
-      const sectionCardSingle = new Section(
-        {
-          data: [res],
-          renderer: (item) => {
-            sectionCardSingle.perependItem(createClassCard(item));
-          },
-        },
-        ".elements"
-      );
-      this.close();
-      sectionCardSingle.renderItems();
+    .then((card) => {
+      cardSection.prependItem(createClassCard(card));
     })
+    .then(() => this.close())
     .catch((err) => {
       api.checkResponse(err);
     })
@@ -107,14 +94,13 @@ function submitCardForm(card) {
     });
 }
 function submitAvatarForm(avatar) {
-  //evt.preventDefault();
   this.renderSaving(true);
   api
     .newAvatar(avatar)
     .then((data) => {
       profileInfo.setUserInfo(data);
-      this.close();
     })
+    .then(() => this.close())
     .catch((err) => {
       api.checkResponse(err);
     })
@@ -123,29 +109,17 @@ function submitAvatarForm(avatar) {
       this.close();
     });
 }
-
 buttonEdit.addEventListener("click", function () {
   userForm.resetError();
   popupProfileForm.open();
   const user = profileInfo.getUserInfo();
   inputName.value = user.name;
   inputAbout.value = user.about;
-  // popupProfileForm.formArray.forEach((element) => {
-  //   userForm.hideError(element);
-  //   if (element.id === "author-name") {
-  //     element.value = user.name;
-  //   } else if (element.id === "author-description") {
-  //     element.value = user.about;
-  //   }
-  // });
-  // userForm.disableButton();
 });
-
 buttonCreate.addEventListener("click", function () {
   popupCardForm.open();
   cardForm.resetError();
 });
-
 avatarEdit.addEventListener("click", function () {
   popupAvatarForm.open();
   avatarForm.resetError();
