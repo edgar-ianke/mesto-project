@@ -32,7 +32,7 @@ export default class Validate {
     this._buttonElem.disabled = true;
   }
   _hasInvalidInput() {
-    return (this._inputList).some(function (inputElement) {
+    return this._inputList.some(function (inputElement) {
       return !inputElement.validity.valid;
     });
   }
@@ -45,7 +45,7 @@ export default class Validate {
     if (!inputElement.validity.valid) {
       this._showError(inputElement, inputElement.validationMessage);
     } else {
-      this.hideError(inputElement);
+      this._hideError(inputElement);
     }
   }
   _showError(inputElement, errorMessage) {
@@ -54,9 +54,15 @@ export default class Validate {
     formError.textContent = errorMessage;
   }
 
-  hideError(inputElement) {
+  _hideError(inputElement) {
     const formError = inputElement.nextElementSibling;
     inputElement.classList.remove(this._inputError);
     formError.textContent = "";
+  }
+  resetError() {
+    this._inputList.forEach((inputElement) => {
+      this._hideError(inputElement);
+    });
+    this._toggleButton();
   }
 }

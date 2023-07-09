@@ -6,6 +6,9 @@ const formElementEdit = document.querySelector("#edit-form");
 const formElementCreate = document.querySelector("#create-form");
 const formElementAvatar = document.querySelector("#avatar-form");
 
+const inputName = formElementEdit.querySelector("#author-name");
+const inputAbout = formElementEdit.querySelector("#author-description");
+
 const objSelectors = {
   name: ".profile__name",
   description: ".profile__description",
@@ -28,4 +31,6 @@ export {
   formElementAvatar,
   objSelectors,
   settingForm,
+  inputName,
+  inputAbout,
 };

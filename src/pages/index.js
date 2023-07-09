@@ -15,6 +15,8 @@ import {
   formElementCreate,
   objSelectors,
   settingForm,
+  inputName,
+  inputAbout,
 } from "../utils/consts";
 
 export const api = new Api({
@@ -43,7 +45,7 @@ avatarForm.enableValidation();
 function createClassCard(item) {
   const cards = new Card(item, "#element", profileInfo.getUserId(), (img) => {
     popupWithImage.open(img);
-  })
+  });
   return cards.generate();
 }
 
@@ -79,7 +81,6 @@ function submitProfileForm(profile) {
     });
 }
 
-
 function submitCardForm(card) {
   //evt.preventDefault();
   this.renderSaving(true);
@@ -90,13 +91,13 @@ function submitCardForm(card) {
         {
           data: [res],
           renderer: (item) => {
-            sectionCardSingle.perependItem(createClassCard(item))
+            sectionCardSingle.perependItem(createClassCard(item));
           },
         },
         ".elements"
       );
-      sectionCardSingle.renderItems();
       this.close();
+      sectionCardSingle.renderItems();
     })
     .catch((err) => {
       api.checkResponse(err);
@@ -124,31 +125,28 @@ function submitAvatarForm(avatar) {
 }
 
 buttonEdit.addEventListener("click", function () {
+  userForm.resetError();
   popupProfileForm.open();
   const user = profileInfo.getUserInfo();
-  popupProfileForm.formArray.forEach((element) => {
-    userForm.hideError(element);
-    if (element.id === "author-name") {
-      element.value = user.name;
-    } else if (element.id === "author-description") {
-      element.value = user.about;
-    }
-  });
-  userForm.disableButton();
+  inputName.value = user.name;
+  inputAbout.value = user.about;
+  // popupProfileForm.formArray.forEach((element) => {
+  //   userForm.hideError(element);
+  //   if (element.id === "author-name") {
+  //     element.value = user.name;
+  //   } else if (element.id === "author-description") {
+  //     element.value = user.about;
+  //   }
+  // });
+  // userForm.disableButton();
 });
 
 buttonCreate.addEventListener("click", function () {
   popupCardForm.open();
-  popupCardForm.formArray.forEach((element) => {
-    cardForm.hideError(element);
-  });
-  cardForm.disableButton();
+  cardForm.resetError();
 });
 
 avatarEdit.addEventListener("click", function () {
   popupAvatarForm.open();
-  popupAvatarForm.formArray.forEach((element) => {
-    avatarForm.hideError(element);
-  });
-  avatarForm.disableButton();
+  avatarForm.resetError();
 });
