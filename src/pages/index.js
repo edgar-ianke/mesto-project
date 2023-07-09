@@ -59,11 +59,11 @@ Promise.all([api.getInfo(), api.getCards()])
     sectionCards.renderItems();
   })
   .catch((error) => console.error(`Ошибка ${error}`));
-function submitProfileForm(evt) {
-  evt.preventDefault();
+function submitProfileForm(profile) {
+  //evt.preventDefault();
   this.renderSaving(true);
   api
-    .patchProfile(this._getInputValues())
+    .patchProfile(profile)
     .then((data) => {
       profileInfo.setUserInfo(data);
       this.close();
@@ -75,11 +75,11 @@ function submitProfileForm(evt) {
       this.renderSaving(false);
     });
 }
-function submitCardForm(evt) {
-  evt.preventDefault();
+function submitCardForm(card) {
+  //evt.preventDefault();
   this.renderSaving(true);
   api
-    .loadCard(this._getInputValues())
+    .loadCard(card)
     .then((res) => {
       const sectionCardSingle = new Section(
         {
@@ -104,11 +104,11 @@ function submitCardForm(evt) {
       this.renderSaving(false);
     });
 }
-function submitAvatarForm(evt) {
-  evt.preventDefault();
+function submitAvatarForm(avatar) {
+  //evt.preventDefault();
   this.renderSaving(true);
   api
-    .newAvatar(this._getInputValues())
+    .newAvatar(avatar)
     .then((data) => {
       profileInfo.setUserInfo(data);
       this.close();
