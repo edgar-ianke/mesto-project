@@ -1,15 +1,15 @@
 import { api } from "../pages/index";
-import { profileInfo } from "../pages";
 
 export default class Card {
-  constructor(data, selector, handleCardClick) {
+  constructor(data, selector, user_id, handleCardClick) {
     this.name = data.name;
     this.link = data.link;
-    this.owner = data.owner;
+    this.owner = data.owner; 
     this.likes = data.likes;
     this.cardHandler = handleCardClick;
     this.selector = selector;
     this._id = data._id;
+    this.user_id = user_id;
   }
   _getElement() {
     const cardElement = document
@@ -33,13 +33,13 @@ export default class Card {
     this._elemLikeCounter.textContent = this.likes.length;
     if (
       this.likes.some((item) => {
-        return item._id === profileInfo._id;
+        return item._id === this.user_id;
       })
     ) {
       this._elemLike.classList.add("elements__like_active");
     }
     this._setEventListeners();
-    if (this.owner._id !== profileInfo._id) {
+    if (this.owner._id !== this.user_id) {
       this._elemUrn.remove();
     }
     return this._element;

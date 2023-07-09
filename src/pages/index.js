@@ -47,7 +47,7 @@ Promise.all([api.getInfo(), api.getCards()])
       {
         data: cardsRes,
         renderer: (item) => {
-          const cards = new Card(item, "#element", (item) => {
+          const cards = new Card(item, "#element", profileInfo.getUserId(), (item) => {
             popupWithImage.open(item);
           });
           const cardElement = cards.generate();
@@ -85,7 +85,7 @@ function submitCardForm(card) {
         {
           data: [res],
           renderer: (item) => {
-            const cardSingle = new Card(item, "#element", (img) => {
+            const cardSingle = new Card(item, "#element", profileInfo.getUserId(), (img) => {
               popupWithImage.open(img);
             });
             const cardElement = cardSingle.generate();
