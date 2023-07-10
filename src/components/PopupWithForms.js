@@ -7,21 +7,12 @@ export default class PopupWithForms extends Popup {
     this._submitButton = this._element.querySelector(".form__submit-button");
     this._submitButtonText = this._submitButton.textContent;
     this.formArray = Array.from(this._element.querySelectorAll(".form__input"));
-    // const allInputs = this._element.querySelectorAll(".form__input");
-    // this.formArray = Array.from(allInputs);
 
     this._getValues = (evt) => {
       evt.preventDefault();
       this._formSubmitHandler(this._getInputValues())
     }
   }
-  // _getInputValues() {
-  //   this.formValues = this.formArray.reduce((acc, currValue) => {
-  //     acc[currValue.name] = currValue.value;
-  //     return acc;
-  //   }, {});
-  //   return this.formValues;
-  // }
   _getInputValues() {
     this.formValues = {};
     this.formArray.forEach(input => {
@@ -53,19 +44,3 @@ export default class PopupWithForms extends Popup {
   }
 }
 
-// function submitProfileForm(evt) {
-//   evt.preventDefault();
-//   this.renderSaving(true);
-//   api
-//     .patchProfile(this._getInputValues())
-//     .then((data) => {
-//       profileInfo.setUserInfo(data);
-//       this.close();
-//     })
-//     .catch((err) => {
-//       api.checkResponse(err);
-//     })
-//     .finally(() => {
-//       this.renderSaving(false);
-//     });
-// }

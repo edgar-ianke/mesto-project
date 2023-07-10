@@ -44,18 +44,6 @@ export default class Api {
       }),
     }).then(this.checkResponse);
   }
-  // getInitialData() {
-  //   return Promise.all([
-  //     fetch(`${this._adress}/users/me`, {
-  //       headers: this._headers,
-  //     }),
-  //     fetch(`${this._adress}/cards`, {
-  //       headers: this._headers,
-  //     }),
-  //   ]).then((responses) => {
-  //     responses.forEach(this.checkResponse);
-  //   });
-  // }
 
   loadCard({ name, link }) {
     return fetch(`${this._adress}/cards`, {
