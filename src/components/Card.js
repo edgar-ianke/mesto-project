@@ -1,7 +1,5 @@
-import { api } from "../pages/index";
-
 export default class Card {
-  constructor(data, selector, user_id, handleCardClick, handlePutLike, handleDeletelike) {
+  constructor(data, selector, user_id, handleCardClick, handlePutLike, handleDeletelike, deleteCard) {
     this.name = data.name;
     this.link = data.link;
     this.owner = data.owner;
@@ -9,6 +7,7 @@ export default class Card {
     this.cardHandler = handleCardClick;
     this.putLikeHandler = handlePutLike;
     this.deleteLikeHandler = handleDeletelike;
+    this.deleteCard = deleteCard;
     this.selector = selector;
     this._id = data._id;
     this.user_id = user_id;
@@ -65,13 +64,13 @@ export default class Card {
     }
   }
   _deleteCard() {
-    api
-      .removeCard(this._id)
+    this.deleteCard(this._id)
       .then(() => {
         this._element.remove();
       })
       .catch((error) => console.error(`Ошибка при удалении карточки ${error}`));
   }
+
   _putLike() {
     this.putLikeHandler(this._id)
       .then((res) => {

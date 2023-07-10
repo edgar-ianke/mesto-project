@@ -51,7 +51,8 @@ function createClassCard(item) {
       popupWithImage.open(img);
     },
     (cardId) => api.addLike(cardId),
-    (cardId) => api.removeLike(cardId)
+    (cardId) => api.removeLike(cardId),
+    (cardId) => api.removeCard(cardId),
   );
   return cards.generate();
 }
