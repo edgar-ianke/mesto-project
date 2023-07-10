@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(data, selector, user_id, handleCardClick, handlePutLike, handleDeletelike, deleteCard) {
+  constructor(data, selector, user_id, handleCardClick, handlePutLike, handleDeletelike, handleDeleteCard) {
     this.name = data.name;
     this.link = data.link;
     this.owner = data.owner;
@@ -7,7 +7,7 @@ export default class Card {
     this.cardHandler = handleCardClick;
     this.putLikeHandler = handlePutLike;
     this.deleteLikeHandler = handleDeletelike;
-    this.deleteCard = deleteCard;
+    this.deleteCardHandler = handleDeleteCard;
     this.selector = selector;
     this._id = data._id;
     this.user_id = user_id;
@@ -64,13 +64,12 @@ export default class Card {
     }
   }
   _deleteCard() {
-    this.deleteCard(this._id)
+    this.deleteCardHandler(this._id)
       .then(() => {
         this._element.remove();
       })
       .catch((error) => console.error(`Ошибка при удалении карточки ${error}`));
   }
-
   _putLike() {
     this.putLikeHandler(this._id)
       .then((res) => {
