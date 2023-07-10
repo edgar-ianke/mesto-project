@@ -114,7 +114,6 @@ function submitAvatarForm(avatar) {
     })
     .finally(() => {
       this.renderSaving(false);
-      this.close();
     });
 }
 buttonEdit.addEventListener("click", function () {
