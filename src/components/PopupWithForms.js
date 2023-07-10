@@ -14,10 +14,10 @@ export default class PopupWithForms extends Popup {
     }
   }
   _getInputValues() {
-    this.formValues = {};
-    this.formArray.forEach(input => {
-      this.formValues[input.name] = input.value;
-    })
+    this.formValues = this.formArray.reduce((acc, currValue) => {
+      acc[currValue.name] = currValue.value;
+      return acc;
+    }, {});
     return this.formValues;
   }
 

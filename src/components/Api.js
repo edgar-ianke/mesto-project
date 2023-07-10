@@ -8,9 +8,10 @@ export default class Api {
   checkResponse(res) {
     if (res.ok) {
       return res.json();
-    } if (!res.redirected) {
-      alert(`${res.status} Что-то пошло не так :(`)
-      return
+    }
+    if (!res.redirected) {
+      alert(`${res.status} Что-то пошло не так :(`);
+      return;
     } else {
       return Promise.reject(`Ошибка: ${res.status}`);
     }
@@ -80,12 +81,3 @@ export default class Api {
     }).then(this.checkResponse);
   }
 }
-
-// export const api = new Api({
-//   adress: `https://nomoreparties.co/v1/plus-cohort-25`,
-//   method: "GET",
-//   headers: {
-//     authorization: "02ffe6ee-1e50-4771-9330-975ddbfb736c",
-//     "Content-Type": "application/json",
-//   },
-// });
