@@ -43,9 +43,16 @@ userForm.enableValidation();
 avatarForm.enableValidation();
 
 function createClassCard(item) {
-  const cards = new Card(item, "#element", profileInfo.getUserId(), (img) => {
-    popupWithImage.open(img);
-  });
+  const cards = new Card(
+    item,
+    "#element",
+    profileInfo.getUserId(),
+    (img) => {
+      popupWithImage.open(img);
+    },
+    (cardId) => api.addLike(cardId),
+    (cardId) => api.removeLike(cardId)
+  );
   return cards.generate();
 }
 const cardSection = new Section(

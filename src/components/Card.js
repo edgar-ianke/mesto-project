@@ -1,12 +1,14 @@
 import { api } from "../pages/index";
 
 export default class Card {
-  constructor(data, selector, user_id, handleCardClick) {
+  constructor(data, selector, user_id, handleCardClick, handlePutLike, handleDeletelike) {
     this.name = data.name;
     this.link = data.link;
-    this.owner = data.owner; 
+    this.owner = data.owner;
     this.likes = data.likes;
     this.cardHandler = handleCardClick;
+    this.putLikeHandler = handlePutLike;
+    this.deleteLikeHandler = handleDeletelike;
     this.selector = selector;
     this._id = data._id;
     this.user_id = user_id;
@@ -26,7 +28,6 @@ export default class Card {
     this._elemLike = this._element.querySelector(".elements__like");
     this._elemUrn = this._element.querySelector(".elements__urn");
 
-    
     this._elemImage.src = this.link;
     this._elemImage.alt = this.name;
     this._elemName.textContent = this.name;
@@ -46,8 +47,12 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._elemLike.addEventListener("click", () => {this._handleLike()});
-    this._elemUrn.addEventListener("click", () => {this._deleteCard()});
+    this._elemLike.addEventListener("click", () => {
+      this._handleLike();
+    });
+    this._elemUrn.addEventListener("click", () => {
+      this._deleteCard();
+    });
     this._elemImage.addEventListener("click", () => this.cardHandler(this));
   }
   _handleLike() {
@@ -68,8 +73,7 @@ export default class Card {
       .catch((error) => console.error(`Ошибка при удалении карточки ${error}`));
   }
   _putLike() {
-    api
-      .addLike(this._id)
+    this.putLikeHandler(this._id)
       .then((res) => {
         this._elemLikeCounter.textContent = res.likes.length;
         this._elemLike.classList.add("elements__like_active");
@@ -77,8 +81,7 @@ export default class Card {
       .catch((error) => console.error(`Ошибка при добавлении лайка ${error}`));
   }
   _deleteLike() {
-    api
-      .removeLike(this._id)
+    this.deleteLikeHandler(this._id)
       .then((res) => {
         this._elemLikeCounter.textContent = res.likes.length;
         this._elemLike.classList.remove("elements__like_active");
