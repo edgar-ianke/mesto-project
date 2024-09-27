@@ -5,4 +5,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-color: black;
+  justify-self: center;
+  justify-content: center;
+  align-items: center;
 }
